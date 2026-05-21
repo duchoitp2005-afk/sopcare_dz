@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Anime Studio Pro App</title>
+    <title>Sopcare - Anime Studio Ultimate App</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Anime%20Mixer%20Pro%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -24,7 +24,7 @@
         .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
         .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
         
-        /* 6 lớp lưới căn góc phát sáng */
+        /* Lớp lưới căn góc phát sáng */
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; z-index: 3; }
         .active { display: block; }
         .line { position: absolute; background-color: rgba(0, 255, 255, 0.4); box-shadow: 0 0 3px rgba(0, 255, 255, 0.5); }
@@ -42,36 +42,32 @@
         .mode-btn { background: #222; border: 1px solid #333; color: #aaa; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; text-transform: uppercase; white-space: nowrap; font-weight: bold; }
         .mode-btn.selected { background: #00ffff; color: #000; font-weight: 900; border-color: #00ffff; }
         
-        /* Khu vực nút chụp và nút tải ảnh lên */
         .action-area { width: 100%; display: flex; justify-content: center; align-items: center; gap: 30px; padding: 0 15px; }
         .shutter-container { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
         .shutter-label { color: #888; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .shutter-btn { width: 50px; height: 50px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
         .shutter-btn.ai-mode { background: linear-gradient(45deg, #00ffff, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; animation: ai-pulse 2s infinite; }
-        
-        /* Nút upload ảnh từ máy thiết kế độc quyền nghệ thuật */
         .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffff; font-size: 16px; cursor: pointer; box-shadow: 0 0 8px rgba(0,255,255,0.2); }
-        .upload-btn:active { transform: scale(0.95); background: #222; }
 
         @keyframes ai-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
         /* Màn hình chỉnh sửa hậu kỳ + Trộn màu */
         .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 10px 0; }
-        .preview-box { width: 100%; height: 48%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; }
-        .image-wrapper { position: relative; max-width: 90%; max-height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a; }
+        .preview-box { width: 100%; height: 46%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; }
+        .image-wrapper { position: relative; max-width: 95%; max-height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a; }
         #previewImage { width: 100%; height: 100%; object-fit: contain; }
         .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
         /* Bộ trộn màu phụ slider */
-        .mixer-panel { width: 90%; background: #121212; border: 1px solid #222; border-radius: 12px; padding: 10px 15px; display: flex; flex-direction: column; gap: 5px; }
+        .mixer-panel { width: 92%; background: #121212; border: 1px solid #222; border-radius: 12px; padding: 10px 15px; display: flex; flex-direction: column; gap: 5px; }
         .mixer-info { display: flex; justify-content: space-between; color: #aaa; font-size: 10px; font-weight: bold; text-transform: uppercase; }
         .mixer-slider { -webkit-appearance: none; width: 100%; height: 6px; background: #252525; border-radius: 3px; outline: none; }
         .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(45deg, #00ffff, #ff00ff); cursor: pointer; box-shadow: 0 0 5px #00ffff; }
 
-        .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 8px 10px; background: #121212; border-top: 1px solid #222; border-bottom: 1px solid #222; scrollbar-width: none; }
+        .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 10px 12px; background: #121212; border-top: 1px solid #222; border-bottom: 1px solid #222; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 68px; cursor: pointer; }
-        .filter-thumb { width: 46px; height: 46px; border-radius: 8px; border: 2px solid #333; background: #222; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 72px; cursor: pointer; }
+        .filter-thumb { width: 48px; height: 48px; border-radius: 8px; border: 2px solid #333; background: #222; }
         .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 8px rgba(0,255,204,0.5); }
         .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; text-transform: uppercase; }
         .filter-item.active .filter-name { color: #fff; }
@@ -89,7 +85,7 @@
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
         <div class="status-header">SOPCARE ANIME STUDIO</div>
-        <div class="sub-header">PRO FILTER BLENDING & EDIT SYSTEM</div>
+        <div class="sub-header">ULTIMATE 32 FILTER BLENDING SYSTEM</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0 M500,500 m -220, 0 a 220,220 0 1,0 440,0" fill="none" stroke="rgba(0,255,255,0.4)" stroke-width="2.5"/></svg></div>
@@ -138,13 +134,14 @@
         <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Thoát Ra</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Lưu Ảnh Đẹp</button></div>
     </div>
 
-    <div id="loadingToast" class="loading-toast">🚀 ĐANG TẢI FILE CHỈNH SỬA...</div>
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG TẢI CODES MÀU MỚI...</div>
     <canvas id="canvas"></canvas>
 
     <script>
         const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), previewTitle = document.getElementById('previewTitle'), mixRange = document.getElementById('mixRange'), mixValue = document.getElementById('mixValue');
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', selectedFilterId = 'ghibli-nostalgia', currentMixRatio = 0;
 
+        // BẢN NÂNG CẤP ĐẦY ĐỦ 32 BỘ LỌC CHUYÊN NGHIỆP
         const filtersConfig = [
             { id: 'normal', name: 'Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
             { id: 'ghibli-nostalgia', name: 'Ghibli Classic', filterCSS: 'contrast(106%) saturate(135%) brightness(102%) sepia(8%) hue-rotate(5deg)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(255,215,0,0.1), rgba(210,105,30,0.06))', rawValues: { con:106, sat:135, bri:102, sep:8, hue:5 } },
@@ -165,7 +162,21 @@
             { id: 'soft-dream', name: '🌤 Soft Mist', filterCSS: 'brightness(103%) contrast(92%) saturate(95%) sepia(3%)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,255,255,0.2), rgba(255,225,225,0.1))', rawValues: { con:92, sat:95, bri:103, sep:3, hue:0 } },
             { id: 'foodie-chef', name: '🍱 Foodie Pro', filterCSS: 'contrast(106%) saturate(155%) brightness(103%) hue-rotate(5deg)', blend: 'none', grad: '', rawValues: { con:106, sat:155, bri:103, sep:0, hue:5 } },
             { id: 'sky-makoto', name: '☁ Makoto Sky', filterCSS: 'contrast(105%) saturate(125%) brightness(104%) hue-rotate(8deg)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(135,206,235,0.18), transparent)', rawValues: { con:105, sat:125, bri:104, sep:0, hue:8 } },
-            { id: 'art-bw', name: '🎞 Mono Art', filterCSS: 'grayscale(100%) contrast(175%) brightness(92%)', blend: 'none', grad: '', rawValues: { con:175, sat:0, bri:92, sep:0, hue:0 } }
+            { id: 'art-bw', name: '🎞 Mono Art', filterCSS: 'grayscale(100%) contrast(175%) brightness(92%)', blend: 'none', grad: '', rawValues: { con:175, sat:0, bri:92, sep:0, hue:0 } },
+            
+            // 12 BỘ LỌC CẬP NHẬT MỚI THÊM VÀO ĐÂY:
+            { id: 'sunset-shinkai', name: '☄️ Makoto Dusk', filterCSS: 'contrast(112%) saturate(148%) brightness(101%) hue-rotate(-15deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,69,0,0.18), rgba(75,0,130,0.12))', rawValues: { con:112, sat:148, bri:101, sep:0, hue:-15 } },
+            { id: 'hk-lofi', name: '🇭🇰 HK Nostalgia', filterCSS: 'contrast(118%) saturate(122%) brightness(95%) sepia(18%) hue-rotate(-8deg)', blend: 'darken', grad: 'rgba(0,128,128,0.05)', rawValues: { con:118, sat:122, bri:95, sep:18, hue:-8 } },
+            { id: 'spring-sakura', name: '🌸 Anh Đào', filterCSS: 'brightness(106%) contrast(95%) saturate(130%) hue-rotate(-12deg)', blend: 'overlay', grad: 'linear-gradient(45deg, rgba(255,192,203,0.22), transparent)', rawValues: { con:95, sat:130, bri:106, sep:0, hue:-12 } },
+            { id: 'autumn-maple', name: '🍁 Phong Thu', filterCSS: 'contrast(104%) saturate(142%) brightness(102%) sepia(22%) hue-rotate(8deg)', blend: 'none', grad: '', rawValues: { con:104, sat:142, bri:102, sep:22, hue:8 } },
+              { id: 'miku-teal', name: '💠 Miku Cyber', filterCSS: 'contrast(110%) saturate(128%) brightness(105%) hue-rotate(140deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(0,255,255,0.15), transparent)', rawValues: { con:110, sat:128, bri:105, sep:0, hue:140 } },
+            { id: 'latte-coffee', name: '☕️ Cafe Sữa', filterCSS: 'contrast(90%) sepia(32%) brightness(104%) saturate(92%)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(139,69,19,0.15), rgba(245,222,179,0.1))', rawValues: { con:90, sat:92, bri:104, sep:32, hue:0 } },
+            { id: 'forest-totoro', name: '🌲 Rừng Totoro', filterCSS: 'contrast(106%) saturate(138%) brightness(98%) hue-rotate(32deg)', blend: 'none', grad: '', rawValues: { con:106, sat:138, bri:98, sep:0, hue:32 } },
+            { id: 'retro-comic', name: '📰 Retro Manga', filterCSS: 'contrast(135%) saturate(110%) brightness(102%) sepia(10%)', blend: 'none', grad: '', rawValues: { con:135, sat:110, bri:102, sep:10, hue:0 } },
+            { id: 'pure-white', name: '🕊 Sáng Tuyết', filterCSS: 'brightness(114%) contrast(88%) saturate(102%) sepia(2%)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(255,255,255,0.25), transparent)', rawValues: { con:88, sat:102, bri:114, sep:2, hue:0 } },
+            { id: 'lemon-summer', name: '🍋 Chanh Tươi', filterCSS: 'contrast(105%) saturate(150%) brightness(106%) hue-rotate(18deg)', blend: 'none', grad: '', rawValues: { con:105, sat:150, bri:106, sep:0, hue:18 } },
+            { id: 'night-city', name: '🌆 Lên Đèn', filterCSS: 'contrast(122%) saturate(125%) brightness(96%) hue-rotate(-5deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,140,0,0.1), rgba(0,0,128,0.08))', rawValues: { con:122, sat:125, bri:96, sep:0, hue:-5 } },
+            { id: 'pastel-fairy', name: '🦄 Tiên Tử', filterCSS: 'brightness(105%) contrast(94%) saturate(120%) hue-rotate(-20deg)', blend: 'soft-light', grad: 'linear-gradient(45deg, rgba(238,130,238,0.15), rgba(173,216,230,0.15))', rawValues: { con:94, sat:120, bri:105, sep:0, hue:-20 } }
         ];
 
         async function initCam() {
@@ -220,7 +231,6 @@
         function selectFilter(id) { selectedFilterId = id; applyMixedFilters(); renderFilterBar(); }
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn AI: ${val}%`; applyMixedFilters(); }
 
-        // CHỨC NĂNG ĐỌC FILE ẢNH TỪ TRONG MÁY ĐỂ LỌC BIẾN XẤU THÀNH ĐẸP
         function uploadLocalImage(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -230,14 +240,13 @@
             reader.onload = function(e) {
                 originalImageDataUrl = e.target.result;
                 previewImage.src = originalImageDataUrl;
-                
                 mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn AI: 0%";
                 
                 setTimeout(() => {
                     loadingToast.style.display = 'none';
                     cameraView.style.display = 'none'; previewView.style.display = 'flex';
                     previewTitle.innerHTML = "✨ CHỈNH SỬA ẢNH ALBUM PRO ✨";
-                    selectFilter('portrait-skin'); // Mặc định mở bộ lọc nịnh da cho ảnh tải lên
+                    selectFilter('portrait-skin');
                 }, 800);
             };
             reader.readAsDataURL(file);
@@ -256,7 +265,7 @@
                     loadingToast.style.display = 'none';
                     cameraView.style.display = 'none'; previewView.style.display = 'flex';
                     previewTitle.innerHTML = "✨ APP AI MIXED PRO MODE ✨";
-                    const aiPool = ['shinkai-dream', 'landscape-vivid', 'japan-lookbook', 'creamy-peach', 'urban-teal'];
+                    const aiPool = ['shinkai-dream', 'landscape-vivid', 'sunset-shinkai', 'spring-sakura', 'pastel-fairy'];
                     const randomFilter = aiPool[Math.floor(Math.random() * aiPool.length)];
                     selectedFilterId = randomFilter;
                     mixRange.value = 35; currentMixRatio = 35; mixValue.innerText = "Tỉ lệ trộn AI: 35%";
