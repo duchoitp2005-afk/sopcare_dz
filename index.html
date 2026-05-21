@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Anime Mix Pro App</title>
+    <title>Sopcare - Anime Studio Pro App</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Anime%20Mixer%20Pro%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -24,7 +24,7 @@
         .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
         .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
         
-        /* 6 lớp lưới căn góc */
+        /* 6 lớp lưới căn góc phát sáng */
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; z-index: 3; }
         .active { display: block; }
         .line { position: absolute; background-color: rgba(0, 255, 255, 0.4); box-shadow: 0 0 3px rgba(0, 255, 255, 0.5); }
@@ -36,18 +36,23 @@
         .double-v1, .double-v2 { width: 1.5px; height: 100%; top: 0; } .double-v1 { left: 45%; } .double-v2 { left: 55%; }
 
         /* Panel điều khiển bên dưới */
-        .controls-panel { position: absolute; bottom: 0; width: 100%; height: 145px; background: rgba(10, 10, 10, 0.92); display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding-bottom: 12px; z-index: 10; border-top: 1px solid #222; }
+        .controls-panel { position: absolute; bottom: 0; width: 100%; height: 155px; background: rgba(10, 10, 10, 0.94); display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding-bottom: 12px; z-index: 10; border-top: 1px solid #222; }
         .mode-selector { width: 100%; display: flex; justify-content: flex-start; gap: 8px; overflow-x: auto; padding: 6px 15px; scrollbar-width: none; }
         .mode-selector::-webkit-scrollbar { display: none; }
         .mode-btn { background: #222; border: 1px solid #333; color: #aaa; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; text-transform: uppercase; white-space: nowrap; font-weight: bold; }
         .mode-btn.selected { background: #00ffff; color: #000; font-weight: 900; border-color: #00ffff; }
         
-        .action-area { width: 100%; display: flex; justify-content: center; align-items: center; gap: 40px; padding: 0 20px; }
-        .shutter-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        /* Khu vực nút chụp và nút tải ảnh lên */
+        .action-area { width: 100%; display: flex; justify-content: center; align-items: center; gap: 30px; padding: 0 15px; }
+        .shutter-container { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
         .shutter-label { color: #888; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
-        .shutter-btn.ai-mode { background: linear-gradient(45deg, #00ffff, #ff00ff); border: 4px solid #111; box-shadow: 0 0 15px #ff00ff; animation: ai-pulse 2s infinite; }
+        .shutter-btn { width: 50px; height: 50px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
+        .shutter-btn.ai-mode { background: linear-gradient(45deg, #00ffff, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; animation: ai-pulse 2s infinite; }
         
+        /* Nút upload ảnh từ máy thiết kế độc quyền nghệ thuật */
+        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffff; font-size: 16px; cursor: pointer; box-shadow: 0 0 8px rgba(0,255,255,0.2); }
+        .upload-btn:active { transform: scale(0.95); background: #222; }
+
         @keyframes ai-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
         /* Màn hình chỉnh sửa hậu kỳ + Trộn màu */
@@ -83,8 +88,8 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE ANIME APP PRO</div>
-        <div class="sub-header">HYBRID BLENDING CAMERA SYSTEM</div>
+        <div class="status-header">SOPCARE ANIME STUDIO</div>
+        <div class="sub-header">PRO FILTER BLENDING & EDIT SYSTEM</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0 M500,500 m -220, 0 a 220,220 0 1,0 440,0" fill="none" stroke="rgba(0,255,255,0.4)" stroke-width="2.5"/></svg></div>
@@ -104,6 +109,12 @@
                 <button class="mode-btn" onclick="changeLayout('diagonal', this)">Đường Chéo</button>
             </div>
             <div class="action-area">
+                <div class="shutter-container">
+                    <label for="fileUpload" class="upload-btn">📁</label>
+                    <input type="file" id="fileUpload" accept="image/*" style="display: none;" onchange="uploadLocalImage(event)">
+                    <span class="shutter-label">Chọn Ảnh</span>
+                </div>
+                
                 <div class="shutter-container"><button class="shutter-btn" onclick="takePhoto(false)"></button><span class="shutter-label">Màu Trơn</span></div>
                 <div class="shutter-container"><button class="shutter-btn ai-mode" onclick="takePhoto(true)"></button><span class="shutter-label" style="color:#00ffff; font-weight:900;">AI Auto</span></div>
             </div>
@@ -116,7 +127,7 @@
         
         <div class="mixer-panel">
             <div class="mixer-info">
-                <span>Màu gốc chọn (A)</span>
+                <span>Màu đang chọn (A)</span>
                 <span id="mixValue" style="color: #ff00ff;">Tỉ lệ trộn AI: 0%</span>
                 <span>Nền Ghibli phụ (B)</span>
             </div>
@@ -124,10 +135,10 @@
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
-        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Chụp lại</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Lưu File Trộn</button></div>
+        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Thoát Ra</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Lưu Ảnh Đẹp</button></div>
     </div>
 
-    <div id="loadingToast" class="loading-toast">🚀 ĐANG KẾT NỐI APP...</div>
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG TẢI FILE CHỈNH SỬA...</div>
     <canvas id="canvas"></canvas>
 
     <script>
@@ -209,6 +220,29 @@
         function selectFilter(id) { selectedFilterId = id; applyMixedFilters(); renderFilterBar(); }
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn AI: ${val}%`; applyMixedFilters(); }
 
+        // CHỨC NĂNG ĐỌC FILE ẢNH TỪ TRONG MÁY ĐỂ LỌC BIẾN XẤU THÀNH ĐẸP
+        function uploadLocalImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            loadingToast.innerText = "📁 ĐANG NẠP ẢNH HẬU KỲ..."; loadingToast.style.display = 'block';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalImageDataUrl = e.target.result;
+                previewImage.src = originalImageDataUrl;
+                
+                mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn AI: 0%";
+                
+                setTimeout(() => {
+                    loadingToast.style.display = 'none';
+                    cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                    previewTitle.innerHTML = "✨ CHỈNH SỬA ẢNH ALBUM PRO ✨";
+                    selectFilter('portrait-skin'); // Mặc định mở bộ lọc nịnh da cho ảnh tải lên
+                }, 800);
+            };
+            reader.readAsDataURL(file);
+        }
+
         function takePhoto(isAI) {
             const ctx = canvas.getContext('2d'); canvas.width = video.videoWidth; canvas.height = video.videoHeight;
             if (useFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
@@ -234,7 +268,7 @@
             }
         }
 
-        function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; }
+        function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; }
 
         function downloadFinalImage() {
             loadingToast.innerText = "👽 APP ĐANG XUẤT FILE ẢNH..."; loadingToast.style.display = 'block';
@@ -254,7 +288,7 @@
                 }
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_App_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_Studio_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
