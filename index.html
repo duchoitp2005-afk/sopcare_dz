@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - AI Command Assistant Studio</title>
+    <title>Sopcare - Anime Studio Ultimate Pro Max</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Anime%20Mixer%20Pro%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -24,18 +24,24 @@
         .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
         .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
         
+        /* Đốm thu phóng (Zoom Slider) tích hợp trên ống kính Camera */
         .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
         .zoom-label { color: #00ffff; font-size: 10px; font-weight: bold; min-width: 55px; text-align: center; font-family: monospace; }
         .zoom-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #333; border-radius: 2px; outline: none; }
         .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffff; cursor: pointer; }
 
+        /* Lớp lưới căn góc phát sáng */
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; z-index: 3; }
         .active { display: block; }
         .line { position: absolute; background-color: rgba(0, 255, 255, 0.4); box-shadow: 0 0 3px rgba(0, 255, 255, 0.5); }
-        .spiral-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .spiral-svg, .triangle-svg, .diagonal-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .grid-v1, .grid-v2 { width: 1.5px; height: 100%; top: 0; } .grid-v1 { left: 33.33%; } .grid-v2 { left: 66.66%; }
         .grid-h1, .grid-h2 { height: 1.5px; width: 100%; left: 0; } .grid-h1 { top: 33.33%; } .grid-h2 { top: 66.66%; }
+        .frame-outer { position: absolute; top: 15%; left: 10%; width: 80%; height: 55%; border: 1.5px solid rgba(0, 255, 255, 0.4); }
+        .frame-inner { position: absolute; top: 70%; left: 44%; width: 12%; height: 15%; border: 1.5px solid rgba(255, 0, 127, 0.5); }
+        .double-v1, .double-v2 { width: 1.5px; height: 100%; top: 0; } .double-v1 { left: 45%; } .double-v2 { left: 55%; }
 
+        /* Panel điều khiển bên dưới */
         .controls-panel { position: absolute; bottom: 0; width: 100%; height: 155px; background: rgba(10, 10, 10, 0.94); display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding-bottom: 12px; z-index: 10; border-top: 1px solid #222; }
         .mode-selector { width: 100%; display: flex; justify-content: flex-start; gap: 8px; overflow-x: auto; padding: 6px 15px; scrollbar-width: none; }
         .mode-selector::-webkit-scrollbar { display: none; }
@@ -47,56 +53,44 @@
         .shutter-label { color: #888; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .shutter-btn { width: 50px; height: 50px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
         .shutter-btn.ai-mode { background: linear-gradient(45deg, #00ffff, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; animation: ai-pulse 2s infinite; }
-        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffff; font-size: 16px; cursor: pointer; }
+        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffff; font-size: 16px; cursor: pointer; box-shadow: 0 0 8px rgba(0,255,255,0.2); }
 
         @keyframes ai-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
-        /* MÀN HÌNH HẬU KỲ TRỢ GIÚP AI THEO YÊU CẦU */
-        .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow-y: auto; }
-        .preview-box { width: 100%; height: 35%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; }
+        /* Màn hình chỉnh sửa hậu kỳ + Trộn màu tự do */
+        .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; }
+        .preview-box { width: 100%; height: 40%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; }
         .image-wrapper { position: relative; max-width: 95%; max-height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a; transition: transform 0.1s ease-out; }
         #previewImage { width: 100%; height: 100%; object-fit: contain; }
         .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
-        /* BOX ĐIỀU KHIỂN CHAT / RA LỆNH CHO AI THẦN THÁNH */
-        .ai-command-panel { width: 94%; background: #15151c; border: 1px solid #2d2d3d; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        .ai-command-title { color: #00ffff; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
-        .ai-command-status { background: #222; padding: 2px 8px; border-radius: 10px; color: #ff00ff; font-size: 8px; font-weight: bold; }
-        
-        .ai-input-row { display: flex; width: 100%; gap: 6px; }
-        .ai-text-input { flex: 1; background: #0c0c10; border: 1px solid #3a3a4f; color: #fff; padding: 10px 12px; border-radius: 20px; font-size: 12px; outline: none; font-weight: 500; }
-        .ai-text-input::placeholder { color: #555566; }
-        .ai-text-input:focus { border-color: #00ffff; box-shadow: 0 0 5px rgba(0,255,255,0.2); }
-        .ai-submit-btn { background: linear-gradient(45deg, #00ffff, #ff00ff); border: none; color: #000; padding: 0 16px; border-radius: 20px; font-size: 11px; font-weight: 900; cursor: pointer; text-transform: uppercase; box-shadow: 0 0 10px rgba(0,255,255,0.3); }
-        
-        /* Gợi ý lệnh nhanh dưới thanh chat */
-        .ai-tags-row { display: flex; gap: 6px; overflow-x: auto; width: 100%; scrollbar-width: none; padding-bottom: 2px; }
-        .ai-tags-row::-webkit-scrollbar { display: none; }
-        .ai-suggest-tag { background: #20202c; border: 1px solid #333344; color: #aaa; padding: 5px 10px; border-radius: 12px; font-size: 10px; font-weight: 600; white-space: nowrap; cursor: pointer; }
-        .ai-suggest-tag:hover { color: #00ffff; border-color: #00ffff; }
-
-        .advanced-mixer-panel { width: 94%; background: #121212; border: 1px solid #222; border-radius: 12px; padding: 6px 12px; display: flex; flex-direction: column; gap: 6px; }
-        .mixer-selectors-row { display: flex; justify-content: space-between; gap: 8px; width: 100%; }
-        .filter-select-box { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+        /* Bảng điều khiển tích hợp Ma Trận Màu Tự Do */
+        .advanced-mixer-panel { width: 94%; background: #121212; border: 1px solid #222; border-radius: 12px; padding: 8px 12px; display: flex; flex-direction: column; gap: 8px; }
+        .mixer-selectors-row { display: flex; justify-content: space-between; gap: 10px; width: 100%; }
+        .filter-select-box { flex: 1; display: flex; flex-direction: column; gap: 3px; }
         .filter-select-box label { color: #888; font-size: 9px; text-transform: uppercase; font-weight: bold; }
-        .styled-select { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 4px; border-radius: 6px; font-size: 11px; outline: none; font-weight: bold; }
+        .styled-select { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 5px; border-radius: 6px; font-size: 11px; outline: none; font-weight: bold; }
+        .styled-select-b { border-color: #ff00ff; color: #ff00ff; }
         
-        .mixer-info { display: flex; justify-content: space-between; color: #aaa; font-size: 9px; font-weight: bold; text-transform: uppercase; }
-        .mixer-slider { -webkit-appearance: none; width: 100%; height: 5px; background: #252525; border-radius: 3px; outline: none; }
-        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(45deg, #00ffff, #ff00ff); cursor: pointer; }
+        /* AI Suggester Button */
+        .ai-suggest-btn { background: linear-gradient(45deg, #00ffff, #ff00ff); border: none; color: #000; padding: 0 10px; border-radius: 6px; font-size: 11px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+
+        .mixer-info { display: flex; justify-content: space-between; color: #aaa; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-top: 2px; }
+        .mixer-slider { -webkit-appearance: none; width: 100%; height: 6px; background: #252525; border-radius: 3px; outline: none; }
+        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(45deg, #00ffff, #ff00ff); cursor: pointer; box-shadow: 0 0 5px #00ffff; }
 
         .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 6px 12px; background: #121212; border-top: 1px solid #222; border-bottom: 1px solid #222; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 62px; cursor: pointer; }
-        .filter-thumb { width: 40px; height: 40px; border-radius: 8px; border: 2px solid #333; background: #222; }
-        .filter-item.active .filter-thumb { border-color: #00ffcc; }
-        .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 66px; cursor: pointer; }
+        .filter-thumb { width: 44px; height: 44px; border-radius: 8px; border: 2px solid #333; background: #222; }
+        .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 8px rgba(0,255,204,0.5); }
+        .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; text-transform: uppercase; }
         .filter-item.active .filter-name { color: #fff; }
 
         .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 4px 15px; }
         .action-btn { padding: 9px 22px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
         .btn-cancel { background: #1a1a1a; color: #888; border: 1px solid #333; }
-        .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; box-shadow: 0 0 10px rgba(0,255,204,0.4); }
+        .btn-download { background: linear-gradient(90deg, #ff00ff, #00ffff); color: #000; }
         
         .loading-toast { display: none; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); color: #00ffcc; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 11px; z-index: 40; border: 1px solid #00ffcc; text-align: center; }
         canvas { display: none; }
@@ -105,8 +99,8 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE AI ASSISTANT</div>
-        <div class="sub-header">HỆ THỐNG PHỤC HỒI ẢNH THEO YÊU CẦU TRỰC TIẾP</div>
+        <div class="status-header">SOPCARE ANIME STUDIO</div>
+        <div class="sub-header">PRO MAX ZOOM & CUSTOM BLENDING SYSTEM</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div class="zoom-control-box">
@@ -114,13 +108,21 @@
             <input type="range" min="10" max="40" value="10" class="zoom-slider" id="cameraZoomSlider" oninput="applyCameraZoom(this.value)">
         </div>
 
-        <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0" fill="none" stroke="rgba(0,255,255,0.4)" stroke-width="2.5"/></svg></div>
+        <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0 M500,500 m -220, 0 a 220,220 0 1,0 440,0" fill="none" stroke="rgba(0,255,255,0.4)" stroke-width="2.5"/></svg></div>
         <div id="layout-grid" class="overlay-layer"><div class="line grid-v1"></div><div class="line grid-v2"></div><div class="line grid-h1"></div><div class="line grid-h2"></div></div>
+        <div id="layout-framing" class="overlay-layer"><div class="frame-outer"></div><div class="frame-inner"></div></div>
+        <div id="layout-triangle" class="overlay-layer"><svg class="triangle-svg"><polygon points="50%,35% 8%,75% 92%,75%" fill="none" stroke="rgba(0,255,255,0.4)" stroke-width="2"/></svg></div>
+        <div id="layout-double" class="overlay-layer"><div class="line double-v1"></div><div class="line double-v2"></div></div>
+        <div id="layout-diagonal" class="overlay-layer"><svg class="diagonal-svg"><line x1="0" y1="80%" x2="100%" y2="45%" stroke="rgba(0,255,255,0.6)" stroke-width="2"/></svg></div>
 
         <div class="controls-panel">
             <div class="mode-selector">
                 <button class="mode-btn selected" onclick="changeLayout('spiral', this)">Ốc Sên</button>
                 <button class="mode-btn" onclick="changeLayout('grid', this)">Lưới 1/3</button>
+                <button class="mode-btn" onclick="changeLayout('framing', this)">Khung Hình</button>
+                <button class="mode-btn" onclick="changeLayout('triangle', this)">Tam Giác</button>
+                <button class="mode-btn" onclick="changeLayout('double', this)">Đường Đôi</button>
+                <button class="mode-btn" onclick="changeLayout('diagonal', this)">Đường Chéo</button>
             </div>
             <div class="action-area">
                 <div class="shutter-container">
@@ -136,7 +138,7 @@
     </div>
 
     <div class="preview-container" id="previewView">
-        <div class="status-header" id="previewTitle" style="color: #00ffcc;">SOPCARE AI PROMPT STUDIO</div>
+        <div class="status-header" id="previewTitle" style="color: #00ffcc;">ANIME BLENDING MATRIX</div>
         
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
@@ -145,55 +147,45 @@
             </div>
         </div>
         
-        <div class="ai-command-panel">
-            <div class="ai-command-title">
-                <span>💬 NHẬP YÊU CẦU CHO AI TRỢ GIÚP</span>
-                <span class="ai-command-status" id="aiStatus">Sẵn sàng</span>
-            </div>
-            <div class="ai-input-row">
-                <input type="text" id="aiPromptInput" class="ai-text-input" placeholder="Ví dụ: che mụn tàn nhang, bóp dáng gọn, xóa người phía sau...">
-                <button class="ai-submit-btn" onclick="executeAICommand()">Gửi AI</button>
-            </div>
-            <div class="ai-tags-row">
-                <div class="ai-suggest-tag" onclick="fillPrompt('Xóa mụn, tàn nhang, làm mịn da')">🧼 Sửa khuyết điểm da</div>
-                <div class="ai-suggest-tag" onclick="fillPrompt('Chỉnh dáng chuẩn, thon eo gọn người')">💃 Chỉnh dáng chuẩn</div>
-                <div class="ai-suggest-tag" onclick="fillPrompt('Xóa bỏ chi tiết rác và người phía sau')">🧽 Xóa chi tiết thừa</div>
-                <div class="ai-suggest-tag" onclick="fillPrompt('Làm mịn da kết hợp bóp dáng và xóa chi tiết thừa')">👑 Combo Toàn Diện</div>
-            </div>
+        <div class="zoom-control-box" style="position:static; width:92%; margin-bottom:0;">
+            <span class="zoom-label" id="postZoomValue">Hậu Kỳ: 1.0x</span>
+            <input type="range" min="10" max="30" value="10" class="zoom-slider" id="postZoomSlider" oninput="applyPostZoom(this.value)">
         </div>
         
         <div class="advanced-mixer-panel">
             <div class="mixer-selectors-row">
                 <div class="filter-select-box">
-                    <label>Màu Chính (A)</label>
+                    <label>Bộ Lọc Gốc (A)</label>
                     <select id="selectFilterA" class="styled-select" onchange="onSelectBoxChange()"></select>
                 </div>
+                <button class="ai-suggest-btn" onclick="triggerAISuggestion()">🤖 AI Gợi Ý</button>
                 <div class="filter-select-box">
-                    <label>Màu Phủ (B)</label>
-                    <select id="selectFilterB" class="styled-select" onchange="onSelectBoxChange()"></select>
+                    <label>Bộ Lọc Phủ AI (B)</label>
+                    <select id="selectFilterB" class="styled-select styled-select-b" onchange="onSelectBoxChange()"></select>
                 </div>
             </div>
+            
             <div class="mixer-info">
                 <span id="labelFilterA">Màu A</span>
-                <span id="mixValue" style="color: #00ffff;">Trộn: 50%</span>
+                <span id="mixValue" style="color: #00ffff; font-family: monospace;">Trộn: 50%</span>
                 <span id="labelFilterB" style="color: #ff00ff;">Màu B</span>
             </div>
             <input type="range" min="0" max="100" value="50" class="mixer-slider" id="mixRange" oninput="updateMixRatio(this.value)">
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
-        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Thoát Ra</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Lưu Siêu Phẩm</button></div>
+        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Thoát Ra</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Lưu Ảnh Đẹp</button></div>
     </div>
 
-    <div id="loadingToast" class="loading-toast">🚀 AI ĐANG PHÂN TÍCH ĐIỂM ẢNH...</div>
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG NẠP THUẬT TOÁN AI...</div>
     <canvas id="canvas"></canvas>
 
     <script>
-        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), previewImageWrapper = document.getElementById('previewImageWrapper'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), mixRange = document.getElementById('mixRange'), mixValue = document.getElementById('mixValue'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), selectFilterA = document.getElementById('selectFilterA'), selectFilterB = document.getElementById('selectFilterB'), labelFilterA = document.getElementById('labelFilterA'), labelFilterB = document.getElementById('labelFilterB'), aiPromptInput = document.getElementById('aiPromptInput'), aiStatus = document.getElementById('aiStatus');
+        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), previewImageWrapper = document.getElementById('previewImageWrapper'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), previewTitle = document.getElementById('previewTitle'), mixRange = document.getElementById('mixRange'), mixValue = document.getElementById('mixValue'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), postZoomSlider = document.getElementById('postZoomSlider'), postZoomValue = document.getElementById('postZoomValue'), selectFilterA = document.getElementById('selectFilterA'), selectFilterB = document.getElementById('selectFilterB'), labelFilterA = document.getElementById('labelFilterA'), labelFilterB = document.getElementById('labelFilterB');
         
-        let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', modifiedImageDataUrl = '';
-        let selectedFilterId = 'portrait-skin', secondaryFilterId = 'ghibli-nostalgia', currentMixRatio = 50;
+        let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', selectedFilterId = 'ghibli-nostalgia', secondaryFilterId = 'shinkai-dream', currentMixRatio = 50;
 
+        // DANH SÁCH 32 BỘ LỌC ĐỘC QUYỀN
         const filtersConfig = [
             { id: 'normal', name: 'Màu Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
             { id: 'ghibli-nostalgia', name: 'Ghibli Classic', filterCSS: 'contrast(106%) saturate(135%) brightness(102%) sepia(8%) hue-rotate(5deg)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(255,215,0,0.1), rgba(210,105,30,0.06))', rawValues: { con:106, sat:135, bri:102, sep:8, hue:5 } },
@@ -201,29 +193,77 @@
             { id: 'portrait-skin', name: '🌸 Nịnh Da', filterCSS: 'brightness(108%) contrast(96%) saturate(106%) sepia(3%)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(255,200,200,0.15), rgba(255,239,213,0.08))', rawValues: { con:96, sat:106, bri:108, sep:3, hue:0 } },
             { id: 'landscape-vivid', name: '🌿 Fresh Nature', filterCSS: 'contrast(110%) saturate(160%) brightness(101%) hue-rotate(15deg)', blend: 'none', grad: '', rawValues: { con:110, sat:160, bri:101, sep:0, hue:15 } },
             { id: 'golden-hour', name: '🌅 Giờ Vàng', filterCSS: 'contrast(102%) saturate(125%) brightness(103%) sepia(12%)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(255,165,0,0.22), transparent)', rawValues: { con:102, sat:125, bri:103, sep:12, hue:0 } },
-            { id: 'hk-lofi', name: '🇭🇰 HK Nostalgia', filterCSS: 'contrast(118%) saturate(122%) brightness(95%) sepia(18%) hue-rotate(-8deg)', blend: 'darken', grad: 'rgba(0,128,128,0.05)', rawValues: { con:118, sat:122, bri:95, sep:18, hue:-8 } }
+            { id: 'japan-lookbook', name: '💎 Trong Trẻo', filterCSS: 'brightness(107%) contrast(93%) saturate(102%) hue-rotate(3deg)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(135,206,235,0.1), rgba(255,255,255,0.05))', rawValues: { con:93, sat:102, bri:107, sep:0, hue:3 } },
+            { id: 'night-cyber', name: '🌃 Đêm Neon', filterCSS: 'contrast(125%) saturate(130%) brightness(98%) hue-rotate(-8deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(0,255,255,0.1), rgba(255,0,128,0.08))', rawValues: { con:125, sat:130, bri:98, sep:0, hue:-8 } },
+            { id: 'creamy-peach', name: '🍑 Kem Đào', filterCSS: 'brightness(104%) contrast(98%) saturate(118%) hue-rotate(-5deg)', blend: 'overlay', grad: 'linear-gradient(45deg, rgba(255,182,193,0.15), rgba(255,222,173,0.08))', rawValues: { con:98, sat:118, bri:104, sep:0, hue:-5 } },
+            { id: 'vintage-tv', name: '🎞 Cine Retro', filterCSS: 'contrast(92%) sepia(25%) saturate(98%) brightness(96%) hue-rotate(-3deg)', blend: 'none', grad: '', rawValues: { con:92, sat:98, bri:96, sep:25, hue:-3 } },
+             { id: 'urban-teal', name: '🌆 Teal/Orange', filterCSS: 'contrast(116%) saturate(115%) hue-rotate(-12deg) brightness(97%)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(0,100,100,0.12), rgba(255,140,0,0.06))', rawValues: { con:116, sat:115, bri:97, sep:0, hue:-12 } },
+            { id: 'icy-winter', name: '❄ Lạnh Giá', filterCSS: 'brightness(105%) contrast(115%) saturate(85%) hue-rotate(160deg)', blend: 'color', grad: 'linear-gradient(to left, rgba(0,191,255,0.18), transparent)', rawValues: { con:115, sat:85, bri:105, sep:0, hue:160 } },
+            { id: 'warm-indie', name: '🎒 Indie Vibe', filterCSS: 'contrast(114%) saturate(130%) sepia(15%) hue-rotate(10deg)', blend: 'overlay', grad: 'linear-gradient(45deg, rgba(255,255,0,0.08), transparent)', rawValues: { con:114, sat:130, bri:98, sep:15, hue:10 } },
+            { id: 'candy-pop', name: '🍬 Candy Pop', filterCSS: 'contrast(98%) saturate(150%) hue-rotate(-10deg) brightness(102%)', blend: 'none', grad: '', rawValues: { con:98, sat:150, bri:102, sep:0, hue:-10 } },
+            { id: 'deep-moody', name: '🖤 Noir Mood', filterCSS: 'grayscale(100%) contrast(150%) brightness(88%) sepia(20%)', blend: 'none', grad: '', rawValues: { con:150, sat:0, bri:88, sep:20, hue:0 } },
+            { id: 'purple-rain', name: '💜 Tím Mộng', filterCSS: 'brightness(102%) contrast(106%) saturate(115%) hue-rotate(245deg)', blend: 'color', grad: 'linear-gradient(135deg, rgba(200,160,255,0.18), transparent)', rawValues: { con:106, sat:115, bri:102, sep:0, hue:245 } },
+            { id: 'soft-dream', name: '🌤 Soft Mist', filterCSS: 'brightness(103%) contrast(92%) saturate(95%) sepia(3%)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,255,255,0.2), rgba(255,225,225,0.1))', rawValues: { con:92, sat:95, bri:103, sep:3, hue:0 } },
+            { id: 'foodie-chef', name: '🍱 Foodie Pro', filterCSS: 'contrast(106%) saturate(155%) brightness(103%) hue-rotate(5deg)', blend: 'none', grad: '', rawValues: { con:106, sat:155, bri:103, sep:0, hue:5 } },
+            { id: 'sky-makoto', name: '☁ Makoto Sky', filterCSS: 'contrast(105%) saturate(125%) brightness(104%) hue-rotate(8deg)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(135,206,235,0.18), transparent)', rawValues: { con:105, sat:125, bri:104, sep:0, hue:8 } },
+            { id: 'art-bw', name: '🎞 Mono Art', filterCSS: 'grayscale(100%) contrast(175%) brightness(92%)', blend: 'none', grad: '', rawValues: { con:175, sat:0, bri:92, sep:0, hue:0 } },
+            { id: 'sunset-shinkai', name: '☄️ Makoto Dusk', filterCSS: 'contrast(112%) saturate(148%) brightness(101%) hue-rotate(-15deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,69,0,0.18), rgba(75,0,130,0.12))', rawValues: { con:112, sat:148, bri:101, sep:0, hue:-15 } },
+            { id: 'hk-lofi', name: '🇭🇰 HK Nostalgia', filterCSS: 'contrast(118%) saturate(122%) brightness(95%) sepia(18%) hue-rotate(-8deg)', blend: 'darken', grad: 'rgba(0,128,128,0.05)', rawValues: { con:118, sat:122, bri:95, sep:18, hue:-8 } },
+            { id: 'spring-sakura', name: '🌸 Anh Đào', filterCSS: 'brightness(106%) contrast(95%) saturate(130%) hue-rotate(-12deg)', blend: 'overlay', grad: 'linear-gradient(45deg, rgba(255,192,203,0.22), transparent)', rawValues: { con:95, sat:130, bri:106, sep:0, hue:-12 } },
+            { id: 'autumn-maple', name: '🍁 Phong Thu', filterCSS: 'contrast(104%) saturate(142%) brightness(102%) sepia(22%) hue-rotate(8deg)', blend: 'none', grad: '', rawValues: { con:104, sat:142, bri:102, sep:22, hue:8 } },
+            { id: 'miku-teal', name: '💠 Miku Cyber', filterCSS: 'contrast(110%) saturate(128%) brightness(105%) hue-rotate(140deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(0,255,255,0.15), transparent)', rawValues: { con:110, sat:128, bri:105, sep:0, hue:140 } },
+            { id: 'latte-coffee', name: '☕️ Cafe Sữa', filterCSS: 'contrast(90%) sepia(32%) brightness(104%) saturate(92%)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(139,69,19,0.15), rgba(245,222,179,0.1))', rawValues: { con:90, sat:92, bri:104, sep:32, hue:0 } },
+            { id: 'forest-totoro', name: '🌲 Rừng Totoro', filterCSS: 'contrast(106%) saturate(138%) brightness(98%) hue-rotate(32deg)', blend: 'none', grad: '', rawValues: { con:106, sat:138, bri:98, sep:0, hue:32 } },
+            { id: 'retro-comic', name: '📰 Retro Manga', filterCSS: 'contrast(135%) saturate(110%) brightness(102%) sepia(10%)', blend: 'none', grad: '', rawValues: { con:135, sat:110, bri:102, sep:10, hue:0 } },
+            { id: 'pure-white', name: '🕊 Sáng Tuyết', filterCSS: 'brightness(114%) contrast(88%) saturate(102%) sepia(2%)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(255,255,255,0.25), transparent)', rawValues: { con:88, sat:102, bri:114, sep:2, hue:0 } },
+            { id: 'lemon-summer', name: '🍋 Chanh Tươi', filterCSS: 'contrast(105%) saturate(150%) brightness(106%) hue-rotate(18deg)', blend: 'none', grad: '', rawValues: { con:105, sat:150, bri:106, sep:0, hue:18 } },
+            { id: 'night-city', name: '🌆 Lên Đèn', filterCSS: 'contrast(122%) saturate(125%) brightness(96%) hue-rotate(-5deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,140,0,0.1), rgba(0,0,128,0.08))', rawValues: { con:122, sat:125, bri:96, sep:0, hue:-5 } },
+            { id: 'pastel-fairy', name: '🦄 Tiên Tử', filterCSS: 'brightness(105%) contrast(94%) saturate(120%) hue-rotate(-20deg)', blend: 'soft-light', grad: 'linear-gradient(45deg, rgba(238,130,238,0.15), rgba(173,216,230,0.15))', rawValues: { con:94, sat:120, bri:105, sep:0, hue:-20 } }
         ];
 
-        function applyCameraZoom(val) { video.style.transform = `scale(${val / 10})`; zoomValue.innerText = `Zoom: ${(val / 10).toFixed(1)}x`; }
+        // TÍNH NĂNG ZOOM TRƯỚC KHI CHỤP (TÁC ĐỘNG LÊN CAMERA)
+        function applyCameraZoom(val) {
+            const scaleFactor = val / 10;
+            zoomValue.innerText = `Zoom: ${scaleFactor.toFixed(1)}x`;
+            video.style.transform = `scale(${scaleFactor})`;
+        }
+
+        // TÍNH NĂNG ZOOM HẬU KỲ (PHÓNG TO ẢNH TRONG KHI CHỈNH SỬA)
+        function applyPostZoom(val) {
+            const scaleFactor = val / 10;
+            postZoomValue.innerText = `Hậu Kỳ: ${scaleFactor.toFixed(1)}x`;
+            previewImageWrapper.style.transform = `scale(${scaleFactor})`;
+        }
+
         async function initCam() {
             if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+            cameraZoomSlider.value = 10; applyCameraZoom(10);
             try {
                 currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: useFacingMode, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
                 video.srcObject = currentStream;
             } catch (err) { currentStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false }); video.srcObject = currentStream; }
         }
+
         function toggleCamera() { useFacingMode = (useFacingMode === "environment") ? "user" : "environment"; initCam(); }
         function changeLayout(l, b) { document.querySelectorAll('.overlay-layer').forEach(y => y.classList.remove('active')); document.querySelectorAll('.mode-btn').forEach(x => x.classList.remove('selected')); document.getElementById(`layout-${l}`).classList.add('active'); b.classList.add('selected'); }
 
+        // KHỞI TẠO BẢNG CHỌN DANH SÁCH BỘ LỌC CHO MA TRẬN MÀU TỰ DO
         function buildSelectOptions() {
             selectFilterA.innerHTML = ''; selectFilterB.innerHTML = '';
             filtersConfig.forEach(f => {
                 const optA = document.createElement('option'); optA.value = f.id; optA.textContent = f.name; selectFilterA.appendChild(optA);
                 const optB = document.createElement('option'); optB.value = f.id; optB.textContent = f.name; selectFilterB.appendChild(optB);
             });
-            selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
+            selectFilterA.value = selectedFilterId;
+            selectFilterB.value = secondaryFilterId;
         }
-        function onSelectBoxChange() { selectedFilterId = selectFilterA.value; secondaryFilterId = selectFilterB.value; applyMixedFilters(); renderFilterBar(); }
+
+        function onSelectBoxChange() {
+            selectedFilterId = selectFilterA.value;
+            secondaryFilterId = selectFilterB.value;
+            applyMixedFilters();
+            renderFilterBar();
+        }
 
         function renderFilterBar() {
             filterBar.innerHTML = '';
@@ -231,167 +271,147 @@
                 const item = document.createElement('div');
                 item.className = `filter-item ${f.id === selectedFilterId ? 'active' : ''}`;
                 item.onclick = () => { selectedFilterId = f.id; selectFilterA.value = f.id; applyMixedFilters(); renderFilterBar(); };
-                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:${f.grad?f.grad:'#333'}"></div><div class="filter-name">${f.name}</div>`;
+                let ts = `filter: ${f.filterCSS}; background: ${f.grad ? f.grad : 'linear-gradient(to bottom, #444, #111)'};`;
+                item.innerHTML = `<div class="filter-thumb" style="${ts}"></div><div class="filter-name">${f.name}</div>`;
                 filterBar.appendChild(item);
             });
             labelFilterA.innerText = filtersConfig.find(f => f.id === selectedFilterId).name;
             labelFilterB.innerText = filtersConfig.find(f => f.id === secondaryFilterId).name;
         }
 
+        // THUẬT TOÁN AI TRỘN HAI BỘ LỌC HOÀN TOÀN TỰ DO THEO Ý MUỐN HOẶC GỢI Ý
         function applyMixedFilters() {
             const filterA = filtersConfig.find(f => f.id === selectedFilterId);
             const filterB = filtersConfig.find(f => f.id === secondaryFilterId);
             const ratio = currentMixRatio / 100;
+
             const c = filterA.rawValues.con + (filterB.rawValues.con - filterA.rawValues.con) * ratio;
             const s = filterA.rawValues.sat + (filterB.rawValues.sat - filterA.rawValues.sat) * ratio;
             const b = filterA.rawValues.bri + (filterB.rawValues.bri - filterA.rawValues.bri) * ratio;
             const sep = filterA.rawValues.sep + (filterB.rawValues.sep - filterA.rawValues.sep) * ratio;
             const h = filterA.rawValues.hue + (filterB.rawValues.hue - filterA.rawValues.hue) * ratio;
-            previewImage.style.filter = `contrast(${c}%) saturate(${s}%) brightness(${b}%) sepia(${sep}%) hue-rotate(${h}deg)`;
-            gradientOverlay.style.background = ratio > 0.5 ? (filterB.grad || 'none') : (filterA.grad || 'none');
-            gradientOverlay.style.mixBlendMode = ratio > 0.5 ? filterB.blend : filterA.blend;
+
+            let computedCSS = `contrast(${c}%) saturate(${s}%) brightness(${b}%) sepia(${sep}%) hue-rotate(${h}deg)`;
+            if(filterA.id==='deep-moody' || filterA.id==='art-bw' || filterB.id==='deep-moody' || filterB.id==='art-bw') {
+                let grayA = (filterA.id==='deep-moody' || filterA.id==='art-bw') ? 100 : 0;
+                let grayB = (filterB.id==='deep-moody' || filterB.id==='art-bw') ? 100 : 0;
+                let computedGray = grayA + (grayB - grayA) * ratio;
+                computedCSS += ` grayscale(${computedGray}%)`;
+            }
+            previewImage.style.filter = computedCSS;
+
+            if (ratio > 0.5) {
+                gradientOverlay.style.background = filterB.grad ? filterB.grad : 'none';
+                gradientOverlay.style.mixBlendMode = filterB.blend;
+            } else {
+                gradientOverlay.style.background = filterA.grad ? filterA.grad : 'none';
+                gradientOverlay.style.mixBlendMode = filterA.blend;
+            }
         }
 
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Trộn: ${val}%`; applyMixedFilters(); }
 
-        function fillPrompt(text) { aiPromptInput.value = text; }
-
-        // LÕI ENGINE XỬ LÝ ẢNH DỰA TRÊN PHÂN TÍCH TỪ KHÓA BẰNG NGÔN NGỮ TỰ NHIÊN
-        function executeAICommand() {
-            const prompt = aiPromptInput.value.trim().toLowerCase();
-            if (!prompt) { alert("Hội ơi, vui lòng nhập yêu cầu chỉnh sửa nhé!"); return; }
-
-            loadingToast.innerText = "🤖 AI ĐANG PHÂN TÍCH YÊU CẦU & THỰC THI...";
-            loadingToast.style.display = 'block';
-            aiStatus.innerText = "ĐANG XỬ LÝ..."; aiStatus.style.color = "#ff00ff";
-
-            // Kiểm tra các từ khóa xuất hiện trong chuỗi text lệnh nhập vào
-            const needSkin = prompt.includes("mụn") || prompt.includes("nhang") || prompt.includes("da") || prompt.includes("khuyết điểm");
-            const needBody = prompt.includes("dáng") || prompt.includes("eo") || prompt.includes("người") || prompt.includes("chân");
-            const needDelete = prompt.includes("xóa") || prompt.includes("bỏ") || prompt.includes("chi tiết") || prompt.includes("rác") || prompt.includes("người");
-
+        // CHỨC NĂNG AI GỢI Ý PHỐI CẶP BỘ LỌC ĐỘC ĐÁO CHUYÊN NGHIỆP
+        function triggerAISuggestion() {
+            loadingToast.innerText = "🤖 AI ĐANG PHÂN TÍCH & PHỐI MÀU GỢI Ý..."; loadingToast.style.display = 'block';
             setTimeout(() => {
-                const img = new Image();
-                img.src = originalImageDataUrl;
-                img.onload = function() {
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width; canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    let data = imgData.data;
-
-                    // 1. Thực thi thuật toán sửa khuyết điểm da
-                    if (needSkin) {
-                        for (let i = 0; i < data.length; i += 4) {
-                            let r = data[i], g = data[i+1], b = data[i+2];
-                            if (r > 95 && g > 40 && b > 20 && (Math.max(r,g,b) - Math.min(r,g,b) > 15) && Math.abs(r - g) > 15 && r > g && r > b) {
-                                if(i > 4 && i < data.length - 4) {
-                                    data[i] = (data[i] + data[i-4] + data[i+4]) / 3;
-                                    data[i+1] = (data[i+1]*2 + data[i-3] + data[i+5]) / 4;
-                                    data[i+2] = (data[i+2] + data[i-2] + data[i+6]) / 3;
-                                }
-                            }
-                        }
-                    }
-                    ctx.putImageData(imgData, 0, 0);
-
-                    // 2. Thực thi thuật toán co giãn hình học bóp dáng chuẩn
-                    if (needBody) {
-                        let tempCanvas = document.createElement('canvas');
-                        tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
-                        let tempCtx = tempCanvas.getContext('2d');
-                        tempCtx.drawImage(canvas, 0, 0);
-                        
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                        
-                        // Co bóp biên eo khoảng trục giữa khung hình
-                        ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height * 0.4, 0, 0, canvas.width, canvas.height * 0.4);
-                        ctx.drawImage(tempCanvas, 0, canvas.height * 0.4, canvas.width, canvas.height * 0.2, canvas.width * 0.02, canvas.height * 0.4, canvas.width * 0.96, canvas.height * 0.19);
-                        ctx.drawImage(tempCanvas, 0, canvas.height * 0.6, canvas.width, canvas.height * 0.4, 0, canvas.height * 0.59, canvas.width, canvas.height * 0.41);
-                    }
-
-                    // 3. Thực thi thuật toán xóa chi tiết rác / người thừa (Inpainting Matrix)
-                    if (needDelete) {
-                        let tempCanvas = document.createElement('canvas');
-                        tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
-                        let tempCtx = tempCanvas.getContext('2d');
-                        tempCtx.drawImage(canvas, 0, 0);
-
-                        // Giả lập làm mờ đứt gãy biên vật thể biên rìa hoặc hậu cảnh phía sau (Background Inpainting Blur)
-                        ctx.save();
-                        ctx.filter = 'blur(10px)';
-                        // Chỉ lấy vùng hậu cảnh phía trên và góc ngoài để đắp đè che lấp người thừa/vật thể thừa
-                        ctx.drawImage(tempCanvas, 0, 0, canvas.width * 0.3, canvas.height * 0.3, 0, canvas.height * 0.5, canvas.width * 0.3, canvas.height * 0.3);
-                        ctx.drawImage(tempCanvas, canvas.width * 0.7, 0, canvas.width * 0.3, canvas.height * 0.3, canvas.width * 0.7, canvas.height * 0.5, canvas.width * 0.3, canvas.height * 0.3);
-                        ctx.restore();
-                        ctx.drawImage(tempCanvas, canvas.width * 0.2, 0, canvas.width * 0.6, canvas.height, canvas.width * 0.2, 0, canvas.width * 0.6, canvas.height);
-                    }
-
-                    modifiedImageDataUrl = canvas.toDataURL('image/png');
-                    previewImage.src = modifiedImageDataUrl;
-                    loadingToast.style.display = 'none';
-                    aiStatus.innerText = "HOÀN THÀNH ✨"; aiStatus.style.color = "#00ffcc";
-                };
-            }, 1200);
+                loadingToast.style.display = 'none';
+                const aiPoolA = ['shinkai-dream', 'portrait-skin', 'landscape-vivid', 'spring-sakura', 'pastel-fairy', 'pure-white'];
+                const aiPoolB = ['ghibli-nostalgia', 'golden-hour', 'sunset-shinkai', 'hk-lofi', 'autumn-maple', 'latte-coffee'];
+                
+                selectedFilterId = aiPoolA[Math.floor(Math.random() * aiPoolA.length)];
+                secondaryFilterId = aiPoolB[Math.floor(Math.random() * aiPoolB.length)];
+                
+                const randomRatio = Math.floor(Math.random() * 41) + 30; // Random tỉ lệ trộn từ 30% đến 70%
+                
+                selectFilterA.value = selectedFilterId;
+                selectFilterB.value = secondaryFilterId;
+                mixRange.value = randomRatio;
+                currentMixRatio = randomRatio;
+                mixValue.innerText = `Trộn: ${randomRatio}%`;
+                
+                applyMixedFilters(); renderFilterBar();
+            }, 800);
         }
 
         function uploadLocalImage(event) {
-            const file = event.target.files[0]; if (!file) return;
-            loadingToast.innerText = "📁 NẠP ẢNH HẬU KỲ..."; loadingToast.style.display = 'block';
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            loadingToast.innerText = "📁 ĐANG NẠP ẢNH HẬU KỲ..."; loadingToast.style.display = 'block';
             const reader = new FileReader();
             reader.onload = function(e) {
-                originalImageDataUrl = e.target.result; modifiedImageDataUrl = originalImageDataUrl;
-                previewImage.src = originalImageDataUrl; aiPromptInput.value = ''; aiStatus.innerText = "Sẵn sàng"; aiStatus.style.color = "#ff00ff";
+                originalImageDataUrl = e.target.result; previewImage.src = originalImageDataUrl;
                 mixRange.value = 50; currentMixRatio = 50; mixValue.innerText = "Trộn: 50%";
+                postZoomSlider.value = 10; applyPostZoom(10);
+                
                 setTimeout(() => {
-                    loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                    loadingToast.style.display = 'none';
+                    cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                    previewTitle.innerHTML = "✨ CHỈNH SỬA ẢNH ALBUM PRO ✨";
                     selectedFilterId = 'portrait-skin'; secondaryFilterId = 'ghibli-nostalgia';
                     selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
                     applyMixedFilters(); renderFilterBar();
-                }, 600);
+                }, 800);
             };
             reader.readAsDataURL(file);
         }
 
         function takePhoto(isAI) {
             const ctx = canvas.getContext('2d'); canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-            const sf = cameraZoomSlider.value / 10; const sw = canvas.width / sf; const sh = canvas.height / sf;
+            
+            // Xử lý zoom trực tiếp từ camera khi vẽ ảnh lên canvas để giữ nguyên khung hình đã căn chỉnh
+            const scaleFactor = cameraZoomSlider.value / 10;
+            const sw = canvas.width / scaleFactor; const sh = canvas.height / scaleFactor;
             const sx = (canvas.width - sw) / 2; const sy = (canvas.height - sh) / 2;
+            
             if (useFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
             ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height); ctx.setTransform(1, 0, 0, 1, 0, 0);
-            originalImageDataUrl = canvas.toDataURL('image/png'); modifiedImageDataUrl = originalImageDataUrl;
-            previewImage.src = originalImageDataUrl;
-            aiPromptInput.value = ''; aiStatus.innerText = "Sẵn sàng"; aiStatus.style.color = "#ff00ff";
+            
+            originalImageDataUrl = canvas.toDataURL('image/png'); previewImage.src = originalImageDataUrl;
             mixRange.value = 50; currentMixRatio = 50; mixValue.innerText = "Trộn: 50%";
+            postZoomSlider.value = 10; applyPostZoom(10);
 
-            cameraView.style.display = 'none'; previewView.style.display = 'flex';
-            if(isAI) { aiPromptInput.value = "làm mịn da kết hợp bóp dáng và xóa chi tiết thừa"; executeAICommand(); } 
-            else { selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId; applyMixedFilters(); renderFilterBar(); }
+            if(isAI) {
+                cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                previewTitle.innerHTML = "✨ APP AI MIXED PRO MODE ✨";
+                triggerAISuggestion();
+            } else {
+                cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                previewTitle.innerHTML = "ANIME BLENDING MATRIX"; 
+                selectedFilterId = 'shinkai-dream'; secondaryFilterId = 'ghibli-nostalgia';
+                selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
+                applyMixedFilters(); renderFilterBar();
+            }
         }
 
         function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; initCam(); }
 
         function downloadFinalImage() {
-            loadingToast.innerText = "👽 ĐANG XUẤT FILE ẢNH MỊN DÁNG..."; loadingToast.style.display = 'block';
-            const img = new Image(); img.src = modifiedImageDataUrl;
+            loadingToast.innerText = "👽 APP ĐANG XUẤT FILE ẢNH..."; loadingToast.style.display = 'block';
+            const img = new Image(); img.src = originalImageDataUrl;
             img.onload = function() {
                 const ctx = canvas.getContext('2d'); canvas.width = img.width; canvas.height = img.height;
                 ctx.filter = previewImage.style.filter; ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 
-                const activeOver = currentMixRatio / 100 > 0.5 ? filtersConfig.find(f=>f.id===secondaryFilterId) : filtersConfig.find(f=>f.id===selectedFilterId);
-                if(activeOver.grad && activeOver.grad !== 'none') {
-                    ctx.globalCompositeOperation = activeOver.blend;
+                const activeOverOverlay = currentMixRatio / 100 > 0.5 ? filtersConfig.find(f=>f.id===secondaryFilterId) : filtersConfig.find(f=>f.id===selectedFilterId);
+                if(activeOverOverlay.grad && activeOverOverlay.grad !== 'none') {
+                    ctx.globalCompositeOperation = activeOverOverlay.blend;
                     let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                    if(activeOver.id==='shinkai-dream') { g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(135,206,235,0.15)"); g.addColorStop(1, "rgba(255,200,220,0.1)"); }
-                    else if(activeOver.id==='ghibli-nostalgia') { g.addColorStop(0, "rgba(255,215,0,0.1)"); g.addColorStop(1, "rgba(210,105,30,0.06)"); }
-                    else { g.addColorStop(0, "rgba(255,255,255,0.02)"); }
+                    if(activeOverOverlay.id==='shinkai-dream') {
+                        g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(135,206,235,0.15)"); g.addColorStop(1, "rgba(255,200,220,0.1)");
+                    } else if(activeOverOverlay.id==='ghibli-nostalgia') {
+                        g.addColorStop(0, "rgba(255,215,0,0.1)"); g.addColorStop(1, "rgba(210,105,30,0.06)");
+                    } else if(activeOverOverlay.id==='sunset-shinkai') {
+                        g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(255,69,0,0.18)"); g.addColorStop(1, "rgba(75,0,130,0.12)");
+                    } else {
+                        ctx.fillStyle = "rgba(255,255,255,0.02)";
+                    }
                     ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_AI_Command_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_Matrix_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
