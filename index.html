@@ -216,7 +216,7 @@
         let selectedFilterId = 'tone-xam-den', secondaryFilterId = 'tone-tu-nhien', currentMixRatio = 0;
 
         // DANH SÁCH 8 TONE MÀU ĐÃ ĐƯỢC CHUYỂN ĐỔI CHUẨN CÔNG THỨC SANG CSS FILTER
-        const firltersConfig = [
+        const filtersConfig = [
             { id: 'normal', name: 'Màu Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
             
             { id: 'tone-xam-den', name: '⚫ Xám Đen', 
@@ -228,6 +228,7 @@
               filterCSS: 'brightness(69%) contrast(80%) saturate(74%) sepia(20%) hue-rotate(-12deg)', 
               blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(139,94,60,0.18), transparent)', 
               rawValues: { con:80, sat:74, bri:69, sep:20, hue:-12 } },
+              
             { id: 'tone-trang-han', name: '⚪ Trắng Hàn', 
               filterCSS: 'brightness(115%) contrast(78%) saturate(76%) sepia(0%) hue-rotate(0deg)', 
               blend: 'overlay', grad: 'rgba(255,255,255,0.12)', 
@@ -427,5 +428,4 @@
         window.addEventListener('DOMContentLoaded', () => { buildSelectOptions(); initCam(); renderFilterBar(); });
     </script>
 </body>
-</html>  
-            
+</html>
