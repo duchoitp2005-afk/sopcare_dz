@@ -24,7 +24,7 @@
         .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
         .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
         
-        /* CỤM ĐIỀU KHIỂN PRO MODE TRONG SUỐT TRÊN MÀN HÌNH CHỤP */
+        /* CỤM ĐIỀU KHIỂN PRO MODE TRONG SUỐT */
         .pro-settings-panel { display: none; position: absolute; top: 65px; left: 5%; width: 90%; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(8px); border: 1px solid rgba(0, 255, 255, 0.2); border-radius: 12px; padding: 10px; z-index: 15; flex-direction: column; gap: 8px; }
         .pro-settings-panel.active { display: flex; }
         .pro-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -35,7 +35,7 @@
         
         .wb-select { background: #222; color: #fff; border: 1px solid #444; font-size: 10px; padding: 2px 6px; border-radius: 4px; outline: none; font-weight: bold; }
 
-        /* THANH ZOOM TIÊU CHUẨN */
+        /* THANH ZOOM */
         .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
         .zoom-label { color: #00ffff; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
         .zoom-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #333; border-radius: 2px; outline: none; }
@@ -86,8 +86,8 @@
 
         .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 8px 14px; background: #101014; border-top: 1px solid #1a1a22; border-bottom: 1px solid #1a1a22; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 62px; cursor: pointer; }
-        .filter-thumb { width: 42px; height: 42px; border-radius: 8px; border: 2px solid #333; background: #222; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 65px; cursor: pointer; }
+        .filter-thumb { width: 44px; height: 44px; border-radius: 8px; border: 2px solid #333; background: #222; }
         .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 6px rgba(0,255,204,0.4); }
         .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; }
         .filter-item.active .filter-name { color: #fff; }
@@ -116,12 +116,12 @@
             </div>
             <div class="pro-row">
                 <span class="pro-label">Độ Tương Phản</span>
-                <input type="range" min="70" max="150" value="100" class="pro-slider" id="proContrast" oninput="applyProControls()">
+                <input type="range" min="50" max="150" value="100" class="pro-slider" id="proContrast" oninput="applyProControls()">
                 <span class="pro-val" id="valContrast">100%</span>
             </div>
             <div class="pro-row">
                 <span class="pro-label">Độ Rực Màu</span>
-                <input type="range" min="60" max="160" value="100" class="pro-slider" id="proSat" oninput="applyProControls()">
+                <input type="range" min="50" max="160" value="100" class="pro-slider" id="proSat" oninput="applyProControls()">
                 <span class="pro-val" id="valSat">100%</span>
             </div>
             <div class="pro-row">
@@ -213,20 +213,52 @@
         const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
 
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = false;
-        let selectedFilterId = 'hdr-backlight', secondaryFilterId = 'portrait-skin', currentMixRatio = 40;
+        let selectedFilterId = 'tone-xam-den', secondaryFilterId = 'tone-tu-nhien', currentMixRatio = 0;
 
-        const filtersConfig = [
+        // DANH SÁCH 8 TONE MÀU ĐÃ ĐƯỢC CHUYỂN ĐỔI CHUẨN CÔNG THỨC SANG CSS FILTER
+        const firltersConfig = [
             { id: 'normal', name: 'Màu Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
-            { id: 'hdr-backlight', name: '⚡ HDR Cứu Sáng', filterCSS: 'brightness(122%) contrast(92%) saturate(125%) sepia(2%)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(255,255,255,0.1), transparent)', rawValues: { con:92, sat:125, bri:122, sep:2, hue:0 } },
-            { id: 'clear-bright', name: '💎 Trong Trẻo', filterCSS: 'brightness(114%) contrast(105%) saturate(112%) hue-rotate(-2deg)', blend: 'none', grad: '', rawValues: { con:105, sat:112, bri:114, sep:0, hue:-2 } },
-               { id: 'portrait-skin', name: '🌸 Nịnh Da', filterCSS: 'brightness(108%) contrast(96%) saturate(106%) sepia(3%)', blend: 'overlay', grad: 'linear-gradient(to bottom, rgba(255,200,200,0.15), rgba(255,239,213,0.08))', rawValues: { con:96, sat:106, bri:108, sep:3, hue:0 } },
-            { id: 'ghibli-nostalgia', name: 'Ghibli Classic', filterCSS: 'contrast(106%) saturate(135%) brightness(102%) sepia(8%) hue-rotate(5deg)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(255,215,0,0.1), rgba(210,105,30,0.06))', rawValues: { con:106, sat:135, bri:102, sep:8, hue:5 } },
-            { id: 'shinkai-dream', name: 'Dreamy Blue', filterCSS: 'contrast(108%) saturate(145%) brightness(104%) hue-rotate(8deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(135,206,235,0.15), rgba(255,200,220,0.1))', rawValues: { con:108, sat:145, bri:104, sep:0, hue:8 } },
-            { id: 'golden-hour', name: '🌅 Giờ Vàng', filterCSS: 'contrast(102%) saturate(125%) brightness(103%) sepia(12%)', blend: 'overlay', grad: 'linear-gradient(135deg, rgba(255,165,0,0.22), transparent)', rawValues: { con:102, sat:125, bri:103, sep:12, hue:0 } },
-            { id: 'hk-lofi', name: '🇭🇰 HK Nostalgia', filterCSS: 'contrast(118%) saturate(122%) brightness(95%) sepia(18%) hue-rotate(-8deg)', blend: 'darken', grad: 'rgba(0,128,128,0.05)', rawValues: { con:118, sat:122, bri:95, sep:18, hue:-8 } }
+            
+            { id: 'tone-xam-den', name: '⚫ Xám Đen', 
+              filterCSS: 'brightness(79%) contrast(86%) saturate(93%) sepia(8%) hue-rotate(14deg)', 
+              blend: 'multiply', grad: 'rgba(30,30,35,0.15)', 
+              rawValues: { con:86, sat:93, bri:79, sep:8, hue:14 } },
+              
+            { id: 'tone-nau-nhat', name: '🟤 Nâu Nhạt', 
+              filterCSS: 'brightness(69%) contrast(80%) saturate(74%) sepia(20%) hue-rotate(-12deg)', 
+              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(139,94,60,0.18), transparent)', 
+              rawValues: { con:80, sat:74, bri:69, sep:20, hue:-12 } },
+            { id: 'tone-trang-han', name: '⚪ Trắng Hàn', 
+              filterCSS: 'brightness(115%) contrast(78%) saturate(76%) sepia(0%) hue-rotate(0deg)', 
+              blend: 'overlay', grad: 'rgba(255,255,255,0.12)', 
+              rawValues: { con:78, sat:76, bri:115, sep:0, hue:0 } },
+              
+            { id: 'tone-xam-trang', name: '🌫️ Xám Trắng', 
+              filterCSS: 'brightness(108%) contrast(108%) saturate(65%) sepia(4%) hue-rotate(0deg)', 
+              blend: 'none', grad: '', 
+              rawValues: { con:108, sat:65, bri:108, sep:4, hue:0 } },
+              
+            { id: 'tone-tu-nhien', name: '🍃 Tự Nhiên', 
+              filterCSS: 'brightness(106%) contrast(82%) saturate(82%) sepia(2%) hue-rotate(0deg)', 
+              blend: 'none', grad: '', 
+              rawValues: { con:82, sat:82, bri:106, sep:2, hue:0 } },
+              
+            { id: 'tone-mau-nang', name: '☀️ Màu Nắng', 
+              filterCSS: 'brightness(177%) contrast(60%) saturate(95%) sepia(15%) hue-rotate(4deg)', 
+              blend: 'screen', grad: 'linear-gradient(135deg, rgba(255,223,128,0.2), transparent)', 
+              rawValues: { con:60, sat:95, bri:177, sep:15, hue:4 } },
+              
+            { id: 'tone-xanh-duong', name: '🔵 Xanh Dương', 
+              filterCSS: 'brightness(89%) contrast(62%) saturate(140%) sepia(0%) hue-rotate(-30deg)', 
+              blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,100,255,0.12), transparent)', 
+              rawValues: { con:62, sat:140, bri:89, sep:0, hue:-30 } },
+              
+            { id: 'tone-xanh-la', name: '🟢 Xanh Lá', 
+              filterCSS: 'brightness(132%) contrast(61%) saturate(140%) sepia(5%) hue-rotate(25deg)', 
+              blend: 'soft-light', grad: 'rgba(50,200,100,0.06)', 
+              rawValues: { con:61, sat:140, bri:132, sep:5, hue:25 } }
         ];
 
-        // KHỞI ĐỘNG/TẮT CHẾ ĐỘ PRO CAMERA
         function toggleProMode() {
             isProModeActive = !isProModeActive;
             if(isProModeActive) { proPanel.classList.add('active'); proToggleBtn.classList.add('pro-active-tab'); } 
@@ -235,21 +267,17 @@
 
         function resetProControls() { proEV.value = 0; proContrast.value = 100; proSat.value = 100; proWB.value = "none"; applyProControls(); }
 
-        // ÁP DỤNG THÔNG SỐ CAMERA CHUYÊN NGHIỆP TRỰC TIẾP LÊN KÍNH NGẮM LIVE VIDEO
         function applyProControls() {
             const ev = parseInt(proEV.value) / 10; valEV.innerText = (ev >= 0 ? "+" : "") + ev.toFixed(1);
             const con = proContrast.value; valContrast.innerText = con + "%";
             const sat = proSat.value; valSat.innerText = sat + "%";
-            
-            // Tính toán độ sáng từ thanh bù trừ sáng EV
             const bri = 100 + (ev * 20);
             
-            // Xử lý Cân bằng trắng WB (Ma trận chuyển đổi hệ màu)
             let wbFilter = "";
-            if (proWB.value === "daylight") wbFilter = "sepia(4%) hue-rotate(2deg)";
-            else if (proWB.value === "cloudy") wbFilter = "sepia(10%) brightness(102%)";
-            else if (proWB.value === "tungsten") wbFilter = "hue-rotate(-15deg) saturate(105%)";
-            else if (proWB.value === "fluorescent") wbFilter = "hue-rotate(10deg) sepia(2%)";
+            if (proWB.value === "daylight") wbFilter = "sepia(5%) hue-rotate(2deg)";
+            else if (proWB.value === "cloudy") wbFilter = "sepia(12%)";
+            else if (proWB.value === "tungsten") wbFilter = "hue-rotate(-15deg) saturate(108%)";
+            else if (proWB.value === "fluorescent") wbFilter = "hue-rotate(12deg) sepia(3%)";
 
             video.style.filter = `brightness(${bri}%) contrast(${con}%) saturate(${sat}%) ${wbFilter}`;
         }
@@ -309,11 +337,10 @@
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn: ${val}%`; applyMixedFilters(); }
 
         function triggerAISuggestion() {
-            const aiPoolA = ['hdr-backlight', 'clear-bright', 'portrait-skin'];
-            const aiPoolB = ['ghibli-nostalgia', 'golden-hour', 'normal'];
-            selectedFilterId = aiPoolA[Math.floor(Math.random() * aiPoolA.length)];
-            secondaryFilterId = aiPoolB[Math.floor(Math.random() * aiPoolB.length)];
-            const r = Math.floor(Math.random() * 40) + 20; // 20% -> 60%
+            const aiPool = ['tone-xam-den', 'tone-nau-nhat', 'tone-trang-han', 'tone-mau-nang', 'tone-xanh-duong', 'tone-xanh-la'];
+            selectedFilterId = aiPool[Math.floor(Math.random() * aiPool.length)];
+            secondaryFilterId = 'tone-tu-nhien';
+            const r = Math.floor(Math.random() * 30) + 10; 
             selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
             mixRange.value = r; currentMixRatio = r; mixValue.innerText = `Tỉ lệ trộn: ${r}%`;
             applyMixedFilters(); renderFilterBar();
@@ -325,11 +352,11 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 originalImageDataUrl = e.target.result; previewImage.src = originalImageDataUrl;
-                mixRange.value = 40; currentMixRatio = 40; mixValue.innerText = "Tỉ lệ trộn: 40%";
+                mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn: 0%";
                 previewZoomSlider.value = 10; applyPreviewZoom(10);
                 setTimeout(() => {
                     loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
-                    selectedFilterId = 'hdr-backlight'; secondaryFilterId = 'portrait-skin';
+                    selectedFilterId = 'tone-tu-nhien'; secondaryFilterId = 'normal';
                     selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
                     applyMixedFilters(); renderFilterBar();
                 }, 400);
@@ -344,12 +371,11 @@
             
             if (useFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
             
-            // Ghi đè bộ lọc Pro Mode đang hiển thị trực tiếp lên tấm ảnh chụp
             ctx.filter = video.style.filter;
             ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height); ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             originalImageDataUrl = canvas.toDataURL('image/png'); previewImage.src = originalImageDataUrl;
-            mixRange.value = 40; currentMixRatio = 40; mixValue.innerText = "Tỉ lệ trộn: 40%";
+            mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn: 0%";
             previewZoomSlider.value = 10; applyPreviewZoom(10);
 
             cameraView.style.display = 'none'; previewView.style.display = 'flex';
@@ -377,15 +403,22 @@
                 if(activeOver.grad && activeOver.grad !== 'none') {
                     ctx.globalCompositeOperation = activeOver.blend;
                     let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                    if(activeOver.id==='shinkai-dream') { g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(135,206,235,0.15)"); g.addColorStop(1, "rgba(255,200,220,0.1)"); }
-                    else if(activeOver.id==='ghibli-nostalgia') { g.addColorStop(0, "rgba(255,215,0,0.1)"); g.addColorStop(1, "rgba(210,105,30,0.06)"); }
-                    else { g.addColorStop(0, "rgba(255,255,255,0.02)"); }
-                    ctx.fillStyle = g; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    if(activeOver.id==='tone-mau-nang') {
+                        g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                        g.addColorStop(0, "rgba(255,223,128,0.2)"); g.addColorStop(1, "transparent");
+                    } else if(activeOver.id==='tone-nau-nhat') {
+                        g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                        g.addColorStop(0, "rgba(139,94,60,0.18)"); g.addColorStop(1, "transparent");
+                    } else {
+                        ctx.fillStyle = activeOver.grad;
+                    }
+                    if(activeOver.id==='tone-mau-nang' || activeOver.id==='tone-nau-nhat') ctx.fillStyle = g;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_Pro_Edition_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_ToneCam_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
@@ -394,4 +427,5 @@
         window.addEventListener('DOMContentLoaded', () => { buildSelectOptions(); initCam(); renderFilterBar(); });
     </script>
 </body>
-</html>
+</html>  
+            
