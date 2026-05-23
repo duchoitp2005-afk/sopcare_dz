@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Pro Cam & Cinematic Blending Studio</title>
+    <title>Sopcare - Ultimate Cinematic Studio Cam</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -20,30 +20,30 @@
         .camera-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
         video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s ease-out; }
         
-        .status-header { position: absolute; top: 12px; width: 100%; text-align: center; color: #fff; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 10px #00ffff; }
+        .status-header { position: absolute; top: 12px; width: 100%; text-align: center; color: #fff; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 10px #00ffcc; }
         .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
         .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
         
-        /* CỤM ĐIỀU KHIỂN PRO MODE TRONG SUỐT */
-        .pro-settings-panel { display: none; position: absolute; top: 65px; left: 5%; width: 90%; background: rgba(15, 15, 20, 0.75); backdrop-filter: blur(8px); border: 1px solid rgba(0, 255, 255, 0.2); border-radius: 12px; padding: 10px; z-index: 15; flex-direction: column; gap: 8px; }
+        /* CỤM ĐIỀU KHIỂN PRO MODE IN-APP */
+        .pro-settings-panel { display: none; position: absolute; top: 65px; left: 5%; width: 90%; background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(0, 255, 204, 0.2); border-radius: 12px; padding: 10px; z-index: 15; flex-direction: column; gap: 8px; }
         .pro-settings-panel.active { display: flex; }
         .pro-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-        .pro-label { color: #00ffff; font-size: 9px; font-weight: 900; text-transform: uppercase; width: 65px; font-family: monospace; }
+        .pro-label { color: #00ffcc; font-size: 9px; font-weight: 900; text-transform: uppercase; width: 65px; font-family: monospace; }
         .pro-slider { -webkit-appearance: none; flex: 1; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; }
-        .pro-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #00ffff; cursor: pointer; }
+        .pro-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #00ffcc; cursor: pointer; }
         .pro-val { color: #fff; font-size: 10px; font-weight: bold; width: 40px; text-align: right; font-family: monospace; }
         
         .wb-select { background: #222; color: #fff; border: 1px solid #444; font-size: 10px; padding: 2px 6px; border-radius: 4px; outline: none; font-weight: bold; }
 
-        /* THANH ZOOM */
+        /* THANH ZOOM TRỰC QUAN */
         .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
-        .zoom-label { color: #00ffff; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
+        .zoom-label { color: #00ffcc; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
         .zoom-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #333; border-radius: 2px; outline: none; }
-        .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffff; cursor: pointer; }
+        .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffcc; cursor: pointer; }
 
         .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; z-index: 3; }
         .active { display: block; }
-        .line { position: absolute; background-color: rgba(0, 255, 255, 0.35); box-shadow: 0 0 2px rgba(0, 255, 255, 0.4); }
+        .line { position: absolute; background-color: rgba(0, 255, 204, 0.3); box-shadow: 0 0 2px rgba(0, 255, 204, 0.3); }
         .spiral-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .grid-v1, .grid-v2 { width: 1.5px; height: 100%; top: 0; } .grid-v1 { left: 33.33%; } .grid-v2 { left: 66.66%; }
         .grid-h1, .grid-h2 { height: 1.5px; width: 100%; left: 0; } .grid-h1 { top: 33.33%; } .grid-h2 { top: 66.66%; }
@@ -52,15 +52,15 @@
         .mode-selector { width: 100%; display: flex; justify-content: flex-start; gap: 8px; overflow-x: auto; padding: 6px 15px; scrollbar-width: none; }
         .mode-selector::-webkit-scrollbar { display: none; }
         .mode-btn { background: #222; border: 1px solid #333; color: #aaa; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; text-transform: uppercase; white-space: nowrap; font-weight: bold; }
-        .mode-btn.selected { background: #00ffff; color: #000; font-weight: 900; border-color: #00ffff; }
+        .mode-btn.selected { background: #00ffcc; color: #000; font-weight: 900; border-color: #00ffcc; }
         .mode-btn.pro-active-tab { background: #ff00ff; color: #fff; border-color: #ff00ff; }
 
         .action-area { width: 100%; display: flex; justify-content: center; align-items: center; gap: 30px; padding: 0 15px; }
         .shutter-container { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
         .shutter-label { color: #888; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
-        .shutter-btn.night-active { background: linear-gradient(45deg, #ff9800, #ff5722); border: 4px solid #111; box-shadow: 0 0 12px #ff5722; }
-        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffff; font-size: 16px; cursor: pointer; }
+        .shutter-btn.night-active { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; }
+        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffcc; font-size: 16px; cursor: pointer; }
 
         /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP */
         .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow-y: auto; }
@@ -69,30 +69,30 @@
         #previewImage { width: 100%; height: 100%; object-fit: contain; transition: transform 0.1s ease-out; }
         .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
-        /* BOX TRỘN MÀU KÉP */
-        .advanced-mixer-panel { width: 94%; background: #131318; border: 1px solid #22222a; border-radius: 14px; padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        /* BẢNG TRỘN MÀU PHIM KÉP CHUYÊN SÂU */
+        .advanced-mixer-panel { width: 94%; background: #131817; border: 1px solid #1d2a26; border-radius: 14px; padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .mixer-selectors-row { display: flex; justify-content: space-between; gap: 8px; width: 100%; align-items: flex-end; }
         .filter-select-box { flex: 1; display: flex; flex-direction: column; gap: 3px; }
         .filter-select-box label { color: #888; font-size: 9px; text-transform: uppercase; font-weight: bold; }
-        .styled-select { background: #1c1c24; color: #fff; border: 1px solid #333344; padding: 6px; border-radius: 8px; font-size: 11px; outline: none; font-weight: bold; }
+        .styled-select { background: #1c2422; color: #fff; border: 1px solid #33443e; padding: 6px; border-radius: 8px; font-size: 11px; outline: none; font-weight: bold; }
         
-        .night-enhance-btn { background: linear-gradient(45deg, #ff9800, #ff00ff); border: none; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; height: 31px; }
+        .night-enhance-btn { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: none; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; height: 31px; }
 
         .mixer-info { display: flex; justify-content: space-between; color: #aaa; font-size: 9px; font-weight: bold; text-transform: uppercase; }
-        .mixer-slider { -webkit-appearance: none; width: 100%; height: 5px; background: #252530; border-radius: 3px; outline: none; }
-        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(45deg, #00ffff, #ff00ff); cursor: pointer; }
+        .mixer-slider { -webkit-appearance: none; width: 100%; height: 5px; background: #25302c; border-radius: 3px; outline: none; }
+        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(45deg, #00ffcc, #ff00ff); cursor: pointer; }
 
-        .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 8px 14px; background: #101014; border-top: 1px solid #1a1a22; border-bottom: 1px solid #1a1a22; scrollbar-width: none; }
+        .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 8px 14px; background: #101413; border-top: 1px solid #1a2220; border-bottom: 1px solid #1a2220; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 70px; cursor: pointer; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 72px; cursor: pointer; }
         .filter-thumb { width: 46px; height: 46px; border-radius: 8px; border: 2px solid #333; background: #222; }
         .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 6px rgba(0,255,204,0.4); }
         .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; }
         .filter-item.active .filter-name { color: #fff; }
 
-        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 6px 15px; background: #0a0a0d; }
+        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 6px 15px; background: #0a0d0c; }
         .action-btn { padding: 10px 24px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
-        .btn-cancel { background: #1a1a22; color: #888; border: 1px solid #2a2a35; }
+        .btn-cancel { background: #1a2220; color: #888; border: 1px solid #2a3532; }
         .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; box-shadow: 0 0 10px rgba(0,255,204,0.4); }
         
         .loading-toast { display: none; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); color: #00ffcc; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 11px; z-index: 40; border: 1px solid #00ffcc; text-align: center; }
@@ -102,8 +102,8 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE STUDIO CAM</div>
-        <div class="sub-header">BỘ SƯU TẬP TONE MÀU ĐA DẠNG CHUYÊN NGHIỆP</div>
+        <div class="status-header">SOPCARE PRO STUDIO CAM</div>
+        <div class="sub-header">BỔ SUNG THÀNH CÔNG CHUỖI FILTER CHUYÊN BIỆT KP-SERIES</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div class="pro-settings-panel" id="proPanel">
@@ -126,8 +126,8 @@
                 <span class="pro-label">Cân Bằng WB</span>
                 <select id="proWB" class="wb-select" onchange="applyProControls()">
                     <option value="none">Auto WB</option>
-                    <option value="tungsten">Chụp Đêm Đô Thị (💡)</option>
                     <option value="daylight">Ấm Áp Cổ Kính (☀️)</option>
+                    <option value="tungsten">Chụp Đêm Đô Thị (💡)</option>
                 </select>
                 <span class="pro-val" style="width:40px;"></span>
             </div>
@@ -138,7 +138,7 @@
             <input type="range" min="10" max="40" value="10" class="zoom-slider" id="cameraZoomSlider" oninput="applyCameraZoom(this.value)">
         </div>
 
-        <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0" fill="none" stroke="rgba(0,255,255,0.3)" stroke-width="2"/></svg></div>
+        <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0" fill="none" stroke="rgba(0,255,204,0.25)" stroke-width="2"/></svg></div>
         <div id="layout-grid" class="overlay-layer"><div class="line grid-v1"></div><div class="line grid-v2"></div><div class="line grid-h1"></div><div class="line grid-h2"></div></div>
 
         <div class="controls-panel">
@@ -154,14 +154,14 @@
                     <span class="shutter-label">Nạp Ảnh</span>
                 </div>
                 
-                <div class="shutter-container"><button class="shutter-btn night-active" onclick="takePhoto(false)"></button><span class="shutter-label" style="color: #ff9800;">Chụp Đêm</span></div>
-                <div class="shutter-container"><button class="shutter-btn" style="background: #00ffff;" onclick="takePhoto(true)"></button><span class="shutter-label">Chụp Màu</span></div>
+                <div class="shutter-container"><button class="shutter-btn night-active" onclick="takePhoto(false)"></button><span class="shutter-label" style="color: #ff00ff;">Chụp Phim KP</span></div>
+                <div class="shutter-container"><button class="shutter-btn" style="background: #00ffcc;" onclick="takePhoto(true)"></button><span class="shutter-label">Gốc Màu</span></div>
             </div>
         </div>
     </div>
 
     <div class="preview-container" id="previewView">
-        <div class="status-header" style="color: #ff9800;">SOPCARE COLOR GRAPHIC PROCESSOR</div>
+        <div class="status-header" style="color: #ff00ff;">SOPCARE KP-SERIES IMAGE ENGINE</div>
         
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
@@ -170,26 +170,26 @@
             </div>
         </div>
 
-        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131318; border-color: #22222a; margin-bottom: 2px;">
+        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 2px;">
             <span class="zoom-label" id="previewZoomValue" style="color: #ff00ff;">Cắt Bố Cục: 1.0x</span>
-            <input type="range" min="10" max="40" value="10" class="zoom-slider" id="previewZoomSlider" oninput="applyPreviewZoom(this.value)" style="background: #252530;">
+            <input type="range" min="10" max="40" value="10" class="zoom-slider" id="previewZoomSlider" oninput="applyPreviewZoom(this.value)" style="background: #1c2422;">
         </div>
         
         <div class="advanced-mixer-panel">
             <div class="mixer-selectors-row">
                 <div class="filter-select-box">
-                    <label>Lọc Màu (A)</label>
+                    <label>Lọc Màu KP (A)</label>
                     <select id="selectFilterA" class="styled-select" onchange="onSelectBoxChange()"></select>
                 </div>
-                <button class="night-enhance-btn" onclick="triggerAutoEnhance()">✨ Auto HDR Fix</button>
+                <button class="night-enhance-btn" onclick="triggerKPEnhance()">⚡ KP-Combo Mix</button>
                 <div class="filter-select-box">
-                    <label>Phủ Màu (B)</label>
+                    <label>Lớp Phủ Chéo (B)</label>
                     <select id="selectFilterB" class="styled-select" onchange="onSelectBoxChange()"></select>
                 </div>
             </div>
             <div class="mixer-info">
                 <span id="labelFilterA">Màu A</span>
-                <span id="mixValue" style="color: #00ffff;">Tỉ lệ trộn: 0%</span>
+                <span id="mixValue" style="color: #00ffcc;">Tỉ lệ trộn: 0%</span>
                 <span id="labelFilterB" style="color: #ff00ff;">Màu B</span>
             </div>
             <input type="range" min="0" max="100" value="0" class="mixer-slider" id="mixRange" oninput="updateMixRatio(this.value)">
@@ -199,7 +199,7 @@
         <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Chụp Lại</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Tải Ảnh Sắc Nét</button></div>
     </div>
 
-    <div id="loadingToast" class="loading-toast">🚀 ĐANG KHỞI TẠO ĐIỂM ẢNH...</div>
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG KHỞI TẠO MA TRẬN MÀU KP...</div>
     <canvas id="canvas"></canvas>
 
     <script>
@@ -209,56 +209,61 @@
         const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
 
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = true;
-        let selectedFilterId = 'normal', secondaryFilterId = 'tone-xam-den', currentMixRatio = 0;
+        let selectedFilterId = 'normal', secondaryFilterId = 'tone-kp1', currentMixRatio = 0;
 
-        // BỘ CÔNG THỨC MÀU ĐƯỢC PHÁT TRIỂN DỰA TRÊN CÁC MẪU ẢNH CỦA BẠN
+        // BỔ SUNG MA TRẬN 10 BỘ LỌC DÒNG KP TỪ CÁC CÔNG THỨC ẢNH BẠN GỬI
         const filtersConfig = [
             { id: 'normal', name: 'Màu Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
             
-            { id: 'tone-xam-den', name: '⚫ Xám Đen', 
-              filterCSS: 'contrast(86%) brightness(79%) saturate(93%) sepia(5%) hue-rotate(10deg)', 
-              blend: 'multiply', grad: 'rgba(30,30,35,0.08)', 
-              rawValues: { con:86, sat:93, bri:79, sep:5, hue:10 } },
+            { id: 'tone-kp1', name: '🎞️ KP1 Retro', 
+              filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', 
+              blend: 'soft-light', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', 
+              rawValues: { con:88, sat:92, bri:102, sep:8, hue:5 } },
 
-            { id: 'tone-nau-nhat', name: '☕ Nâu Nhạt', 
-              filterCSS: 'contrast(80%) brightness(69%) saturate(74%) sepia(10%) hue-rotate(-25deg)', 
-              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(139,69,19,0.05), transparent)', 
-              rawValues: { con:80, sat:74, bri:69, sep:10, hue:-25 } },
-              
-            { id: 'tone-trang-han', name: '🤍 Trắng Hàn', 
-              filterCSS: 'contrast(78%) brightness(115%) saturate(76%) sepia(2%) hue-rotate(0deg)', 
-              blend: 'overlay', grad: 'rgba(255,255,255,0.12)', 
-              rawValues: { con:78, sat:76, bri:115, sep:2, hue:0 } },
+            { id: 'tone-kp2', name: '🎞️ KP2 Soft', 
+              filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%) hue-rotate(0deg)', 
+              blend: 'overlay', grad: 'rgba(255,255,240,0.1)', 
+              rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
 
-            { id: 'tone-xam-trang', name: '🥈 Xám Trắng', 
-              filterCSS: 'contrast(108%) brightness(108%) saturate(65%) sepia(4%) hue-rotate(0deg)', 
-              blend: 'normal', grad: '', 
-              rawValues: { con:108, sat:65, bri:108, sep:4, hue:0 } },
+            { id: 'tone-kp3', name: '🎞️ KP3 Deep', 
+              filterCSS: 'contrast(112%) brightness(92%) saturate(110%) sepia(4%) hue-rotate(-10deg)', 
+              blend: 'multiply', grad: 'rgba(40,45,55,0.06)', 
+              rawValues: { con:112, sat:110, bri:92, sep:4, hue:-10 } },
 
-            { id: 'tone-tu-nhien', name: '🍃 Tự Nhiên', 
-              filterCSS: 'contrast(82%) brightness(106%) saturate(82%) sepia(2%) hue-rotate(0deg)', 
+            { id: 'tone-kp4', name: '🎞️ KP4 Clear', 
+              filterCSS: 'contrast(95%) brightness(108%) saturate(104%) sepia(2%) hue-rotate(0deg)', 
               blend: 'none', grad: '', 
-              rawValues: { con:82, sat:82, bri:106, sep:2, hue:0 } },
+              rawValues: { con:95, sat:104, bri:108, sep:2, hue:0 } },
 
-            { id: 'tone-mau-nang', name: '☀️ Màu Nắng', 
-              filterCSS: 'contrast(60%) brightness(177%) saturate(95%) sepia(15%) hue-rotate(15deg)', 
-              blend: 'soft-light', grad: 'linear-gradient(135deg, rgba(255,223,0,0.1), transparent)', 
-              rawValues: { con:60, sat:95, bri:177, sep:15, hue:15 } },
+            { id: 'tone-kp5', name: '🎞️ KP5 Vintage', 
+              filterCSS: 'contrast(84%) brightness(96%) saturate(78%) sepia(18%) hue-rotate(8deg)', 
+              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(150,110,70,0.08), transparent)', 
+              rawValues: { con:84, sat:78, bri:96, sep:18, hue:8 } },
 
-            { id: 'tone-xanh-duong', name: '🔷 Xanh Dương', 
-              filterCSS: 'contrast(62%) brightness(89%) saturate(140%) sepia(0%) hue-rotate(-50deg)', 
-              blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,0,255,0.08), transparent)', 
-              rawValues: { con:62, sat:140, bri:89, sep:0, hue:-50 } },
+            { id: 'tone-kp6', name: '🎞️ KP6 Urban', 
+              filterCSS: 'contrast(118%) brightness(88%) saturate(118%) sepia(3%) hue-rotate(-18deg)', 
+              blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,60,120,0.06), transparent)', 
+              rawValues: { con:118, sat:118, bri:88, sep:3, hue:-18 } },
 
-            { id: 'tone-xanh-la', name: '🌲 Xanh Lá', 
-              filterCSS: 'contrast(61%) brightness(132%) saturate(140%) sepia(5%) hue-rotate(25deg)', 
-              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(0,128,0,0.05), transparent)', 
-              rawValues: { con:61, sat:140, bri:132, sep:5, hue:25 } },
+            { id: 'tone-kp7', name: '🎞️ KP7 Warm', 
+              filterCSS: 'contrast(86%) brightness(104%) saturate(115%) sepia(14%) hue-rotate(12deg)', 
+              blend: 'soft-light', grad: 'rgba(245,210,150,0.06)', 
+              rawValues: { con:86, sat:115, bri:104, sep:14, hue:12 } },
 
-            { id: 'tone-dem-cyber', name: '🌌 Đêm Đô Thị', 
-              filterCSS: 'contrast(125%) saturate(135%) brightness(90%) sepia(2%) hue-rotate(-15deg)', 
-              blend: 'overlay', grad: 'linear-gradient(to top, rgba(0, 50, 150, 0.12), transparent)', 
-              rawValues: { con:125, sat:135, bri:90, sep:2, hue:-15 } }
+            { id: 'tone-kp8', name: '🎞️ KP8 Fade', 
+              filterCSS: 'contrast(70%) brightness(110%) saturate(72%) sepia(10%) hue-rotate(-5deg)', 
+              blend: 'lighten', grad: 'rgba(255,255,255,0.04)', 
+              rawValues: { con:70, sat:72, bri:110, sep:10, hue:-5 } },
+
+            { id: 'tone-kp9', name: '🎞️ KP9 Vibrant', 
+              filterCSS: 'contrast(106%) brightness(99%) saturate(145%) sepia(0%) hue-rotate(3deg)', 
+              blend: 'none', grad: '', 
+              rawValues: { con:106, sat:145, bri:99, sep:0, hue:3 } },
+
+            { id: 'tone-kp10', name: '🎞️ KP10 Dark', 
+              filterCSS: 'contrast(125%) brightness(79%) saturate(85%) sepia(15%) hue-rotate(20deg)', 
+              blend: 'multiply', grad: 'rgba(20,15,10,0.12)', 
+              rawValues: { con:125, sat:85, bri:79, sep:15, hue:20 } }
         ];
 
         function toggleProMode() {
@@ -339,10 +344,11 @@
 
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn: ${val}%`; applyMixedFilters(); }
 
-        function triggerAutoEnhance() {
-            // Tự động tối ưu hóa cân bằng vùng sáng tối nhẹ nhàng
-            mixRange.value = 30; currentMixRatio = 30; mixValue.innerText = "Tỉ lệ trộn: 30%";
-            applyMixedFilters();
+        function triggerKPEnhance() {
+            selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp5';
+            mixRange.value = 35; currentMixRatio = 35; mixValue.innerText = "Tỉ lệ trộn: 35%";
+            selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
+            applyMixedFilters(); renderFilterBar();
         }
 
         function uploadLocalImage(event) {
@@ -355,7 +361,7 @@
                 previewZoomSlider.value = 10; applyPreviewZoom(10);
                 setTimeout(() => {
                     loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
-                    selectedFilterId = 'normal'; secondaryFilterId = 'tone-xam-den';
+                    selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp1';
                     selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
                     applyMixedFilters(); renderFilterBar();
                 }, 400);
@@ -379,11 +385,10 @@
             cameraView.style.display = 'none'; previewView.style.display = 'flex';
             
             if(!isNormalMode) {
-                // Nếu bấm nút Chụp Đêm -> Ưu tiên áp Tone Đêm Đô Thị ngay
-                selectedFilterId = 'tone-dem-cyber'; secondaryFilterId = 'tone-xam-den';
-                mixRange.value = 20; currentMixRatio = 20; mixValue.innerText = "Tỉ lệ trộn: 20%";
+                selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp2';
+                mixRange.value = 25; currentMixRatio = 25; mixValue.innerText = "Tỉ lệ trộn: 25%";
             } else {
-                selectedFilterId = 'normal'; secondaryFilterId = 'tone-xam-den';
+                selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp1';
                 mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn: 0%";
             }
             selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
@@ -409,17 +414,17 @@
                 const activeOver = currentMixRatio / 100 > 0.5 ? filtersConfig.find(f=>f.id===secondaryFilterId) : filtersConfig.find(f=>f.id===selectedFilterId);
                 if(activeOver.grad && activeOver.grad !== 'none') {
                     ctx.globalCompositeOperation = activeOver.blend;
-                    if(activeOver.id==='tone-dem-cyber') {
-                        let g = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                        g.addColorStop(0, "rgba(0, 50, 150, 0.12)"); g.addColorStop(1, "transparent");
-                        ctx.fillStyle = g;
-                    } else if(activeOver.id==='tone-mau-nang') {
+                    if(activeOver.id==='tone-kp1') {
                         let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                        g.addColorStop(0, "rgba(255,223,0,0.1)"); g.addColorStop(1, "transparent");
+                        g.addColorStop(0, "rgba(230,200,170,0.05)"); g.addColorStop(1, "transparent");
                         ctx.fillStyle = g;
-                    } else if(activeOver.id==='tone-xanh-duong') {
+                    } else if(activeOver.id==='tone-kp6') {
                         let g = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                        g.addColorStop(0, "rgba(0,0,255,0.08)"); g.addColorStop(1, "transparent");
+                        g.addColorStop(0, "rgba(0,60,120,0.06)"); g.addColorStop(1, "transparent");
+                        ctx.fillStyle = g;
+                    } else if(activeOver.id==='tone-kp10') {
+                        let g = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                        g.addColorStop(0, "rgba(20,15,10,0.12)"); g.addColorStop(1, "transparent");
                         ctx.fillStyle = g;
                     } else {
                         ctx.fillStyle = activeOver.grad;
@@ -429,7 +434,7 @@
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_Cam_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_KP_Cam_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
