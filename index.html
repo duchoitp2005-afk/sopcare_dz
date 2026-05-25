@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Ultimate Cinematic 2D Joystick Studio v7</title>
+    <title>Sopcare - Cinematic 2D Joystick Studio v37</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -34,7 +34,6 @@
         .pro-val { color: #fff; font-size: 10px; font-weight: bold; width: 40px; text-align: right; font-family: monospace; }
         
         .wb-select { background: #222; color: #fff; border: 1px solid #444; font-size: 10px; padding: 2px 6px; border-radius: 4px; outline: none; font-weight: bold; }
-
         /* THANH ZOOM TRỰC QUAN */
         .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
         .zoom-label { color: #00ffcc; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
@@ -61,45 +60,43 @@
         .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
         .shutter-btn.night-active { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; }
         .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffcc; font-size: 16px; cursor: pointer; }
-        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - ĐÃ ĐƯỢC TỐI ƯU KHÔNG GIAN */
+        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - TỐI ƯU VIEW TOÀN CẢNH */
         .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow: hidden; }
-        
-        /* Tăng vùng hiển thị ảnh lên tối đa */
-        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 10px; }
+        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 8px; }
         .image-wrapper { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 8px; overflow: hidden; }
-        #previewImage { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.1s ease-out; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        #previewImage { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.1s ease-out; box-shadow: 0 0 20px rgba(0,0,0,0.9); }
         .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
-        /* BẢNG TRỘN MÀU 2D JOYSTICK CAO CẤP - THU GỌN CHẶT CHẼ */
-        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 4px; }
+        /* BẢNG TRỘN MÀU 2D JOYSTICK - THU GỌN CHẶT CHẼ */
+        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 2px; }
         .mixer-header-row { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; }
         .mixer-title { color: #00ffcc; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
         .hud-stats { color: #ff00ff; font-family: monospace; font-size: 9px; font-weight: bold; text-align: right; }
         
         /* KHÔNG GIAN KHUÔN TRỘN 2D */
-        .joystick-space-pad { position: relative; width: 100%; height: 110px; background: linear-gradient(45deg, #161c1a 25%, #0d1211 25%, #0d1211 50%, #161c1a 50%, #161c1a 75%, #0d1211 75%, #0d1211 100%); background-size: 20px 20px; border: 1px dashed rgba(0, 255, 204, 0.25); border-radius: 8px; overflow: hidden; touch-action: none; }
-        .pad-corner-label { position: absolute; font-size: 8px; font-weight: 900; text-transform: uppercase; padding: 3px 5px; background: rgba(0,0,0,0.7); border-radius: 4px; z-index: 2; }
+        .joystick-space-pad { position: relative; width: 100%; height: 100px; background: linear-gradient(45deg, #161c1a 25%, #0d1211 25%, #0d1211 50%, #161c1a 50%, #161c1a 75%, #0d1211 75%, #0d1211 100%); background-size: 20px 20px; border: 1px dashed rgba(0, 255, 204, 0.25); border-radius: 8px; overflow: hidden; touch-action: none; }
+        .pad-corner-label { position: absolute; font-size: 8px; font-weight: 900; text-transform: uppercase; padding: 2px 4px; background: rgba(0,0,0,0.7); border-radius: 4px; z-index: 2; }
         .label-tl { top: 4px; left: 4px; color: #ffeb3b; border-left: 2px solid #ffeb3b; }
         .label-tr { top: 4px; right: 4px; color: #00ffcc; border-right: 2px solid #00ffcc; }
         .label-bl { bottom: 4px; left: 4px; color: #ff2a2a; border-left: 2px solid #ff2a2a; }
         .label-br { bottom: 4px; right: 4px; color: #00b0ff; border-right: 2px solid #00b0ff; }
         
-        .joystick-pointer { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, #fff 30%, #00ffcc 70%); border: 2px solid #000; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #00ffcc; cursor: pointer; z-index: 3; }
+        .joystick-pointer { position: absolute; width: 18px; height: 18px; background: radial-gradient(circle, #fff 30%, #00ffcc 70%); border: 2px solid #000; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #00ffcc; cursor: pointer; z-index: 3; }
 
-        .category-tab-bar { width: 100%; display: flex; gap: 6px; padding: 4px 14px 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
+        .category-tab-bar { width: 100%; display: flex; gap: 4px; padding: 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
         .category-tab-bar::-webkit-scrollbar { display: none; }
-        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 5px 12px; border-radius: 10px; font-size: 9px; font-weight: bold; cursor: pointer; white-space: nowrap; text-transform: uppercase; }
+        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 4px 10px; border-radius: 8px; font-size: 9px; font-weight: bold; cursor: pointer; white-space: nowrap; text-transform: uppercase; }
         .category-tab-btn.active { background: #00ffcc; color: #000; border-color: #00ffcc; font-weight: 900; }
         
         .filter-bar { width: 100%; display: flex; gap: 8px; overflow-x: auto; padding: 4px 14px 6px 14px; background: #101413; border-bottom: 1px solid #1a2220; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; cursor: pointer; }
-        .filter-thumb { width: 38px; height: 38px; border-radius: 6px; border: 2px solid #333; background: #222; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 58px; cursor: pointer; }
+        .filter-thumb { width: 36px; height: 36px; border-radius: 6px; border: 2px solid #333; background: #222; }
         .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 6px rgba(0,255,204,0.4); }
-        .filter-name { color: #777; font-size: 8px; text-align: center; white-space: nowrap; font-weight: bold; }
+        .filter-name { color: #777; font-size: 8px; text-align: center; white-space: nowrap; font-weight: bold; width: 100%; overflow: hidden; text-overflow: ellipsis; }
         .filter-item.active .filter-name { color: #fff; }
 
-        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 8px 15px; background: #0a0d0c; }
+        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 6px 15px; background: #0a0d0c; }
         .action-btn { padding: 8px 20px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
         .btn-cancel { background: #1a2220; color: #888; border: 1px solid #2a3532; }
         .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; }
@@ -168,8 +165,9 @@
             </div>
         </div>
     </div>
-     <div class="preview-container" id="previewView">
-        <div class="status-header" style="position: relative; top: 0; padding-top: 6px; color: #ff00ff;">SOPCARE STUDIO WORKSPACE</div>
+
+    <div class="preview-container" id="previewView">
+        <div class="status-header" style="position: relative; top: 0; padding-top: 4px; color: #ff00ff;">SOPCARE STUDIO WORKSPACE</div>
         
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
@@ -178,7 +176,7 @@
             </div>
         </div>
 
-        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 6px; padding: 4px 12px;">
+        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 4px; padding: 4px 12px;">
             <span class="zoom-label" id="previewZoomValue" style="color: #ff00ff; min-width: 90px;">Cắt Bố Cục: 1.0x</span>
             <input type="range" min="10" max="40" value="10" class="zoom-slider" id="previewZoomSlider" oninput="applyPreviewZoom(this.value)" style="background: #1c2422;">
         </div>
@@ -190,21 +188,21 @@
             </div>
             
             <div class="joystick-space-pad" id="joystickPad">
-                <div class="pad-corner-label label-tl">🎞️ Tệp 1: Film</div>
+                <div class="pad-corner-label label-tl">🎞️ Tệp 1: Retro</div>
                 <div class="pad-corner-label label-tr">🌌 Tệp 2: Cyber</div>
-                <div class="pad-corner-label label-bl">💀 Tệp 3: Kinh Dị</div>
-                <div class="pad-corner-label label-br">🌊 Tệp 4: Biển</div>
+                <div class="pad-corner-label label-bl">💀 Tệp 3: Horror</div>
+                <div class="pad-corner-label label-br">🌊 Tệp 4: Ocean</div>
                 
                 <div class="joystick-pointer" id="joystickNode"></div>
             </div>
         </div>
 
         <div class="category-tab-bar">
-            <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 Tất Cả</button>
-            <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1</button>
-            <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2</button>
-            <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3</button>
-            <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4</button>
+            <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 Tất Cả (37)</button>
+   <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1 (01-10)</button>
+            <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2 (11-20)</button>
+            <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3 (21-30)</button>
+            <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4 (31-37)</button>
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
@@ -227,25 +225,53 @@
         let joyX = 50, joyY = 50; 
         let mixFilm = 25, mixCyber = 25, mixHorror = 25, mixSea = 25;
 
+        // Định vị 4 trục màu mượt mà để nội suy tinh gọn không nhảy màu bộc phát
         const baseValues = {
-            film:   { con: 85,  sat: 88,  bri: 104, sep: 12, hue: 6 },
-            cyber:  { con: 110, sat: 140, bri: 95,  sep: 2,  hue: 290 },
-            horror: { con: 145, sat: 40,  bri: 70,  sep: 20, hue: 50 },
-            sea:    { con: 112, sat: 130, bri: 102, sep: 0,  hue: -25 }
+            film:   { con: 85,  sat: 90,  bri: 102, sep: 12, hue: 5 },
+            cyber:  { con: 108, sat: 135, bri: 96,  sep: 2,  hue: 200 },
+            horror: { con: 130, sat: 55,  bri: 80,  sep: 15, hue: 45 },
+            sea:    { con: 110, sat: 125, bri: 100, sep: 0,  hue: -20 }
         };
 
+        // KHỞI TẠO ĐẦY ĐỦ 37 BỘ LỌC ĐỘC QUYỀN SOPCARE
         const filtersConfig = [
-            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
-            { id: 'tone-kp1', name: '🎞️ KP1 Retro', category: 'film-retro', filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', rawValues: baseValues.film },
-            { id: 'tone-kp2', name: '🎞️ KP2 Soft', category: 'film-retro', filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%)', grad: '', rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
-            { id: 'tone-kp12', name: '🔵 KP12 Teal', category: 'cyber-nature', filterCSS: 'contrast(105%) brightness(96%) saturate(112%) sepia(5%) hue-rotate(-30deg)', grad: 'rgba(0,150,180,0.06)', rawValues: baseValues.cyber },
-            { id: 'tone-kp19', name: '🔮 KP19 Cyber', category: 'cyber-nature', filterCSS: 'contrast(115%) brightness(94%) saturate(150%) hue-rotate(280deg)', grad: '', rawValues: { con:115, sat:150, bri:94, sep:0, hue:280 } },
-            { id: 'tone-kp31', name: '🧟 KP31 Zombie', category: 'horror-cinematic', filterCSS: 'contrast(140%) brightness(75%) saturate(45%) sepia(15%) hue-rotate(60deg)', grad: 'rgba(20,40,20,0.15)', rawValues: baseValues.horror },
-            { id: 'tone-kp35', name: '👺 KP35 Psycho', category: 'horror-cinematic', filterCSS: 'contrast(165%) brightness(65%) saturate(160%)', grad: '', rawValues: { con:165, sat:160, bri:65, sep:0, hue:0 } },
-            { id: 'tone-kp36', name: '🌊 KP36 DeepSea', category: 'sea-ocean', filterCSS: 'contrast(115%) brightness(95%) saturate(120%) sepia(2%) hue-rotate(-20deg)', grad: 'rgba(0,60,120,0.08)', rawValues: baseValues.sea },
-            { id: 'tone-kp37', name: '🏝️ KP37 Island', category: 'sea-ocean', filterCSS: 'contrast(105%) brightness(105%) saturate(135%) sepia(5%) hue-rotate(-10deg)', grad: '', rawValues: { con:105, sat:135, bri:105, sep:5, hue:-10 } }
+            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } }
         ];
 
+        // Tự động sinh cấu trúc thông số cho đủ 37 bộ lọc điện ảnh phân theo tệp
+        for (let i = 1; i <= 37; i++) {
+            let cat = 'film-retro';
+            let cssStr = '';
+            let valObj = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+            
+            if (i <= 10) {
+                cat = 'film-retro';
+                valObj = { con: 82 + (i%3)*4, sat: 85 + (i%2)*5, bri: 100 + i, sep: 5 + i, hue: i * 2 };
+                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
+            } else if (i <= 20) {
+                cat = 'cyber-nature';
+                valObj = { con: 105 + (i%3)*3, sat: 125 + (i%4)*6, bri: 95 - (i%2)*2, sep: 0, hue: 180 + (i*6) };
+                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) hue-rotate(${valObj.hue}deg)`;
+            } else if (i <= 30) {
+                cat = 'horror-cinematic';
+                valObj = { con: 125 + (i%3)*5, sat: 45 + (i%3)*5, bri: 82 - (i%2)*4, sep: 10 + i - 20, hue: 30 + (i*2) };
+                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
+            } else {
+                cat = 'sea-ocean';
+                valObj = { con: 106 + (i%2)*4, sat: 120 + (i%3)*5, bri: 102 - (i%2)*2, sep: 0, hue: -15 - (i - 30) * 3 };
+                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) hue-rotate(${valObj.hue}deg)`;
+            }
+
+            filtersConfig.push({
+                id: `tone-kp${i}`,
+                name: `KP${i < 10 ? '0' + i : i}`,
+                category: cat,
+                filterCSS: cssStr,
+                grad: '',
+                rawValues: valObj
+            });
+        }
+          // KHỞI ĐỘNG EVENT JOYSTICK 2D
         function initJoystick() {
             function handleJoystickMove(e) {
                 const rect = joystickPad.getBoundingClientRect();
@@ -271,6 +297,8 @@
             joystickPad.addEventListener('touchstart', (e) => { handleJoystickMove(e); window.addEventListener('touchmove', handleJoystickMove); }, {passive: true});
             window.addEventListener('touchend', () => { window.removeEventListener('touchmove', handleJoystickMove); });
         }
+
+        // TOÁN HỌC ĐA ĐIỂM: TRỘN TUYẾN TÍNH MƯỢT MÀ KHÔNG NHẢY MÀU
         function calculateJoystickMix() {
             let wTL = (100 - joyX) * (100 - joyY);
             let wTR = joyX * (100 - joyY);
@@ -301,10 +329,10 @@
             previewImage.style.filter = `contrast(${finalContrast}%) saturate(${finalSaturation}%) brightness(${finalBrightness}%) sepia(${finalSepia}%) hue-rotate(${finalHue}deg)`;
             
             let maxMix = Math.max(mixFilm, mixCyber, mixHorror, mixSea);
-            if (maxMix === mixFilm) { gradientOverlay.style.background = 'linear-gradient(rgba(230,200,170,0.05), transparent)'; gradientOverlay.style.mixBlendMode = 'soft-light'; }
-            else if (maxMix === mixCyber) { gradientOverlay.style.background = 'rgba(0,150,180,0.06)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
-            else if (maxMix === mixHorror) { gradientOverlay.style.background = 'rgba(20,40,20,0.12)'; gradientOverlay.style.mixBlendMode = 'multiply'; }
-            else { gradientOverlay.style.background = 'rgba(0,60,120,0.08)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
+            if (maxMix === mixFilm) { gradientOverlay.style.background = 'linear-gradient(rgba(230,200,170,0.04), transparent)'; gradientOverlay.style.mixBlendMode = 'soft-light'; }
+            else if (maxMix === mixCyber) { gradientOverlay.style.background = 'rgba(0,150,180,0.04)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
+            else if (maxMix === mixHorror) { gradientOverlay.style.background = 'rgba(20,40,20,0.08)'; gradientOverlay.style.mixBlendMode = 'multiply'; }
+            else { gradientOverlay.style.background = 'rgba(0,60,120,0.05)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
         }
 
         function changeCategory(cat) {
@@ -329,14 +357,24 @@
                 item.onclick = () => { 
                     selectedFilterId = f.id; 
                     renderFilterBar();
-                    if (f.category === 'film-retro') { joyX = 15; joyY = 15; }
+                     // Nếu bấm chọn filter đơn, tự động trượt joystick tới vùng tệp màu tương ứng
+                    if (f.id === 'normal') { joyX = 50; joyY = 50; }
+                    else if (f.category === 'film-retro') { joyX = 15; joyY = 15; }
                     else if (f.category === 'cyber-nature') { joyX = 85; joyY = 15; }
                     else if (f.category === 'horror-cinematic') { joyX = 15; joyY = 85; }
                     else if (f.category === 'sea-ocean') { joyX = 85; joyY = 85; }
+                    
                     joystickNode.style.left = `${joyX}%`; joystickNode.style.top = `${joyY}%`;
-                    calculateJoystickMix();
+                    
+                    // Nếu là filter đơn lẻ đặc biệt, áp dụng chính xác cấu trúc css của riêng nó
+                    if(f.id !== 'normal') {
+                        previewImage.style.filter = f.filterCSS;
+                        hudMixStats.innerText = `Đơn lẻ: ${f.name}`;
+                    } else {
+                        calculateJoystickMix();
+                    }
                 };
-                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:${f.grad?f.grad:'#444'}"></div><div class="filter-name">${f.name}</div>`;
+                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:#252a28"></div><div class="filter-name">${f.name}</div>`;
                 filterBar.appendChild(item);
             });
         }
@@ -410,10 +448,11 @@
             joyX = 50; joyY = 50; joystickNode.style.left = '50%'; joystickNode.style.top = '50%';
             calculateJoystickMix(); changeCategory('all');
         }
+
         function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; initCam(); }
 
         function downloadFinalImage() {
-            loadingToast.innerText = "🎛️ DÙNG ENGINE 2D XUẤT ẢNH..."; loadingToast.style.display = 'block';
+            loadingToast.innerText = "🎛️ XUẤT ẢNH HIGH-RES..."; loadingToast.style.display = 'block';
             const img = new Image(); img.src = originalImageDataUrl;
             img.onload = function() {
                 const ctx = canvas.getContext('2d'); 
@@ -430,20 +469,20 @@
                 ctx.globalCompositeOperation = (maxMix === mixFilm) ? 'soft-light' : (maxMix === mixHorror ? 'multiply' : 'overlay');
                 
                 if (maxMix === mixFilm) {
-                    let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(230,200,170,0.05)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
+                    let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(230,200,170,0.04)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
                 } else if (maxMix === mixCyber) {
-                    ctx.fillStyle = "rgba(0,150,180,0.06)";
+                    ctx.fillStyle = "rgba(0,150,180,0.04)";
                 } else if (maxMix === mixHorror) {
-                    ctx.fillStyle = "rgba(20,40,20,0.12)";
+                    ctx.fillStyle = "rgba(20,40,20,0.08)";
                 } else {
-                    ctx.fillStyle = "rgba(0,60,120,0.08)";
+                    ctx.fillStyle = "rgba(0,60,120,0.05)";
                 }
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_2DMix_Studio_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_v37_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
