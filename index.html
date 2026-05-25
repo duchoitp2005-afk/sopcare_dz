@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Ultimate Cinematic Studio Cam</title>
+    <title>Sopcare - Ultimate Cinematic Studio Cam v2</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -102,8 +102,8 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE PRO STUDIO CAM</div>
-        <div class="sub-header">BỔ SUNG THÀNH CÔNG CHUỖI FILTER CHUYÊN BIỆT KP-SERIES</div>
+        <div class="status-header">SOPCARE STUDIO ULTRA CAM</div>
+        <div class="sub-header">BỔ SUNG TRỌN BỘ 20 FILTER DÒNG KP CINEMATIC</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div class="pro-settings-panel" id="proPanel">
@@ -114,13 +114,13 @@
             </div>
             <div class="pro-row">
                 <span class="pro-label">Tương Phản</span>
-                <input type="range" min="50" max="150" value="115" class="pro-slider" id="proContrast" oninput="applyProControls()">
-                <span class="pro-val" id="valContrast">115%</span>
+                <input type="range" min="50" max="150" value="112" class="pro-slider" id="proContrast" oninput="applyProControls()">
+                <span class="pro-val" id="valContrast">112%</span>
             </div>
             <div class="pro-row">
                 <span class="pro-label">Độ Bão Hòa</span>
-                <input type="range" min="50" max="160" value="110" class="pro-slider" id="proSat" oninput="applyProControls()">
-                <span class="pro-val" id="valSat">110%</span>
+                <input type="range" min="50" max="160" value="108" class="pro-slider" id="proSat" oninput="applyProControls()">
+                <span class="pro-val" id="valSat">108%</span>
             </div>
             <div class="pro-row">
                 <span class="pro-label">Cân Bằng WB</span>
@@ -154,14 +154,14 @@
                     <span class="shutter-label">Nạp Ảnh</span>
                 </div>
                 
-                <div class="shutter-container"><button class="shutter-btn night-active" onclick="takePhoto(false)"></button><span class="shutter-label" style="color: #ff00ff;">Chụp Phim KP</span></div>
+                <div class="shutter-container"><button class="shutter-btn night-active" onclick="takePhoto(false)"></button><span class="shutter-label" style="color: #ff00ff;">Chụp KP PRO</span></div>
                 <div class="shutter-container"><button class="shutter-btn" style="background: #00ffcc;" onclick="takePhoto(true)"></button><span class="shutter-label">Gốc Màu</span></div>
             </div>
         </div>
     </div>
 
     <div class="preview-container" id="previewView">
-        <div class="status-header" style="color: #ff00ff;">SOPCARE KP-SERIES IMAGE ENGINE</div>
+        <div class="status-header" style="color: #ff00ff;">SOPCARE CINE EXTENSION PROCESSOR</div>
         
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
@@ -181,7 +181,7 @@
                     <label>Lọc Màu KP (A)</label>
                     <select id="selectFilterA" class="styled-select" onchange="onSelectBoxChange()"></select>
                 </div>
-                <button class="night-enhance-btn" onclick="triggerKPEnhance()">⚡ KP-Combo Mix</button>
+                <button class="night-enhance-btn" onclick="triggerCyberCombo()">🌌 Cyber-Tone Mix</button>
                 <div class="filter-select-box">
                     <label>Lớp Phủ Chéo (B)</label>
                     <select id="selectFilterB" class="styled-select" onchange="onSelectBoxChange()"></select>
@@ -196,10 +196,10 @@
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
-        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Chụp Lại</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Tải Ảnh Sắc Nét</button></div>
+        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Chụp Lại</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Tải Ảnh Màu Đẹp</button></div>
     </div>
 
-    <div id="loadingToast" class="loading-toast">🚀 ĐANG KHỞI TẠO MA TRẬN MÀU KP...</div>
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG PHÂN TÍCH MA TRẬN MÀU MỚI...</div>
     <canvas id="canvas"></canvas>
 
     <script>
@@ -209,61 +209,74 @@
         const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
 
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = true;
-        let selectedFilterId = 'normal', secondaryFilterId = 'tone-kp1', currentMixRatio = 0;
+        let selectedFilterId = 'normal', secondaryFilterId = 'tone-kp11', currentMixRatio = 0;
 
-        // BỔ SUNG MA TRẬN 10 BỘ LỌC DÒNG KP TỪ CÁC CÔNG THỨC ẢNH BẠN GỬI
+        // BỘ CẤU HÌNH ĐẦY ĐỦ 20 BỘ LỌC DÒNG KP CÙNG CÁC PHONG CÁCH CHUYÊN SÂU TỪ ẢNH MẪU
         const filtersConfig = [
             { id: 'normal', name: 'Màu Gốc', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
             
-            { id: 'tone-kp1', name: '🎞️ KP1 Retro', 
-              filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', 
-              blend: 'soft-light', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', 
-              rawValues: { con:88, sat:92, bri:102, sep:8, hue:5 } },
+            // --- CÁC FILTER DÒNG KP ĐÃ THÊM TRƯỚC ĐÓ ---
+            { id: 'tone-kp1', name: '🎞️ KP1 Retro', filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', blend: 'soft-light', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', rawValues: { con:88, sat:92, bri:102, sep:8, hue:5 } },
+            { id: 'tone-kp2', name: '🎞️ KP2 Soft', filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%) hue-rotate(0deg)', blend: 'overlay', grad: 'rgba(255,255,240,0.1)', rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
+            { id: 'tone-kp3', name: '🎞️ KP3 Deep', filterCSS: 'contrast(112%) brightness(92%) saturate(110%) sepia(4%) hue-rotate(-10deg)', blend: 'multiply', grad: 'rgba(40,45,55,0.06)', rawValues: { con:112, sat:110, bri:92, sep:4, hue:-10 } },
+            { id: 'tone-kp4', name: '🎞️ KP4 Clear', filterCSS: 'contrast(95%) brightness(108%) saturate(104%) sepia(2%) hue-rotate(0deg)', blend: 'none', grad: '', rawValues: { con:95, sat:104, bri:108, sep:2, hue:0 } },
+            { id: 'tone-kp5', name: '🎞️ KP5 Vintage', filterCSS: 'contrast(84%) brightness(96%) saturate(78%) sepia(18%) hue-rotate(8deg)', blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(150,110,70,0.08), transparent)', rawValues: { con:84, sat:78, bri:96, sep:18, hue:8 } },
+            { id: 'tone-kp6', name: '🎞️ KP6 Urban', filterCSS: 'contrast(118%) brightness(88%) saturate(118%) sepia(3%) hue-rotate(-18deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,60,120,0.06), transparent)', rawValues: { con:118, sat:118, bri:88, sep:3, hue:-18 } },
+            { id: 'tone-kp7', name: '🎞️ KP7 Warm', filterCSS: 'contrast(86%) brightness(104%) saturate(115%) sepia(14%) hue-rotate(12deg)', blend: 'soft-light', grad: 'rgba(245,210,150,0.06)', rawValues: { con:86, sat:115, bri:104, sep:14, hue:12 } },
+            { id: 'tone-kp8', name: '🎞️ KP8 Fade', filterCSS: 'contrast(70%) brightness(110%) saturate(72%) sepia(10%) hue-rotate(-5deg)', blend: 'lighten', grad: 'rgba(255,255,255,0.04)', rawValues: { con:70, sat:72, bri:110, sep:10, hue:-5 } },
+            { id: 'tone-kp9', name: '🎞️ KP9 Vivid', filterCSS: 'contrast(106%) brightness(99%) saturate(145%) sepia(0%) hue-rotate(3deg)', blend: 'none', grad: '', rawValues: { con:106, sat:145, bri:99, sep:0, hue:3 } },
+            { id: 'tone-kp10', name: '🎞️ KP10 Night', filterCSS: 'contrast(125%) brightness(79%) saturate(85%) sepia(15%) hue-rotate(20deg)', blend: 'multiply', grad: 'rgba(20,15,10,0.12)', rawValues: { con:125, sat:85, bri:79, sep:15, hue:20 } },
 
-            { id: 'tone-kp2', name: '🎞️ KP2 Soft', 
-              filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%) hue-rotate(0deg)', 
-              blend: 'overlay', grad: 'rgba(255,255,240,0.1)', 
-              rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
+            // --- 10 BỘ LỌC DÒNG KP MỚI BỔ SUNG (KP11 - KP20) ---
+            { id: 'tone-kp11', name: '🟢 KP11 Jade', 
+              filterCSS: 'contrast(92%) brightness(104%) saturate(88%) sepia(10%) hue-rotate(40deg)', 
+              blend: 'soft-light', grad: 'linear-gradient(rgba(0,120,80,0.05), transparent)', 
+              rawValues: { con:92, sat:88, bri:104, sep:10, hue:40 } },
 
-            { id: 'tone-kp3', name: '🎞️ KP3 Deep', 
-              filterCSS: 'contrast(112%) brightness(92%) saturate(110%) sepia(4%) hue-rotate(-10deg)', 
-              blend: 'multiply', grad: 'rgba(40,45,55,0.06)', 
-              rawValues: { con:112, sat:110, bri:92, sep:4, hue:-10 } },
+            { id: 'tone-kp12', name: '🔵 KP12 Teal', 
+              filterCSS: 'contrast(105%) brightness(96%) saturate(112%) sepia(5%) hue-rotate(-30deg)', 
+              blend: 'overlay', grad: 'rgba(0,150,180,0.06)', 
+              rawValues: { con:105, sat:112, bri:96, sep:5, hue:-30 } },
 
-            { id: 'tone-kp4', name: '🎞️ KP4 Clear', 
-              filterCSS: 'contrast(95%) brightness(108%) saturate(104%) sepia(2%) hue-rotate(0deg)', 
+            { id: 'tone-kp13', name: '🎬 KP13 Movie', 
+              filterCSS: 'contrast(120%) brightness(90%) saturate(105%) sepia(8%) hue-rotate(-15deg)', 
+              blend: 'multiply', grad: 'rgba(15,25,35,0.08)', 
+              rawValues: { con:120, sat:105, bri:90, sep:8, hue:-15 } },
+
+            { id: 'tone-kp14', name: '☕ KP14 Latte', 
+              filterCSS: 'contrast(82%) brightness(106%) saturate(78%) sepia(20%) hue-rotate(15deg)', 
+              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(140,100,60,0.1), transparent)', 
+              rawValues: { con:82, sat:78, bri:106, sep:20, hue:15 } },
+
+            { id: 'tone-kp15', name: '🌸 KP15 Rose', 
+              filterCSS: 'contrast(90%) brightness(110%) saturate(118%) sepia(4%) hue-rotate(330deg)', 
+              blend: 'screen', grad: 'rgba(240,180,190,0.06)', 
+              rawValues: { con:90, sat:118, bri:110, sep:4, hue:330 } },
+
+            { id: 'tone-kp16', name: '🌆 KP16 Sunset', 
+              filterCSS: 'contrast(110%) brightness(98%) saturate(135%) sepia(15%) hue-rotate(5deg)', 
+              blend: 'overlay', grad: 'linear-gradient(to right, rgba(255,100,0,0.06), rgba(255,200,0,0.03))', 
+              rawValues: { con:110, sat:135, bri:98, sep:15, hue:5 } },
+
+            { id: 'tone-kp17', name: '⛰️ KP17 Nature', 
+              filterCSS: 'contrast(96%) brightness(102%) saturate(125%) sepia(6%) hue-rotate(25deg)', 
               blend: 'none', grad: '', 
-              rawValues: { con:95, sat:104, bri:108, sep:2, hue:0 } },
+              rawValues: { con:96, sat:125, bri:102, sep:6, hue:25 } },
 
-            { id: 'tone-kp5', name: '🎞️ KP5 Vintage', 
-              filterCSS: 'contrast(84%) brightness(96%) saturate(78%) sepia(18%) hue-rotate(8deg)', 
-              blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(150,110,70,0.08), transparent)', 
-              rawValues: { con:84, sat:78, bri:96, sep:18, hue:8 } },
+            { id: 'tone-kp18', name: '🌫️ KP18 Mist', 
+              filterCSS: 'contrast(74%) brightness(115%) saturate(80%) sepia(8%) hue-rotate(-5deg)', 
+              blend: 'lighten', grad: 'rgba(240,245,250,0.08)', 
+              rawValues: { con:74, sat:80, bri:115, sep:8, hue:-5 } },
 
-            { id: 'tone-kp6', name: '🎞️ KP6 Urban', 
-              filterCSS: 'contrast(118%) brightness(88%) saturate(118%) sepia(3%) hue-rotate(-18deg)', 
-              blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,60,120,0.06), transparent)', 
-              rawValues: { con:118, sat:118, bri:88, sep:3, hue:-18 } },
+            { id: 'tone-kp19', name: '🔮 KP19 Cyber', 
+              filterCSS: 'contrast(115%) brightness(94%) saturate(150%) sepia(0%) hue-rotate(280deg)', 
+              blend: 'soft-light', grad: 'rgba(180,0,255,0.05)', 
+              rawValues: { con:115, sat:150, bri:94, sep:0, hue:280 } },
 
-            { id: 'tone-kp7', name: '🎞️ KP7 Warm', 
-              filterCSS: 'contrast(86%) brightness(104%) saturate(115%) sepia(14%) hue-rotate(12deg)', 
-              blend: 'soft-light', grad: 'rgba(245,210,150,0.06)', 
-              rawValues: { con:86, sat:115, bri:104, sep:14, hue:12 } },
-
-            { id: 'tone-kp8', name: '🎞️ KP8 Fade', 
-              filterCSS: 'contrast(70%) brightness(110%) saturate(72%) sepia(10%) hue-rotate(-5deg)', 
-              blend: 'lighten', grad: 'rgba(255,255,255,0.04)', 
-              rawValues: { con:70, sat:72, bri:110, sep:10, hue:-5 } },
-
-            { id: 'tone-kp9', name: '🎞️ KP9 Vibrant', 
-              filterCSS: 'contrast(106%) brightness(99%) saturate(145%) sepia(0%) hue-rotate(3deg)', 
-              blend: 'none', grad: '', 
-              rawValues: { con:106, sat:145, bri:99, sep:0, hue:3 } },
-
-            { id: 'tone-kp10', name: '🎞️ KP10 Dark', 
-              filterCSS: 'contrast(125%) brightness(79%) saturate(85%) sepia(15%) hue-rotate(20deg)', 
-              blend: 'multiply', grad: 'rgba(20,15,10,0.12)', 
-              rawValues: { con:125, sat:85, bri:79, sep:15, hue:20 } }
+            { id: 'tone-kp20', name: '🖤 KP20 Noir', 
+              filterCSS: 'contrast(135%) brightness(85%) saturate(0%) sepia(0%) hue-rotate(0deg)', 
+              blend: 'multiply', grad: 'rgba(0,0,0,0.05)', 
+              rawValues: { con:135, sat:0, bri:85, sep:0, hue:0 } }
         ];
 
         function toggleProMode() {
@@ -272,7 +285,7 @@
             else { proPanel.classList.remove('active'); proToggleBtn.classList.remove('pro-active-tab'); resetProControls(); }
         }
 
-        function resetProControls() { proEV.value = -3; proContrast.value = 115; proSat.value = 110; proWB.value = "none"; applyProControls(); }
+        function resetProControls() { proEV.value = -3; proContrast.value = 112; proSat.value = 108; proWB.value = "none"; applyProControls(); }
 
         function applyProControls() {
             const ev = parseInt(proEV.value) / 10; valEV.innerText = (ev >= 0 ? "+" : "") + ev.toFixed(1);
@@ -344,9 +357,9 @@
 
         function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn: ${val}%`; applyMixedFilters(); }
 
-        function triggerKPEnhance() {
-            selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp5';
-            mixRange.value = 35; currentMixRatio = 35; mixValue.innerText = "Tỉ lệ trộn: 35%";
+        function triggerCyberCombo() {
+            selectedFilterId = 'tone-kp12'; secondaryFilterId = 'tone-kp19';
+            mixRange.value = 45; currentMixRatio = 45; mixValue.innerText = "Tỉ lệ trộn: 45%";
             selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
             applyMixedFilters(); renderFilterBar();
         }
@@ -361,7 +374,7 @@
                 previewZoomSlider.value = 10; applyPreviewZoom(10);
                 setTimeout(() => {
                     loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
-                    selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp1';
+                    selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp11';
                     selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
                     applyMixedFilters(); renderFilterBar();
                 }, 400);
@@ -385,10 +398,10 @@
             cameraView.style.display = 'none'; previewView.style.display = 'flex';
             
             if(!isNormalMode) {
-                selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp2';
-                mixRange.value = 25; currentMixRatio = 25; mixValue.innerText = "Tỉ lệ trộn: 25%";
+                selectedFilterId = 'tone-kp11'; secondaryFilterId = 'tone-kp12';
+                mixRange.value = 30; currentMixRatio = 30; mixValue.innerText = "Tỉ lệ trộn: 30%";
             } else {
-                selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp1';
+                selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp11';
                 mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn: 0%";
             }
             selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
@@ -414,17 +427,17 @@
                 const activeOver = currentMixRatio / 100 > 0.5 ? filtersConfig.find(f=>f.id===secondaryFilterId) : filtersConfig.find(f=>f.id===selectedFilterId);
                 if(activeOver.grad && activeOver.grad !== 'none') {
                     ctx.globalCompositeOperation = activeOver.blend;
-                    if(activeOver.id==='tone-kp1') {
+                    if(activeOver.id==='tone-kp11') {
                         let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                        g.addColorStop(0, "rgba(230,200,170,0.05)"); g.addColorStop(1, "transparent");
+                        g.addColorStop(0, "rgba(0,120,80,0.05)"); g.addColorStop(1, "transparent");
                         ctx.fillStyle = g;
-                    } else if(activeOver.id==='tone-kp6') {
-                        let g = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                        g.addColorStop(0, "rgba(0,60,120,0.06)"); g.addColorStop(1, "transparent");
+                    } else if(activeOver.id==='tone-kp16') {
+                        let g = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                        g.addColorStop(0, "rgba(255,100,0,0.06)"); g.addColorStop(1, "rgba(255,200,0,0.03)");
                         ctx.fillStyle = g;
-                    } else if(activeOver.id==='tone-kp10') {
+                    } else if(activeOver.id==='tone-kp20') {
                         let g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-                        g.addColorStop(0, "rgba(20,15,10,0.12)"); g.addColorStop(1, "transparent");
+                        g.addColorStop(0, "rgba(0,0,0,0.05)"); g.addColorStop(1, "transparent");
                         ctx.fillStyle = g;
                     } else {
                         ctx.fillStyle = activeOver.grad;
@@ -434,7 +447,7 @@
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_KP_Cam_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_KP_Cam_v2_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
