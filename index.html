@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Ultimate Cinematic Studio Cam v6</title>
+    <title>Sopcare - Ultimate Cinematic 2D Joystick Studio v7</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -61,48 +61,48 @@
         .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
         .shutter-btn.night-active { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; }
         .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffcc; font-size: 16px; cursor: pointer; }
-           /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP */
-        .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow-y: auto; }
-        .preview-box { width: 100%; height: 40%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; }
-        .image-wrapper { position: relative; max-width: 95%; max-height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a; }
-        #previewImage { width: 100%; height: 100%; object-fit: contain; transition: transform 0.1s ease-out; }
+        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - ĐÃ ĐƯỢC TỐI ƯU KHÔNG GIAN */
+        .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow: hidden; }
+        
+        /* Tăng vùng hiển thị ảnh lên tối đa */
+        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 10px; }
+        .image-wrapper { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 8px; overflow: hidden; }
+        #previewImage { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.1s ease-out; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
         .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
-        /* BẢNG TRỘN MÀU PHIM KÉP CHUYÊN SÂU */
-        .advanced-mixer-panel { width: 94%; background: #131817; border: 1px solid #1d2a26; border-radius: 14px; padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .mixer-selectors-row { display: flex; justify-content: space-between; gap: 8px; width: 100%; align-items: flex-end; }
-        .filter-select-box { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-        .filter-select-box label { color: #888; font-size: 9px; text-transform: uppercase; font-weight: bold; }
-        .styled-select { background: #1c2422; color: #fff; border: 1px solid #33443e; padding: 6px; border-radius: 8px; font-size: 11px; outline: none; font-weight: bold; }
+        /* BẢNG TRỘN MÀU 2D JOYSTICK CAO CẤP - THU GỌN CHẶT CHẼ */
+        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 4px; }
+        .mixer-header-row { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; }
+        .mixer-title { color: #00ffcc; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hud-stats { color: #ff00ff; font-family: monospace; font-size: 9px; font-weight: bold; text-align: right; }
         
-        .night-enhance-btn { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: none; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; height: 31px; }
+        /* KHÔNG GIAN KHUÔN TRỘN 2D */
+        .joystick-space-pad { position: relative; width: 100%; height: 110px; background: linear-gradient(45deg, #161c1a 25%, #0d1211 25%, #0d1211 50%, #161c1a 50%, #161c1a 75%, #0d1211 75%, #0d1211 100%); background-size: 20px 20px; border: 1px dashed rgba(0, 255, 204, 0.25); border-radius: 8px; overflow: hidden; touch-action: none; }
+        .pad-corner-label { position: absolute; font-size: 8px; font-weight: 900; text-transform: uppercase; padding: 3px 5px; background: rgba(0,0,0,0.7); border-radius: 4px; z-index: 2; }
+        .label-tl { top: 4px; left: 4px; color: #ffeb3b; border-left: 2px solid #ffeb3b; }
+        .label-tr { top: 4px; right: 4px; color: #00ffcc; border-right: 2px solid #00ffcc; }
+        .label-bl { bottom: 4px; left: 4px; color: #ff2a2a; border-left: 2px solid #ff2a2a; }
+        .label-br { bottom: 4px; right: 4px; color: #00b0ff; border-right: 2px solid #00b0ff; }
+        
+        .joystick-pointer { position: absolute; width: 20px; height: 20px; background: radial-gradient(circle, #fff 30%, #00ffcc 70%); border: 2px solid #000; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #00ffcc; cursor: pointer; z-index: 3; }
 
-        .mixer-info { display: flex; justify-content: space-between; color: #aaa; font-size: 9px; font-weight: bold; text-transform: uppercase; }
-        .mixer-slider { -webkit-appearance: none; width: 100%; height: 5px; background: #25302c; border-radius: 3px; outline: none; }
-        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(45deg, #00ffcc, #ff00ff); cursor: pointer; }
-
-        /* THANH CHỌN TỆP CHỦ ĐỀ / BỐI CẢNH (HỖ TRỢ 5 TỆP) */
-        .category-tab-bar { width: 100%; display: flex; gap: 8px; padding: 6px 14px 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
+        .category-tab-bar { width: 100%; display: flex; gap: 6px; padding: 4px 14px 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
         .category-tab-bar::-webkit-scrollbar { display: none; }
-        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 6px 14px; border-radius: 12px; font-size: 10px; font-weight: bold; cursor: pointer; white-space: nowrap; text-transform: uppercase; transition: all 0.2s ease; }
-        .category-tab-btn.active { background: #00ffcc; color: #000; border-color: #00ffcc; font-weight: 900; box-shadow: 0 0 6px rgba(0,255,204,0.3); }
-        .category-tab-btn.horror-tab.active { background: #ff2a2a; color: #fff; border-color: #ff2a2a; box-shadow: 0 0 6px rgba(255,42,42,0.5); }
-        .category-tab-btn.sea-tab.active { background: #00b0ff; color: #fff; border-color: #00b0ff; box-shadow: 0 0 6px rgba(0,176,255,0.5); }
-
-        .filter-bar { width: 100%; display: flex; gap: 10px; overflow-x: auto; padding: 6px 14px 10px 14px; background: #101413; border-bottom: 1px solid #1a2220; scrollbar-width: none; }
+        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 5px 12px; border-radius: 10px; font-size: 9px; font-weight: bold; cursor: pointer; white-space: nowrap; text-transform: uppercase; }
+        .category-tab-btn.active { background: #00ffcc; color: #000; border-color: #00ffcc; font-weight: 900; }
+        
+        .filter-bar { width: 100%; display: flex; gap: 8px; overflow-x: auto; padding: 4px 14px 6px 14px; background: #101413; border-bottom: 1px solid #1a2220; scrollbar-width: none; }
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 68px; cursor: pointer; }
-        .filter-thumb { width: 44px; height: 44px; border-radius: 8px; border: 2px solid #333; background: #222; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; cursor: pointer; }
+        .filter-thumb { width: 38px; height: 38px; border-radius: 6px; border: 2px solid #333; background: #222; }
         .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 6px rgba(0,255,204,0.4); }
-        .filter-item.horror-item.active .filter-thumb { border-color: #ff2a2a; box-shadow: 0 0 6px rgba(255,42,42,0.5); }
-        .filter-item.sea-item.active .filter-thumb { border-color: #00b0ff; box-shadow: 0 0 6px rgba(0,176,255,0.5); }
-        .filter-name { color: #777; font-size: 9px; text-align: center; white-space: nowrap; font-weight: bold; }
+        .filter-name { color: #777; font-size: 8px; text-align: center; white-space: nowrap; font-weight: bold; }
         .filter-item.active .filter-name { color: #fff; }
 
-        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 6px 15px; background: #0a0d0c; }
-        .action-btn { padding: 10px 24px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
+        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 8px 15px; background: #0a0d0c; }
+        .action-btn { padding: 8px 20px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
         .btn-cancel { background: #1a2220; color: #888; border: 1px solid #2a3532; }
-        .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; box-shadow: 0 0 10px rgba(0,255,204,0.4); }
+        .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; }
         
         .loading-toast { display: none; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); color: #00ffcc; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 11px; z-index: 40; border: 1px solid #00ffcc; text-align: center; }
         canvas { display: none; }
@@ -111,8 +111,8 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE CATEGORIZED STUDIO</div>
-        <div class="sub-header">HỆ THỐNG PHÂN CHIA 5 TỆP MÀU ĐA BỐI CẢNH</div>
+        <div class="status-header">SOPCARE JOYSTICK STUDIO</div>
+        <div class="sub-header">BỘ TRỘN MÀU KHÔNG GIAN 2D CAO CẤP</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
 
         <div class="pro-settings-panel" id="proPanel">
@@ -168,9 +168,8 @@
             </div>
         </div>
     </div>
-
-    <div class="preview-container" id="previewView">
-        <div class="status-header" style="color: #ff00ff;">SOPCARE STUDIO WORKSPACE</div>
+     <div class="preview-container" id="previewView">
+        <div class="status-header" style="position: relative; top: 0; padding-top: 6px; color: #ff00ff;">SOPCARE STUDIO WORKSPACE</div>
         
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
@@ -179,37 +178,33 @@
             </div>
         </div>
 
-        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 2px;">
-            <span class="zoom-label" id="previewZoomValue" style="color: #ff00ff;">Cắt Bố Cục: 1.0x</span>
+        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 6px; padding: 4px 12px;">
+            <span class="zoom-label" id="previewZoomValue" style="color: #ff00ff; min-width: 90px;">Cắt Bố Cục: 1.0x</span>
             <input type="range" min="10" max="40" value="10" class="zoom-slider" id="previewZoomSlider" oninput="applyPreviewZoom(this.value)" style="background: #1c2422;">
         </div>
         
         <div class="advanced-mixer-panel">
-            <div class="mixer-selectors-row">
-                <div class="filter-select-box">
-                    <label>Lọc Màu KP (A)</label>
-                    <select id="selectFilterA" class="styled-select" onchange="onSelectBoxChange()"></select>
-                </div>
-                <button class="night-enhance-btn" onclick="triggerPresetMix()">⚡ Auto Balanced</button>
-                <div class="filter-select-box">
-                    <label>Lớp Phủ Chéo (B)</label>
-                    <select id="selectFilterB" class="styled-select" onchange="onSelectBoxChange()"></select>
-                </div>
+            <div class="mixer-header-row">
+                <span class="mixer-title">🎛️ Bộ Trộn Màu Không Gian 2D</span>
+                <span class="hud-stats" id="hudMixStats">F:25% | C:25% | H:25% | S:25%</span>
             </div>
-            <div class="mixer-info">
-                <span id="labelFilterA">Màu A</span>
-                <span id="mixValue" style="color: #00ffcc;">Tỉ lệ trộn: 0%</span>
-                <span id="labelFilterB" style="color: #ff00ff;">Màu B</span>
+            
+            <div class="joystick-space-pad" id="joystickPad">
+                <div class="pad-corner-label label-tl">🎞️ Tệp 1: Film</div>
+                <div class="pad-corner-label label-tr">🌌 Tệp 2: Cyber</div>
+                <div class="pad-corner-label label-bl">💀 Tệp 3: Kinh Dị</div>
+                <div class="pad-corner-label label-br">🌊 Tệp 4: Biển</div>
+                
+                <div class="joystick-pointer" id="joystickNode"></div>
             </div>
-            <input type="range" min="0" max="100" value="0" class="mixer-slider" id="mixRange" oninput="updateMixRatio(this.value)">
         </div>
-           <div class="category-tab-bar">
+
+        <div class="category-tab-bar">
             <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 Tất Cả</button>
-            <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1: Film</button>
-            <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2: Cyber</button>
-            <button class="category-tab-btn" id="tab-vsco" onclick="changeCategory('vsco-aesthetic')">🌸 Tệp 3: VSCO</button>
-            <button class="category-tab-btn horror-tab" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 4: Kinh Dị</button>
-            <button class="category-tab-btn sea-tab" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 5: Biển</button>
+            <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1</button>
+            <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2</button>
+            <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3</button>
+            <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4</button>
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
@@ -220,96 +215,130 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), previewImageWrapper = document.getElementById('previewImageWrapper'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), mixRange = document.getElementById('mixRange'), mixValue = document.getElementById('mixValue'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), previewZoomSlider = document.getElementById('previewZoomSlider'), previewZoomValue = document.getElementById('previewZoomValue'), selectFilterA = document.getElementById('selectFilterA'), selectFilterB = document.getElementById('selectFilterB'), labelFilterA = document.getElementById('labelFilterA'), labelFilterB = document.getElementById('labelFilterB');
+        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), previewImageWrapper = document.getElementById('previewImageWrapper'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), previewZoomSlider = document.getElementById('previewZoomSlider'), previewZoomValue = document.getElementById('previewZoomValue');
         
+        const joystickPad = document.getElementById('joystickPad'), joystickNode = document.getElementById('joystickNode'), hudMixStats = document.getElementById('hudMixStats');
         const proPanel = document.getElementById('proPanel'), proToggleBtn = document.getElementById('proToggleBtn'), proEV = document.getElementById('proEV'), proContrast = document.getElementById('proContrast'), proSat = document.getElementById('proSat'), proWB = document.getElementById('proWB');
         const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
 
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = true;
-        let selectedFilterId = 'normal', secondaryFilterId = 'tone-kp1', currentMixRatio = 0;
-        let currentCategory = 'all';
+        let selectedFilterId = 'normal', currentCategory = 'all';
 
-        // DANH SÁCH FILTER CHIA THÀNH 5 TỆP RÕ RÀNG (BỔ SUNG 10 BỘ LỌC BIỂN CHO TỆP 5)
+        let joyX = 50, joyY = 50; 
+        let mixFilm = 25, mixCyber = 25, mixHorror = 25, mixSea = 25;
+
+        const baseValues = {
+            film:   { con: 85,  sat: 88,  bri: 104, sep: 12, hue: 6 },
+            cyber:  { con: 110, sat: 140, bri: 95,  sep: 2,  hue: 290 },
+            horror: { con: 145, sat: 40,  bri: 70,  sep: 20, hue: 50 },
+            sea:    { con: 112, sat: 130, bri: 102, sep: 0,  hue: -25 }
+        };
+
         const filtersConfig = [
-            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', blend: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
-            
-            // --- TỆP 1: FILM - RETRO - HOÀI CỔ (KP1 -> KP10) ---
-            { id: 'tone-kp1', name: '🎞️ KP1 Retro', category: 'film-retro', filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', blend: 'soft-light', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', rawValues: { con:88, sat:92, bri:102, sep:8, hue:5 } },
-            { id: 'tone-kp2', name: '🎞️ KP2 Soft', category: 'film-retro', filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%) hue-rotate(0deg)', blend: 'overlay', grad: 'rgba(255,255,240,0.1)', rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
-            { id: 'tone-kp3', name: '🎞️ KP3 Deep', category: 'film-retro', filterCSS: 'contrast(112%) brightness(92%) saturate(110%) sepia(4%) hue-rotate(-10deg)', blend: 'multiply', grad: 'rgba(40,45,55,0.06)', rawValues: { con:112, sat:110, bri:92, sep:4, hue:-10 } },
-            { id: 'tone-kp4', name: '🎞️ KP4 Clear', category: 'film-retro', filterCSS: 'contrast(95%) brightness(108%) saturate(104%) sepia(2%) hue-rotate(0deg)', blend: 'none', grad: '', rawValues: { con:95, sat:104, bri:108, sep:2, hue:0 } },
-            { id: 'tone-kp5', name: '🎞️ KP5 Vintage', category: 'film-retro', filterCSS: 'contrast(84%) brightness(96%) saturate(78%) sepia(18%) hue-rotate(8deg)', blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(150,110,70,0.08), transparent)', rawValues: { con:84, sat:78, bri:96, sep:18, hue:8 } },
-            { id: 'tone-kp6', name: '🎞️ KP6 Urban', category: 'film-retro', filterCSS: 'contrast(118%) brightness(88%) saturate(118%) sepia(3%) hue-rotate(-18deg)', blend: 'overlay', grad: 'linear-gradient(to top, rgba(0,60,120,0.06), transparent)', rawValues: { con:118, sat:118, bri:88, sep:3, hue:-18 } },
-            { id: 'tone-kp7', name: '🎞️ KP7 Warm', category: 'film-retro', filterCSS: 'contrast(86%) brightness(104%) saturate(115%) sepia(14%) hue-rotate(12deg)', blend: 'soft-light', grad: 'rgba(245,210,150,0.06)', rawValues: { con:86, sat:115, bri:104, sep:14, hue:12 } },
-            { id: 'tone-kp8', name: '🎞️ KP8 Fade', category: 'film-retro', filterCSS: 'contrast(70%) brightness(110%) saturate(72%) sepia(10%) hue-rotate(-5deg)', blend: 'lighten', grad: 'rgba(255,255,255,0.04)', rawValues: { con:70, sat:72, bri:110, sep:10, hue:-5 } },
-            { id: 'tone-kp9', name: '🎞️ KP9 Vivid', category: 'film-retro', filterCSS: 'contrast(106%) brightness(99%) saturate(145%) sepia(0%) hue-rotate(3deg)', blend: 'none', grad: '', rawValues: { con:106, sat:145, bri:99, sep:0, hue:3 } },
-            { id: 'tone-kp10', name: '🎞️ KP10 Night', category: 'film-retro', filterCSS: 'contrast(125%) brightness(79%) saturate(85%) sepia(15%) hue-rotate(20deg)', blend: 'multiply', grad: 'rgba(20,15,10,0.12)', rawValues: { con:125, sat:85, bri:79, sep:15, hue:20 } },
-
-            // --- TỆP 2: CYBER - NATURE (KP11 -> KP20) ---
-            { id: 'tone-kp11', name: '🟢 KP11 Jade', category: 'cyber-nature', filterCSS: 'contrast(92%) brightness(104%) saturate(88%) sepia(10%) hue-rotate(40deg)', blend: 'soft-light', grad: 'linear-gradient(rgba(0,120,80,0.05), transparent)', rawValues: { con:92, sat:88, bri:104, sep:10, hue:40 } },
-            { id: 'tone-kp12', name: '🔵 KP12 Teal', category: 'cyber-nature', filterCSS: 'contrast(105%) brightness(96%) saturate(112%) sepia(5%) hue-rotate(-30deg)', blend: 'overlay', grad: 'rgba(0,150,180,0.06)', rawValues: { con:105, sat:112, bri:96, sep:5, hue:-30 } },
-            { id: 'tone-kp13', name: '🎬 KP13 Movie', category: 'cyber-nature', filterCSS: 'contrast(120%) brightness(90%) saturate(105%) sepia(8%) hue-rotate(-15deg)', blend: 'multiply', grad: 'rgba(15,25,35,0.08)', rawValues: { con:120, sat:105, bri:90, sep:8, hue:-15 } },
-            { id: 'tone-kp14', name: '☕ KP14 Latte', category: 'cyber-nature', filterCSS: 'contrast(82%) brightness(106%) saturate(78%) sepia(20%) hue-rotate(15deg)', blend: 'soft-light', grad: 'linear-gradient(to bottom, rgba(140,100,60,0.1), transparent)', rawValues: { con:82, sat:78, bri:106, sep:20, hue:15 } },
-            { id: 'tone-kp15', name: '🌸 KP15 Rose', category: 'cyber-nature', filterCSS: 'contrast(90%) brightness(110%) saturate(118%) sepia(4%) hue-rotate(330deg)', blend: 'screen', grad: 'rgba(240,180,190,0.06)', rawValues: { con:90, sat:118, bri:110, sep:4, hue:330 } },
-            { id: 'tone-kp16', name: '🌆 KP16 Sunset', category: 'cyber-nature', filterCSS: 'contrast(110%) brightness(98%) saturate(135%) sepia(15%) hue-rotate(5deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(255,100,0,0.06), rgba(255,200,0,0.03))', rawValues: { con:110, sat:135, bri:98, sep:15, hue:5 } },
-            { id: 'tone-kp17', name: '⛰️ KP17 Nature', category: 'cyber-nature', filterCSS: 'contrast(96%) brightness(102%) saturate(125%) sepia(6%) hue-rotate(25deg)', blend: 'none', grad: '', rawValues: { con:96, sat:125, bri:102, sep:6, hue:25 } },
-            { id: 'tone-kp18', name: '🌫️ KP18 Mist', category: 'cyber-nature', filterCSS: 'contrast(74%) brightness(115%) saturate(80%) sepia(8%) hue-rotate(-5deg)', blend: 'lighten', grad: 'rgba(240,245,250,0.08)', rawValues: { con:74, sat:80, bri:115, sep:8, hue:-5 } },
-            { id: 'tone-kp19', name: '🔮 KP19 Cyber', category: 'cyber-nature', filterCSS: 'contrast(115%) brightness(94%) saturate(150%) sepia(0%) hue-rotate(280deg)', blend: 'soft-light', grad: 'rgba(180,0,255,0.05)', rawValues: { con:115, sat:150, bri:94, sep:0, hue:280 } },
-            { id: 'tone-kp20', name: '🖤 KP20 Noir', category: 'cyber-nature', filterCSS: 'contrast(135%) brightness(85%) saturate(0%) sepia(0%) hue-rotate(0deg)', blend: 'multiply', grad: 'rgba(0,0,0,0.05)', rawValues: { con:135, sat:0, bri:85, sep:0, hue:0 } },
-
-            // --- TỆP 3: VSCO AESTHETIC (KP21 -> KP30) ---
-            { id: 'tone-kp21', name: '✨ KP21 A6', category: 'vsco-aesthetic', filterCSS: 'contrast(92%) brightness(106%) saturate(112%) sepia(4%) hue-rotate(2deg)', blend: 'soft-light', grad: 'rgba(255,255,255,0.02)', rawValues: { con:92, sat:112, bri:106, sep:4, hue:2 } },
-            { id: 'tone-kp22', name: '🍧 KP22 C1', category: 'vsco-aesthetic', filterCSS: 'contrast(108%) brightness(104%) saturate(125%) sepia(0%) hue-rotate(-8deg)', blend: 'overlay', grad: 'rgba(255,230,235,0.04)', rawValues: { con:108, sat:125, bri:104, sep:0, hue:-8 } },
-            { id: 'tone-kp23', name: '🌿 KP23 G3', category: 'vsco-aesthetic', filterCSS: 'contrast(86%) brightness(102%) saturate(95%) sepia(6%) hue-rotate(18deg)', blend: 'soft-light', grad: 'rgba(220,240,225,0.05)', rawValues: { con:86, sat:95, bri:102, sep:6, hue:18 } },
-            { id: 'tone-kp24', name: '🌊 KP24 P5', category: 'vsco-aesthetic', filterCSS: 'contrast(84%) brightness(110%) saturate(86%) sepia(8%) hue-rotate(-12deg)', blend: 'lighten', grad: 'rgba(230,240,250,0.06)', rawValues: { con:84, sat:86, bri:110, sep:8, hue:-12 } },
-            { id: 'tone-kp25', name: '🏹 KP25 M5', category: 'vsco-aesthetic', filterCSS: 'contrast(78%) brightness(98%) saturate(76%) sepia(14%) hue-rotate(6deg)', blend: 'multiply', grad: 'rgba(120,105,90,0.06)', rawValues: { con:78, sat:76, bri:98, sep:14, hue:6 } },
-            { id: 'tone-kp26', name: '🍊 KP26 K3', category: 'vsco-aesthetic', filterCSS: 'contrast(112%) brightness(102%) saturate(130%) sepia(10%) hue-rotate(10deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(255,140,0,0.04), transparent)', rawValues: { con:112, sat:130, bri:102, sep:10, hue:10 } },
-            { id: 'tone-kp27', name: '🥞 KP27 HB2', category: 'vsco-aesthetic', filterCSS: 'contrast(116%) brightness(95%) saturate(105%) sepia(5%) hue-rotate(-5deg)', blend: 'darken', grad: 'rgba(30,40,50,0.04)', rawValues: { con:116, sat:105, bri:95, sep:5, hue:-5 } },
-            { id: 'tone-kp28', name: '🍨 KP28 E1', category: 'vsco-aesthetic', filterCSS: 'contrast(85%) brightness(115%) saturate(102%) sepia(8%) hue-rotate(0deg)', blend: 'screen', grad: 'rgba(255,250,240,0.08)', rawValues: { con:85, sat:102, bri:115, sep:8, hue:0 } },
-            { id: 'tone-kp29', name: '🎡 KP29 S2', category: 'vsco-aesthetic', filterCSS: 'contrast(94%) brightness(108%) saturate(118%) sepia(2%) hue-rotate(-2deg)', blend: 'soft-light', grad: 'rgba(240,240,255,0.03)', rawValues: { con:94, sat:118, bri:108, sep:2, hue:-2 } },
-            { id: 'tone-kp30', name: '💎 KP30 Q1', category: 'vsco-aesthetic', filterCSS: 'contrast(102%) brightness(105%) saturate(110%) sepia(3%) hue-rotate(-22deg)', blend: 'overlay', grad: 'rgba(0,200,255,0.04)', rawValues: { con:102, sat:110, bri:105, sep:3, hue:-22 } },
-
-            // --- TỆP 4: HORROR CINEMATIC (KP31 -> KP35) ---
-            { id: 'tone-kp31', name: '🧟 KP31 Zombie', category: 'horror-cinematic', filterCSS: 'contrast(140%) brightness(75%) saturate(45%) sepia(15%) hue-rotate(60deg)', blend: 'multiply', grad: 'rgba(20,40,20,0.15)', rawValues: { con:140, sat:45, bri:75, sep:15, hue:60 } },
-            { id: 'tone-kp32', name: '🧛 KP32 Vampire', category: 'horror-cinematic', filterCSS: 'contrast(150%) brightness(80%) saturate(130%) sepia(5%) hue-rotate(-25deg)', blend: 'overlay', grad: 'linear-gradient(rgba(120,0,0,0.15), transparent)', rawValues: { con:150, sat:130, bri:80, sep:5, hue:-25 } },
-            { id: 'tone-kp33', name: '👻 KP33 Ghost', category: 'horror-cinematic', filterCSS: 'contrast(110%) brightness(120%) saturate(20%) sepia(10%) hue-rotate(180deg)', blend: 'difference', grad: 'rgba(0,100,120,0.08)', rawValues: { con:110, sat:20, bri:120, sep:10, hue:180 } },
-            { id: 'tone-kp34', name: '🕯️ KP34 Asylum', category: 'horror-cinematic', filterCSS: 'contrast(130%) brightness(70%) saturate(30%) sepia(25%) hue-rotate(15deg)', blend: 'darken', grad: 'rgba(40,35,30,0.18)', rawValues: { con:130, sat:30, bri:70, sep:25, hue:15 } },
-            { id: 'tone-kp35', name: '👺 KP35 Psycho', category: 'horror-cinematic', filterCSS: 'contrast(165%) brightness(65%) saturate(160%) sepia(0%) hue-rotate(0deg)', blend: 'hard-light', grad: 'rgba(255,0,0,0.1)', rawValues: { con:165, sat:160, bri:65, sep:0, hue:0 } },
-
-            // --- TỆP 5: SEA & OCEAN CINEMATIC - 10 BỘ LỌC Ý TƯỞNG BIỂN CHUYÊN SÂU (KP36 -> KP45) ---
-            { id: 'tone-kp36', name: '🌊 KP36 DeepSea', category: 'sea-ocean', filterCSS: 'contrast(115%) brightness(95%) saturate(120%) sepia(2%) hue-rotate(-20deg)', blend: 'overlay', grad: 'rgba(0,60,120,0.08)', rawValues: { con:115, sat:120, bri:95, sep:2, hue:-20 } },
-            { id: 'tone-kp37', name: '🏝️ KP37 Island', category: 'sea-ocean', filterCSS: 'contrast(105%) brightness(105%) saturate(135%) sepia(5%) hue-rotate(-10deg)', blend: 'soft-light', grad: 'linear-gradient(to top, rgba(0,180,200,0.06), transparent)', rawValues: { con:105, sat:135, bri:105, sep:5, hue:-10 } },
-            { id: 'tone-kp38', name: '☀️ KP38 SunCove', category: 'sea-ocean', filterCSS: 'contrast(95%) brightness(110%) saturate(125%) sepia(12%) hue-rotate(5deg)', blend: 'overlay', grad: 'linear-gradient(45deg, rgba(255,180,0,0.05), rgba(0,150,200,0.03))', rawValues: { con:95, sat:125, bri:110, sep:12, hue:5 } },
-            { id: 'tone-kp39', name: '🐬 KP39 Aqua', category: 'sea-ocean', filterCSS: 'contrast(100%) brightness(108%) saturate(110%) sepia(0%) hue-rotate(-35deg)', blend: 'screen', grad: 'rgba(0,220,255,0.04)', rawValues: { con:100, sat:110, bri:108, sep:0, hue:-35 } },
-            { id: 'tone-kp40', name: '🌅 KP40 Marine', category: 'sea-ocean', filterCSS: 'contrast(120%) brightness(90%) saturate(140%) sepia(8%) hue-rotate(-15deg)', blend: 'multiply', grad: 'rgba(10,30,60,0.1)', rawValues: { con:120, sat:140, bri:90, sep:8, hue:-15 } },
-            { id: 'tone-kp41', name: '🐚 KP41 Shell', category: 'sea-ocean', filterCSS: 'contrast(85%) brightness(112%) saturate(95%) sepia(8%) hue-rotate(10deg)', blend: 'soft-light', grad: 'rgba(255,240,230,0.06)', rawValues: { con:85, sat:95, bri:112, sep:8, hue:10 } },
-            { id: 'tone-kp42', name: '🪸 KP42 Reef', category: 'sea-ocean', filterCSS: 'contrast(110%) brightness(98%) saturate(150%) sepia(4%) hue-rotate(-5deg)', blend: 'overlay', grad: 'linear-gradient(to right, rgba(0,120,150,0.05), rgba(255,100,100,0.03))', rawValues: { con:110, sat:150, bri:98, sep:4, hue:-5 } },
-            { id: 'tone-kp43', name: '⛵ KP43 Breeze', category: 'sea-ocean', filterCSS: 'contrast(90%) brightness(115%) saturate(105%) sepia(3%) hue-rotate(-25deg)', blend: 'lighten', grad: 'rgba(230,250,255,0.08)', rawValues: { con:90, sat:105, bri:115, sep:3, hue:-25 } },
-            { id: 'tone-kp44', name: '⚓ KP44 Coast', category: 'sea-ocean', filterCSS: 'contrast(125%) brightness(88%) saturate(115%) sepia(14%) hue-rotate(-12deg)', blend: 'darken', grad: 'rgba(20,40,50,0.12)', rawValues: { con:125, sat:115, bri:88, sep:14, hue:-12 } },
-            { id: 'tone-kp45', name: '💎 KP45 Abyss', category: 'sea-ocean', filterCSS: 'contrast(130%) brightness(80%) saturate(160%) sepia(0%) hue-rotate(-45deg)', blend: 'hard-light', grad: 'rgba(0,40,100,0.15)', rawValues: { con:130, sat:160, bri:80, sep:0, hue:-45 } }
+            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } },
+            { id: 'tone-kp1', name: '🎞️ KP1 Retro', category: 'film-retro', filterCSS: 'contrast(88%) brightness(102%) saturate(92%) sepia(8%) hue-rotate(5deg)', grad: 'linear-gradient(rgba(230,200,170,0.05), transparent)', rawValues: baseValues.film },
+            { id: 'tone-kp2', name: '🎞️ KP2 Soft', category: 'film-retro', filterCSS: 'contrast(76%) brightness(114%) saturate(84%) sepia(12%)', grad: '', rawValues: { con:76, sat:84, bri:114, sep:12, hue:0 } },
+            { id: 'tone-kp12', name: '🔵 KP12 Teal', category: 'cyber-nature', filterCSS: 'contrast(105%) brightness(96%) saturate(112%) sepia(5%) hue-rotate(-30deg)', grad: 'rgba(0,150,180,0.06)', rawValues: baseValues.cyber },
+            { id: 'tone-kp19', name: '🔮 KP19 Cyber', category: 'cyber-nature', filterCSS: 'contrast(115%) brightness(94%) saturate(150%) hue-rotate(280deg)', grad: '', rawValues: { con:115, sat:150, bri:94, sep:0, hue:280 } },
+            { id: 'tone-kp31', name: '🧟 KP31 Zombie', category: 'horror-cinematic', filterCSS: 'contrast(140%) brightness(75%) saturate(45%) sepia(15%) hue-rotate(60deg)', grad: 'rgba(20,40,20,0.15)', rawValues: baseValues.horror },
+            { id: 'tone-kp35', name: '👺 KP35 Psycho', category: 'horror-cinematic', filterCSS: 'contrast(165%) brightness(65%) saturate(160%)', grad: '', rawValues: { con:165, sat:160, bri:65, sep:0, hue:0 } },
+            { id: 'tone-kp36', name: '🌊 KP36 DeepSea', category: 'sea-ocean', filterCSS: 'contrast(115%) brightness(95%) saturate(120%) sepia(2%) hue-rotate(-20deg)', grad: 'rgba(0,60,120,0.08)', rawValues: baseValues.sea },
+            { id: 'tone-kp37', name: '🏝️ KP37 Island', category: 'sea-ocean', filterCSS: 'contrast(105%) brightness(105%) saturate(135%) sepia(5%) hue-rotate(-10deg)', grad: '', rawValues: { con:105, sat:135, bri:105, sep:5, hue:-10 } }
         ];
 
-        // HÀM CHUYỂN ĐỔI CHỦ ĐỀ VÀ ĐỒNG BỘ GIAO DIỆN KHÔNG TRỄ NHỊP
+        function initJoystick() {
+            function handleJoystickMove(e) {
+                const rect = joystickPad.getBoundingClientRect();
+                let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                let x = ((clientX - rect.left) / rect.width) * 100;
+                let y = ((clientY - rect.top) / rect.height) * 100;
+                
+                x = Math.max(0, Math.min(100, x));
+                y = Math.max(0, Math.min(100, y));
+                
+                joyX = x; joyY = y;
+                joystickNode.style.left = `${x}%`;
+                joystickNode.style.top = `${y}%`;
+                
+                calculateJoystickMix();
+            }
+            
+            joystickPad.addEventListener('mousedown', (e) => { handleJoystickMove(e); window.addEventListener('mousemove', handleJoystickMove); });
+            window.addEventListener('mouseup', () => { window.removeEventListener('mousemove', handleJoystickMove); });
+            
+            joystickPad.addEventListener('touchstart', (e) => { handleJoystickMove(e); window.addEventListener('touchmove', handleJoystickMove); }, {passive: true});
+            window.addEventListener('touchend', () => { window.removeEventListener('touchmove', handleJoystickMove); });
+        }
+        function calculateJoystickMix() {
+            let wTL = (100 - joyX) * (100 - joyY);
+            let wTR = joyX * (100 - joyY);
+            let wBL = (100 - joyX) * joyY;
+            let wBR = joyX * joyY;
+            
+            let total = wTL + wTR + wBL + wBR;
+            if (total === 0) total = 1;
+            
+            mixFilm = Math.round((wTL / total) * 100);
+            mixCyber = Math.round((wTR / total) * 100);
+            mixHorror = Math.round((wBL / total) * 100);
+            mixSea = Math.round((wBR / total) * 100);
+            
+            hudMixStats.innerText = `F:${mixFilm}% | C:${mixCyber}% | H:${mixHorror}% | S:${mixSea}%`;
+            apply2DColorMatrix();
+        }
+
+        function apply2DColorMatrix() {
+            const fF = mixFilm / 100, fC = mixCyber / 100, fH = mixHorror / 100, fS = mixSea / 100;
+            
+            const finalContrast = (baseValues.film.con * fF) + (baseValues.cyber.con * fC) + (baseValues.horror.con * fH) + (baseValues.sea.con * fS);
+            const finalSaturation = (baseValues.film.sat * fF) + (baseValues.cyber.sat * fC) + (baseValues.horror.sat * fH) + (baseValues.sea.sat * fS);
+            const finalBrightness = (baseValues.film.bri * fF) + (baseValues.cyber.bri * fC) + (baseValues.horror.bri * fH) + (baseValues.sea.bri * fS);
+            const finalSepia = (baseValues.film.sep * fF) + (baseValues.cyber.sep * fC) + (baseValues.horror.sep * fH) + (baseValues.sea.sep * fS);
+            const finalHue = (baseValues.film.hue * fF) + (baseValues.cyber.hue * fC) + (baseValues.horror.hue * fH) + (baseValues.sea.hue * fS);
+            
+            previewImage.style.filter = `contrast(${finalContrast}%) saturate(${finalSaturation}%) brightness(${finalBrightness}%) sepia(${finalSepia}%) hue-rotate(${finalHue}deg)`;
+            
+            let maxMix = Math.max(mixFilm, mixCyber, mixHorror, mixSea);
+            if (maxMix === mixFilm) { gradientOverlay.style.background = 'linear-gradient(rgba(230,200,170,0.05), transparent)'; gradientOverlay.style.mixBlendMode = 'soft-light'; }
+            else if (maxMix === mixCyber) { gradientOverlay.style.background = 'rgba(0,150,180,0.06)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
+            else if (maxMix === mixHorror) { gradientOverlay.style.background = 'rgba(20,40,20,0.12)'; gradientOverlay.style.mixBlendMode = 'multiply'; }
+            else { gradientOverlay.style.background = 'rgba(0,60,120,0.08)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
+        }
+
         function changeCategory(cat) {
             currentCategory = cat;
-            
             document.querySelectorAll('.category-tab-bar .category-tab-btn').forEach(btn => btn.classList.remove('active'));
             if (cat === 'all') document.getElementById('tab-all').classList.add('active');
             else if (cat === 'film-retro') document.getElementById('tab-retro').classList.add('active');
             else if (cat === 'cyber-nature') document.getElementById('tab-cyber').classList.add('active');
-            else if (cat === 'vsco-aesthetic') document.getElementById('tab-vsco').classList.add('active');
             else if (cat === 'horror-cinematic') document.getElementById('tab-horror').classList.add('active');
             else if (cat === 'sea-ocean') document.getElementById('tab-sea').classList.add('active');
             
-            const filtered = filtersConfig.filter(f => cat === 'all' || f.category === cat || f.id === 'normal');
-            
-            if (filtered.length > 0) {
-                selectedFilterId = filtered[0].id;
-                selectFilterA.value = selectedFilterId;
-            }
-            
-            applyMixedFilters();
             renderFilterBar();
+        }
+
+        function renderFilterBar() {
+            filterBar.innerHTML = '';
+            const activeList = filtersConfig.filter(f => currentCategory === 'all' || f.category === currentCategory || f.id === 'normal');
+            
+            activeList.forEach(f => {
+                const item = document.createElement('div');
+                item.className = `filter-item ${f.id === selectedFilterId ? 'active' : ''}`;
+                item.onclick = () => { 
+                    selectedFilterId = f.id; 
+                    renderFilterBar();
+                    if (f.category === 'film-retro') { joyX = 15; joyY = 15; }
+                    else if (f.category === 'cyber-nature') { joyX = 85; joyY = 15; }
+                    else if (f.category === 'horror-cinematic') { joyX = 15; joyY = 85; }
+                    else if (f.category === 'sea-ocean') { joyX = 85; joyY = 85; }
+                    joystickNode.style.left = `${joyX}%`; joystickNode.style.top = `${joyY}%`;
+                    calculateJoystickMix();
+                };
+                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:${f.grad?f.grad:'#444'}"></div><div class="filter-name">${f.name}</div>`;
+                filterBar.appendChild(item);
+            });
         }
 
         function toggleProMode() {
@@ -349,85 +378,17 @@
         function toggleCamera() { useFacingMode = (useFacingMode === "environment") ? "user" : "environment"; initCam(); }
         function changeLayout(l, b) { document.querySelectorAll('.overlay-layer').forEach(y => y.classList.remove('active')); document.querySelectorAll('.mode-btn').forEach(x => x.classList.remove('selected')); document.getElementById(`layout-${l}`).classList.add('active'); b.classList.add('selected'); }
 
-        function buildSelectOptions() {
-            selectFilterA.innerHTML = ''; selectFilterB.innerHTML = '';
-            filtersConfig.forEach(f => {
-                const optA = document.createElement('option'); optA.value = f.id; optA.textContent = f.name; selectFilterA.appendChild(optA);
-                const optB = document.createElement('option'); optB.value = f.id; optB.textContent = f.name; selectFilterB.appendChild(optB);
-            });
-            selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
-        }
-        function onSelectBoxChange() { selectedFilterId = selectFilterA.value; secondaryFilterId = selectFilterB.value; applyMixedFilters(); renderFilterBar(); }
-
-        function renderFilterBar() {
-            filterBar.innerHTML = '';
-            const activeList = filtersConfig.filter(f => currentCategory === 'all' || f.category === currentCategory || f.id === 'normal');
-            
-            activeList.forEach(f => {
-                const item = document.createElement('div');
-                let customClass = '';
-                if(f.category === 'horror-cinematic') customClass = 'horror-item';
-                else if(f.category === 'sea-ocean') customClass = 'sea-item';
-
-                item.className = `filter-item ${customClass} ${f.id === selectedFilterId ? 'active' : ''}`;
-                item.onclick = () => { selectedFilterId = f.id; selectFilterA.value = f.id; applyMixedFilters(); renderFilterBar(); };
-                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:${f.grad?f.grad:'#444'}"></div><div class="filter-name">${f.name}</div>`;
-                filterBar.appendChild(item);
-            });
-            
-            const itemA = filtersConfig.find(f => f.id === selectedFilterId);
-            const itemB = filtersConfig.find(f => f.id === secondaryFilterId);
-            labelFilterA.innerText = itemA ? itemA.name : 'Màu A';
-            labelFilterB.innerText = itemB ? itemB.name : 'Màu B';
-        }
-
-        function applyMixedFilters() {
-            const filterA = filtersConfig.find(f => f.id === selectedFilterId);
-            const filterB = filtersConfig.find(f => f.id === secondaryFilterId);
-            if (!filterA || !filterB) return;
-            
-            const ratio = currentMixRatio / 100;
-            
-            const c = filterA.rawValues.con + (filterB.rawValues.con - filterA.rawValues.con) * ratio;
-            const s = filterA.rawValues.sat + (filterB.rawValues.sat - filterA.rawValues.sat) * ratio;
-            const b = filterA.rawValues.bri + (filterB.rawValues.bri - filterA.rawValues.bri) * ratio;
-            const sep = filterA.rawValues.sep + (filterB.rawValues.sep - filterA.rawValues.sep) * ratio;
-            const h = filterA.rawValues.hue + (filterB.rawValues.hue - filterA.rawValues.hue) * ratio;
-            
-            previewImage.style.filter = `contrast(${c}%) saturate(${s}%) brightness(${b}%) sepia(${sep}%) hue-rotate(${h}deg)`;
-            gradientOverlay.style.background = ratio > 0.5 ? (filterB.grad || 'none') : (filterA.grad || 'none');
-            gradientOverlay.style.mixBlendMode = ratio > 0.5 ? filterB.blend : filterA.blend;
-        }
-
-        function updateMixRatio(val) { currentMixRatio = parseInt(val); mixValue.innerText = `Tỉ lệ trộn: ${val}%`; applyMixedFilters(); }
-
-        function triggerPresetMix() {
-            if(currentCategory === 'cyber-nature') {
-                selectedFilterId = 'tone-kp12'; secondaryFilterId = 'tone-kp19'; updateMixRatio(40);
-            } else if(currentCategory === 'vsco-aesthetic') {
-                selectedFilterId = 'tone-kp21'; secondaryFilterId = 'tone-kp28'; updateMixRatio(35);
-            } else if(currentCategory === 'horror-cinematic') {
-                selectedFilterId = 'tone-kp31'; secondaryFilterId = 'tone-kp35'; updateMixRatio(50);
-            } else if(currentCategory === 'sea-ocean') {
-                selectedFilterId = 'tone-kp36'; secondaryFilterId = 'tone-kp37'; updateMixRatio(45);
-            } else {
-                selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp2'; updateMixRatio(30);
-            }
-            selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
-            applyMixedFilters(); renderFilterBar();
-        }
-
         function uploadLocalImage(event) {
             const file = event.target.files[0]; if (!file) return;
             loadingToast.innerText = "📁 NẠP ẢNH HẬU KỲ..."; loadingToast.style.display = 'block';
             const reader = new FileReader();
             reader.onload = function(e) {
                 originalImageDataUrl = e.target.result; previewImage.src = originalImageDataUrl;
-                mixRange.value = 0; currentMixRatio = 0; mixValue.innerText = "Tỉ lệ trộn: 0%";
+                joyX = 50; joyY = 50; joystickNode.style.left = '50%'; joystickNode.style.top = '50%';
                 previewZoomSlider.value = 10; applyPreviewZoom(10);
                 setTimeout(() => {
                     loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
-                    changeCategory('all');
+                    calculateJoystickMix(); changeCategory('all');
                 }, 400);
             };
             reader.readAsDataURL(file);
@@ -439,30 +400,20 @@
             const sx = (canvas.width - sw) / 2; const sy = (canvas.height - sh) / 2;
             
             if (useFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
-            
             ctx.filter = video.style.filter;
             ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height); ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             originalImageDataUrl = canvas.toDataURL('image/png'); previewImage.src = originalImageDataUrl;
             previewZoomSlider.value = 10; applyPreviewZoom(10);
-
             cameraView.style.display = 'none'; previewView.style.display = 'flex';
             
-            if(!isNormalMode) {
-                changeCategory('film-retro');
-                selectedFilterId = 'tone-kp1'; secondaryFilterId = 'tone-kp2'; updateMixRatio(25);
-            } else {
-                changeCategory('all');
-                selectedFilterId = 'normal'; secondaryFilterId = 'tone-kp1'; updateMixRatio(0);
-            }
-            selectFilterA.value = selectedFilterId; selectFilterB.value = secondaryFilterId;
-            applyMixedFilters(); renderFilterBar();
+            joyX = 50; joyY = 50; joystickNode.style.left = '50%'; joystickNode.style.top = '50%';
+            calculateJoystickMix(); changeCategory('all');
         }
-
         function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; initCam(); }
 
         function downloadFinalImage() {
-            loadingToast.innerText = "🌊 ĐANG XUẤT FILE ẢNH CHUYÊN NGHIỆP..."; loadingToast.style.display = 'block';
+            loadingToast.innerText = "🎛️ DÙNG ENGINE 2D XUẤT ẢNH..."; loadingToast.style.display = 'block';
             const img = new Image(); img.src = originalImageDataUrl;
             img.onload = function() {
                 const ctx = canvas.getContext('2d'); 
@@ -475,66 +426,31 @@
                 ctx.filter = previewImage.style.filter; 
                 ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, canvas.width, canvas.height);
                 
-                const activeOver = currentMixRatio / 100 > 0.5 ? filtersConfig.find(f=>f.id===secondaryFilterId) : filtersConfig.find(f=>f.id===selectedFilterId);
-                if(activeOver && activeOver.grad && activeOver.grad !== 'none') {
-                    ctx.globalCompositeOperation = activeOver.blend;
-                    // XỬ LÝ LỚP PHỦ CHO CÁC BỘ LỌC CŨ VÀ MỚI
-                    if(activeOver.id === 'tone-kp1') {
-                        let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(230,200,170,0.05)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp11') {
-                        let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(0,120,80,0.05)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp16') {
-                        let g = ctx.createLinearGradient(0, 0, canvas.width, 0); g.addColorStop(0, "rgba(255,100,0,0.06)"); g.addColorStop(1, "rgba(255,200,0,0.03)"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp6') {
-                        let g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(0,60,120,0.06)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp10' || activeOver.id === 'tone-kp20') {
-                        let g = ctx.createLinearGradient(0, 0, 0, canvas.height); g.addColorStop(0, "rgba(0,0,0,0.06)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp31') {
-                        ctx.fillStyle = "rgba(20,40,20,0.15)";
-                    } else if(activeOver.id === 'tone-kp32') {
-                        let g = ctx.createLinearGradient(0, 0, 0, canvas.height); g.addColorStop(0, "rgba(120,0,0,0.15)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp33') {
-                        ctx.fillStyle = "rgba(0,100,120,0.08)";
-                    } else if(activeOver.id === 'tone-kp34') {
-                        ctx.fillStyle = "rgba(40,35,30,0.18)";
-                    } else if(activeOver.id === 'tone-kp35') {
-                        ctx.fillStyle = "rgba(255,0,0,0.1)";
-                    } 
-                    // LỚP PHỦ HẬU KỲ CHO TỆP BIỂN (SEA FILTER CODES)
-                    else if(activeOver.id === 'tone-kp36' || activeOver.id === 'tone-kp45') {
-                        ctx.fillStyle = activeOver.id === 'tone-kp36' ? "rgba(0,60,120,0.08)" : "rgba(0,40,100,0.15)";
-                    } else if(activeOver.id === 'tone-kp37') {
-                        let g = ctx.createLinearGradient(0, canvas.height, 0, 0); g.addColorStop(0, "rgba(0,180,200,0.06)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp38') {
-                        let g = ctx.createLinearGradient(0, canvas.height, canvas.width, 0); g.addColorStop(0, "rgba(255,180,0,0.05)"); g.addColorStop(1, "rgba(0,150,200,0.03)"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp39') {
-                        ctx.fillStyle = "rgba(0,220,255,0.04)";
-                    } else if(activeOver.id === 'tone-kp40') {
-                        ctx.fillStyle = "rgba(10,30,60,0.1)";
-                    } else if(activeOver.id === 'tone-kp42') {
-                        let g = ctx.createLinearGradient(0, 0, canvas.width, 0); g.addColorStop(0, "rgba(0,120,150,0.05)"); g.addColorStop(1, "rgba(255,100,100,0.03)"); ctx.fillStyle = g;
-                    } else if(activeOver.id === 'tone-kp43') {
-                        ctx.fillStyle = "rgba(230,250,255,0.08)";
-                    } else if(activeOver.id === 'tone-kp44') {
-                        ctx.fillStyle = "rgba(20,40,50,0.12)";
-                    } else {
-                        ctx.fillStyle = activeOver.grad;
-                    }
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                let maxMix = Math.max(mixFilm, mixCyber, mixHorror, mixSea);
+                ctx.globalCompositeOperation = (maxMix === mixFilm) ? 'soft-light' : (maxMix === mixHorror ? 'multiply' : 'overlay');
+                
+                if (maxMix === mixFilm) {
+                    let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(230,200,170,0.05)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
+                } else if (maxMix === mixCyber) {
+                    ctx.fillStyle = "rgba(0,150,180,0.06)";
+                } else if (maxMix === mixHorror) {
+                    ctx.fillStyle = "rgba(20,40,20,0.12)";
+                } else {
+                    ctx.fillStyle = "rgba(0,60,120,0.08)";
                 }
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
                 ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_Ocean_Studio_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_2DMix_Studio_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
             };
         }
-        window.addEventListener('DOMContentLoaded', () => { buildSelectOptions(); initCam(); renderFilterBar(); });
+
+        window.addEventListener('DOMContentLoaded', () => { initCam(); initJoystick(); renderFilterBar(); });
     </script>
 </body>
 </html>
-
-  
-        
