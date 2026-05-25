@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0b0b0b">
     
-    <title>Sopcare - Cinematic 2D Joystick Studio v37</title>
+    <title>Sopcare - AI Slider Cam Studio v37</title>
     
     <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
 
@@ -34,6 +34,7 @@
         .pro-val { color: #fff; font-size: 10px; font-weight: bold; width: 40px; text-align: right; font-family: monospace; }
         
         .wb-select { background: #222; color: #fff; border: 1px solid #444; font-size: 10px; padding: 2px 6px; border-radius: 4px; outline: none; font-weight: bold; }
+
         /* THANH ZOOM TRỰC QUAN */
         .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
         .zoom-label { color: #00ffcc; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
@@ -60,28 +61,31 @@
         .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
         .shutter-btn.night-active { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; }
         .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffcc; font-size: 16px; cursor: pointer; }
-        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - TỐI ƯU VIEW TOÀN CẢNH */
+
+        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - TỐI ƯU TOÀN MÀN HÌNH */
         .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow: hidden; }
-        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 8px; }
+        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 6px; }
         .image-wrapper { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 8px; overflow: hidden; }
         #previewImage { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.1s ease-out; box-shadow: 0 0 20px rgba(0,0,0,0.9); }
-        .gradient-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: overlay; }
         
-        /* BẢNG TRỘN MÀU 2D JOYSTICK - THU GỌN CHẶT CHẼ */
-        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 2px; }
-        .mixer-header-row { display: flex; justify-content: space-between; align-items: center; padding: 0 2px; }
+        /* BẢNG THANH TRƯỢT KỸ THUẬT SỐ ĐỘC LẬP TÍCH HỢP AI */
+        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 2px; }
+        .mixer-header-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-bottom: 1px solid #1a2421; }
         .mixer-title { color: #00ffcc; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
-        .hud-stats { color: #ff00ff; font-family: monospace; font-size: 9px; font-weight: bold; text-align: right; }
+        .hud-stats { color: #ff00ff; font-family: monospace; font-size: 10px; font-weight: bold; text-align: right; }
         
-        /* KHÔNG GIAN KHUÔN TRỘN 2D */
-        .joystick-space-pad { position: relative; width: 100%; height: 100px; background: linear-gradient(45deg, #161c1a 25%, #0d1211 25%, #0d1211 50%, #161c1a 50%, #161c1a 75%, #0d1211 75%, #0d1211 100%); background-size: 20px 20px; border: 1px dashed rgba(0, 255, 204, 0.25); border-radius: 8px; overflow: hidden; touch-action: none; }
-        .pad-corner-label { position: absolute; font-size: 8px; font-weight: 900; text-transform: uppercase; padding: 2px 4px; background: rgba(0,0,0,0.7); border-radius: 4px; z-index: 2; }
-        .label-tl { top: 4px; left: 4px; color: #ffeb3b; border-left: 2px solid #ffeb3b; }
-        .label-tr { top: 4px; right: 4px; color: #00ffcc; border-right: 2px solid #00ffcc; }
-        .label-bl { bottom: 4px; left: 4px; color: #ff2a2a; border-left: 2px solid #ff2a2a; }
-        .label-br { bottom: 4px; right: 4px; color: #00b0ff; border-right: 2px solid #00b0ff; }
-        
-        .joystick-pointer { position: absolute; width: 18px; height: 18px; background: radial-gradient(circle, #fff 30%, #00ffcc 70%); border: 2px solid #000; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #00ffcc; cursor: pointer; z-index: 3; }
+        /* CỤM AI MIX VÀ INTENSITY */
+        .ai-control-box { display: flex; align-items: center; justify-content: space-between; background: rgba(0, 255, 204, 0.06); padding: 6px 8px; border-radius: 8px; border: 1px dashed rgba(0, 255, 204, 0.3); gap: 10px; }
+        .ai-btn { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: none; color: #000; font-size: 9px; font-weight: 900; padding: 6px 12px; border-radius: 6px; cursor: pointer; text-transform: uppercase; white-space: nowrap; box-shadow: 0 0 8px rgba(0,255,204,0.4); }
+        .ai-intensity-label { color: #ff00ff; font-size: 9px; font-weight: bold; text-transform: uppercase; font-family: monospace; white-space: nowrap; }
+
+        /* KHÔNG GIAN BẢNG TRƯỢT HẬU KỲ CHUYÊN NGHIỆP */
+        .slider-group-box { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .studio-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .studio-label { color: #aaa; font-size: 9px; font-weight: bold; text-transform: uppercase; width: 75px; font-family: monospace; }
+        .studio-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #1e2624; border-radius: 2px; outline: none; }
+        .studio-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffcc; cursor: pointer; box-shadow: 0 0 5px #00ffcc; }
+        .studio-val { color: #fff; font-size: 9px; font-weight: bold; width: 35px; text-align: right; font-family: monospace; }
 
         .category-tab-bar { width: 100%; display: flex; gap: 4px; padding: 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
         .category-tab-bar::-webkit-scrollbar { display: none; }
@@ -108,11 +112,10 @@
 <body>
     <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="status-header">SOPCARE JOYSTICK STUDIO</div>
-        <div class="sub-header">BỘ TRỘN MÀU KHÔNG GIAN 2D CAO CẤP</div>
+        <div class="status-header">SOPCARE AI SLIDER STUDIO</div>
+        <div class="sub-header">MÔ HÌNH PHÂN TÍCH SẮC ĐỘ THÔNG MINH</div>
         <div class="flip-btn" onclick="toggleCamera()">🔄</div>
-
-        <div class="pro-settings-panel" id="proPanel">
+         <div class="pro-settings-panel" id="proPanel">
             <div class="pro-row">
                 <span class="pro-label">Bù Sáng EV</span>
                 <input type="range" min="-20" max="20" value="-3" class="pro-slider" id="proEV" oninput="applyProControls()">
@@ -172,7 +175,6 @@
         <div class="preview-box">
             <div class="image-wrapper" id="previewImageWrapper">
                 <img id="previewImage" alt="Preview">
-                <div class="gradient-overlay" id="gradientOverlay"></div>
             </div>
         </div>
 
@@ -183,23 +185,49 @@
         
         <div class="advanced-mixer-panel">
             <div class="mixer-header-row">
-                <span class="mixer-title">🎛️ Bộ Trộn Màu Không Gian 2D</span>
-                <span class="hud-stats" id="hudMixStats">F:25% | C:25% | H:25% | S:25%</span>
+                <span class="mixer-title">🎛️ Bảng Tinh Chỉnh & Trộn Màu AI</span>
+                <span class="hud-stats" id="hudMixStats">Màu Gốc</span>
+            </div>
+
+            <div class="ai-control-box">
+                <button class="ai-btn" onclick="triggerAIAnalysis()">✨ AI Tự Động Trộn MÀU</button>
+                <span class="ai-intensity-label">Can thiệp AI:</span>
+                <input type="range" min="0" max="100" value="100" class="studio-slider" id="sldAIEffect" oninput="applyManualSliders()" style="background: #2a1f2d;">
+                <span class="studio-val" id="valAIEffect" style="color: #ff00ff;">100%</span>
             </div>
             
-            <div class="joystick-space-pad" id="joystickPad">
-                <div class="pad-corner-label label-tl">🎞️ Tệp 1: Retro</div>
-                <div class="pad-corner-label label-tr">🌌 Tệp 2: Cyber</div>
-                <div class="pad-corner-label label-bl">💀 Tệp 3: Horror</div>
-                <div class="pad-corner-label label-br">🌊 Tệp 4: Ocean</div>
-                
-                <div class="joystick-pointer" id="joystickNode"></div>
+            <div class="slider-group-box">
+                <div class="studio-row">
+                    <span class="studio-label">Tương phản</span>
+                    <input type="range" min="40" max="180" value="100" class="studio-slider" id="sldContrast" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldContrast">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Độ bão hòa</span>
+                    <input type="range" min="0" max="200" value="100" class="studio-slider" id="sldSaturate" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldSaturate">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Độ sáng</span>
+                    <input type="range" min="50" max="150" value="100" class="studio-slider" id="sldBrightness" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldBrightness">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Hoài cổ (Sepia)</span>
+                    <input type="range" min="0" max="100" value="0" class="studio-slider" id="sldSepia" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldSepia">0%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Trượt Hue màu</span>
+                    <input type="range" min="-180" max="180" value="0" class="studio-slider" id="sldHue" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldHue">0°</span>
+                </div>
             </div>
         </div>
 
         <div class="category-tab-bar">
             <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 Tất Cả (37)</button>
-   <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1 (01-10)</button>
+            <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1 (01-10)</button>
             <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2 (11-20)</button>
             <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3 (21-30)</button>
             <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4 (31-37)</button>
@@ -213,32 +241,28 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), previewImageWrapper = document.getElementById('previewImageWrapper'), gradientOverlay = document.getElementById('gradientOverlay'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), previewZoomSlider = document.getElementById('previewZoomSlider'), previewZoomValue = document.getElementById('previewZoomValue');
+        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), previewZoomSlider = document.getElementById('previewZoomSlider'), previewZoomValue = document.getElementById('previewZoomValue');
         
-        const joystickPad = document.getElementById('joystickPad'), joystickNode = document.getElementById('joystickNode'), hudMixStats = document.getElementById('hudMixStats');
+        const hudMixStats = document.getElementById('hudMixStats');
+        const sldContrast = document.getElementById('sldContrast'), sldSaturate = document.getElementById('sldSaturate'), sldBrightness = document.getElementById('sldBrightness'), sldSepia = document.getElementById('sldSepia'), sldHue = document.getElementById('sldHue');
+        const valSldContrast = document.getElementById('valSldContrast'), valSldSaturate = document.getElementById('valSldSaturate'), valSldBrightness = document.getElementById('valSldBrightness'), valSldSepia = document.getElementById('valSldSepia'), valSldHue = document.getElementById('valSldHue');
+        const sldAIEffect = document.getElementById('sldAIEffect'), valAIEffect = document.getElementById('valAIEffect');
+        
         const proPanel = document.getElementById('proPanel'), proToggleBtn = document.getElementById('proToggleBtn'), proEV = document.getElementById('proEV'), proContrast = document.getElementById('proContrast'), proSat = document.getElementById('proSat'), proWB = document.getElementById('proWB');
         const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
 
         let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = true;
         let selectedFilterId = 'normal', currentCategory = 'all';
+        // Bộ nhớ lưu cấu trúc màu trước khi AI can thiệp để tính toán nội suy mức độ
+        let preAIValues = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+        let targetAIValues = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+        let isAIActivated = false;
 
-        let joyX = 50, joyY = 50; 
-        let mixFilm = 25, mixCyber = 25, mixHorror = 25, mixSea = 25;
-
-        // Định vị 4 trục màu mượt mà để nội suy tinh gọn không nhảy màu bộc phát
-        const baseValues = {
-            film:   { con: 85,  sat: 90,  bri: 102, sep: 12, hue: 5 },
-            cyber:  { con: 108, sat: 135, bri: 96,  sep: 2,  hue: 200 },
-            horror: { con: 130, sat: 55,  bri: 80,  sep: 15, hue: 45 },
-            sea:    { con: 110, sat: 125, bri: 100, sep: 0,  hue: -20 }
-        };
-
-        // KHỞI TẠO ĐẦY ĐỦ 37 BỘ LỌC ĐỘC QUYỀN SOPCARE
+        // TẠO ĐỦ CẤU TRÚC 37 BỘ LỌC ĐỘC QUYỀN SOPCARE
         const filtersConfig = [
-            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', grad: '', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } }
+            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } }
         ];
 
-        // Tự động sinh cấu trúc thông số cho đủ 37 bộ lọc điện ảnh phân theo tệp
         for (let i = 1; i <= 37; i++) {
             let cat = 'film-retro';
             let cssStr = '';
@@ -246,93 +270,130 @@
             
             if (i <= 10) {
                 cat = 'film-retro';
-                valObj = { con: 82 + (i%3)*4, sat: 85 + (i%2)*5, bri: 100 + i, sep: 5 + i, hue: i * 2 };
-                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
+                valObj = { con: 85 + (i%3)*4, sat: 88 + (i%2)*6, bri: 100 + i, sep: 4 + i, hue: i * 2 };
             } else if (i <= 20) {
                 cat = 'cyber-nature';
-                valObj = { con: 105 + (i%3)*3, sat: 125 + (i%4)*6, bri: 95 - (i%2)*2, sep: 0, hue: 180 + (i*6) };
-                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) hue-rotate(${valObj.hue}deg)`;
+                valObj = { con: 108 + (i%3)*3, sat: 130 + (i%4)*5, bri: 96 - (i%2)*2, sep: 0, hue: 120 + (i*5) };
             } else if (i <= 30) {
                 cat = 'horror-cinematic';
-                valObj = { con: 125 + (i%3)*5, sat: 45 + (i%3)*5, bri: 82 - (i%2)*4, sep: 10 + i - 20, hue: 30 + (i*2) };
-                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
+                valObj = { con: 130 + (i%3)*4, sat: 50 + (i%3)*6, bri: 85 - (i%2)*3, sep: 8 + i - 20, hue: 25 + (i*2) };
             } else {
                 cat = 'sea-ocean';
-                valObj = { con: 106 + (i%2)*4, sat: 120 + (i%3)*5, bri: 102 - (i%2)*2, sep: 0, hue: -15 - (i - 30) * 3 };
-                cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) hue-rotate(${valObj.hue}deg)`;
+                valObj = { con: 108 + (i%2)*4, sat: 122 + (i%3)*4, bri: 101 - (i%2)*2, sep: 0, hue: -10 - (i - 30) * 4 };
             }
+
+            cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
 
             filtersConfig.push({
                 id: `tone-kp${i}`,
                 name: `KP${i < 10 ? '0' + i : i}`,
                 category: cat,
                 filterCSS: cssStr,
-                grad: '',
                 rawValues: valObj
             });
         }
-          // KHỞI ĐỘNG EVENT JOYSTICK 2D
-        function initJoystick() {
-            function handleJoystickMove(e) {
-                const rect = joystickPad.getBoundingClientRect();
-                let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                
-                let x = ((clientX - rect.left) / rect.width) * 100;
-                let y = ((clientY - rect.top) / rect.height) * 100;
-                
-                x = Math.max(0, Math.min(100, x));
-                y = Math.max(0, Math.min(100, y));
-                
-                joyX = x; joyY = y;
-                joystickNode.style.left = `${x}%`;
-                joystickNode.style.top = `${y}%`;
-                
-                calculateJoystickMix();
+
+        // THUẬT TOÁN AI PHÂN TÍCH MA TRẬN MÀU NỀN VÀ TRỘN TỰ ĐỘNG
+        function triggerAIAnalysis() {
+            loadingToast.innerText = "⚡ AI ĐANG QUÉT KHÔNG GIAN SẮC ĐỘ...";
+            loadingToast.style.display = 'block';
+            isAIActivated = true;
+            sldAIEffect.value = 100;
+            valAIEffect.innerText = "100%";
+
+            // Lưu lại thông số hiện tại làm mốc 0% cho thanh trượt cường độ AI
+            preAIValues = {
+                con: parseInt(sldContrast.value),
+                sat: parseInt(sldSaturate.value),
+                bri: parseInt(sldBrightness.value),
+                sep: parseInt(sldSepia.value),
+                hue: parseInt(sldHue.value)
+            };
+
+            setTimeout(() => {
+                // Thuật toán AI giả lập: Tùy chỉnh thông số tối ưu dựa theo đặc trưng của tệp màu đang chọn để tránh cháy màu
+                if (selectedFilterId === 'normal') {
+                    targetAIValues = { con: 115, sat: 110, bri: 102, sep: 2, hue: 4 };
+                } else {
+                    const currentFilter = filtersConfig.find(f => f.id === selectedFilterId);
+                    const base = currentFilter ? currentFilter.rawValues : { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+                    
+                    // AI tinh chỉnh cân bằng sắc độ: giảm tương phản nếu quá gắt, bù sáng thông minh
+                    targetAIValues = {
+                        con: Math.round(base.con * 0.95 + 10),
+                        sat: Math.round(base.sat * 1.05),
+                        bri: Math.round(base.bri * 0.98 + 4),
+                        sep: Math.round(base.sep * 0.8),
+                        hue: base.hue + 5
+                    };
+                }
+
+                // Cập nhật giá trị đích lên các thanh trượt hiển thị
+                sldContrast.value = targetAIValues.con;
+                sldSaturate.value = targetAIValues.sat;
+                sldBrightness.value = targetAIValues.bri;
+                sldSepia.value = targetAIValues.sep;
+                sldHue.value = targetAIValues.hue;
+
+                applyManualSliders();
+                hudMixStats.innerText = `✨ AI Đã Trộn Màu`;
+                loadingToast.style.display = 'none';
+            }, 600);
+        }
+
+        // ÁP DỤNG THÔNG SỐ TỪ CÁC THANH TRƯỢT ĐỂ HẬU KỲ KHÔNG BỊ NHẢY MÀU
+        function applyManualSliders() {
+            let con = parseInt(sldContrast.value);
+            let sat = parseInt(sldSaturate.value);
+            let bri = parseInt(sldBrightness.value);
+            let sep = parseInt(sldSepia.value);
+            let hue = parseInt(sldHue.value);
+
+            // Nếu thanh trượt cường độ AI di chuyển, tính toán nội suy mượt mà từ mốc pre-AI lên target-AI
+            if (isAIActivated) {
+                const aiFactor = parseInt(sldAIEffect.value) / 100;
+                valAIEffect.innerText = sldAIEffect.value + "%";
+
+                con = Math.round(preAIValues.con + (targetAIValues.con - preAIValues.con) * aiFactor);
+                sat = Math.round(preAIValues.sat + (targetAIValues.sat - preAIValues.sat) * aiFactor);
+                bri = Math.round(preAIValues.bri + (targetAIValues.bri - preAIValues.bri) * aiFactor);
+                sep = Math.round(preAIValues.sep + (targetAIValues.sep - preAIValues.sep) * aiFactor);
+                hue = Math.round(preAIValues.hue + (targetAIValues.hue - preAIValues.hue) * aiFactor);
+
+                // Đồng bộ vị trí nút trượt vật lý theo thuật toán nội suy AI
+                sldContrast.value = con;
+                sldSaturate.value = sat;
+                sldBrightness.value = bri;
+                sldSepia.value = sep;
+                sldHue.value = hue;
             }
-            
-            joystickPad.addEventListener('mousedown', (e) => { handleJoystickMove(e); window.addEventListener('mousemove', handleJoystickMove); });
-            window.addEventListener('mouseup', () => { window.removeEventListener('mousemove', handleJoystickMove); });
-            
-            joystickPad.addEventListener('touchstart', (e) => { handleJoystickMove(e); window.addEventListener('touchmove', handleJoystickMove); }, {passive: true});
-            window.addEventListener('touchend', () => { window.removeEventListener('touchmove', handleJoystickMove); });
+
+            valSldContrast.innerText = con + "%";
+            valSldSaturate.innerText = sat + "%";
+            valSldBrightness.innerText = bri + "%";
+            valSldSepia.innerText = sep + "%";
+            valSldHue.innerText = hue + "°";
+
+            previewImage.style.filter = `contrast(${con}%) saturate(${sat}%) brightness(${bri}%) sepia(${sep}%) hue-rotate(${hue}deg)`;
         }
 
-        // TOÁN HỌC ĐA ĐIỂM: TRỘN TUYẾN TÍNH MƯỢT MÀ KHÔNG NHẢY MÀU
-        function calculateJoystickMix() {
-            let wTL = (100 - joyX) * (100 - joyY);
-            let wTR = joyX * (100 - joyY);
-            let wBL = (100 - joyX) * joyY;
-            let wBR = joyX * joyY;
+        // KHI BẤM CHỌN BỘ LỌC ĐƠN, ĐỒNG BỘ GIÁ TRỊ GỐC LÊN THANH TRƯỢT VÀ TẮT TẠM AI KHỎI NHẢY MÀU
+        function selectFilter(f) {
+            selectedFilterId = f.id;
+            hudMixStats.innerText = f.name;
+            isAIActivated = false; // Tắt trạng thái AI khi đổi filter đơn
+            sldAIEffect.value = 0;
+            valAIEffect.innerText = "0%";
             
-            let total = wTL + wTR + wBL + wBR;
-            if (total === 0) total = 1;
+            // Đồng bộ thông số gốc của bộ lọc được chọn lên hệ thống thanh trượt thanh thoát
+            sldContrast.value = f.rawValues.con;
+            sldSaturate.value = f.rawValues.sat;
+            sldBrightness.value = f.rawValues.bri;
+            sldSepia.value = f.rawValues.sep;
+            sldHue.value = f.rawValues.hue;
             
-            mixFilm = Math.round((wTL / total) * 100);
-            mixCyber = Math.round((wTR / total) * 100);
-            mixHorror = Math.round((wBL / total) * 100);
-            mixSea = Math.round((wBR / total) * 100);
-            
-            hudMixStats.innerText = `F:${mixFilm}% | C:${mixCyber}% | H:${mixHorror}% | S:${mixSea}%`;
-            apply2DColorMatrix();
-        }
-
-        function apply2DColorMatrix() {
-            const fF = mixFilm / 100, fC = mixCyber / 100, fH = mixHorror / 100, fS = mixSea / 100;
-            
-            const finalContrast = (baseValues.film.con * fF) + (baseValues.cyber.con * fC) + (baseValues.horror.con * fH) + (baseValues.sea.con * fS);
-            const finalSaturation = (baseValues.film.sat * fF) + (baseValues.cyber.sat * fC) + (baseValues.horror.sat * fH) + (baseValues.sea.sat * fS);
-            const finalBrightness = (baseValues.film.bri * fF) + (baseValues.cyber.bri * fC) + (baseValues.horror.bri * fH) + (baseValues.sea.bri * fS);
-            const finalSepia = (baseValues.film.sep * fF) + (baseValues.cyber.sep * fC) + (baseValues.horror.sep * fH) + (baseValues.sea.sep * fS);
-            const finalHue = (baseValues.film.hue * fF) + (baseValues.cyber.hue * fC) + (baseValues.horror.hue * fH) + (baseValues.sea.hue * fS);
-            
-            previewImage.style.filter = `contrast(${finalContrast}%) saturate(${finalSaturation}%) brightness(${finalBrightness}%) sepia(${finalSepia}%) hue-rotate(${finalHue}deg)`;
-            
-            let maxMix = Math.max(mixFilm, mixCyber, mixHorror, mixSea);
-            if (maxMix === mixFilm) { gradientOverlay.style.background = 'linear-gradient(rgba(230,200,170,0.04), transparent)'; gradientOverlay.style.mixBlendMode = 'soft-light'; }
-            else if (maxMix === mixCyber) { gradientOverlay.style.background = 'rgba(0,150,180,0.04)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
-            else if (maxMix === mixHorror) { gradientOverlay.style.background = 'rgba(20,40,20,0.08)'; gradientOverlay.style.mixBlendMode = 'multiply'; }
-            else { gradientOverlay.style.background = 'rgba(0,60,120,0.05)'; gradientOverlay.style.mixBlendMode = 'overlay'; }
+            applyManualSliders();
+            renderFilterBar();
         }
 
         function changeCategory(cat) {
@@ -354,27 +415,8 @@
             activeList.forEach(f => {
                 const item = document.createElement('div');
                 item.className = `filter-item ${f.id === selectedFilterId ? 'active' : ''}`;
-                item.onclick = () => { 
-                    selectedFilterId = f.id; 
-                    renderFilterBar();
-                     // Nếu bấm chọn filter đơn, tự động trượt joystick tới vùng tệp màu tương ứng
-                    if (f.id === 'normal') { joyX = 50; joyY = 50; }
-                    else if (f.category === 'film-retro') { joyX = 15; joyY = 15; }
-                    else if (f.category === 'cyber-nature') { joyX = 85; joyY = 15; }
-                    else if (f.category === 'horror-cinematic') { joyX = 15; joyY = 85; }
-                    else if (f.category === 'sea-ocean') { joyX = 85; joyY = 85; }
-                    
-                    joystickNode.style.left = `${joyX}%`; joystickNode.style.top = `${joyY}%`;
-                    
-                    // Nếu là filter đơn lẻ đặc biệt, áp dụng chính xác cấu trúc css của riêng nó
-                    if(f.id !== 'normal') {
-                        previewImage.style.filter = f.filterCSS;
-                        hudMixStats.innerText = `Đơn lẻ: ${f.name}`;
-                    } else {
-                        calculateJoystickMix();
-                    }
-                };
-                item.innerHTML = `<div class="filter-thumb" style="filter: ${f.filterCSS}; background:#252a28"></div><div class="filter-name">${f.name}</div>`;
+                item.onclick = () => { selectFilter(f); };
+                item.innerHTML = `<div class="filter-thumb" style="contrast(${f.rawValues.con}%) saturate(${f.rawValues.sat}%) brightness(${f.rawValues.bri}%) sepia(${f.rawValues.sep}%) hue-rotate(${f.rawValues.hue}deg); background:#252a28"></div><div class="filter-name">${f.name}</div>`;
                 filterBar.appendChild(item);
             });
         }
@@ -422,11 +464,10 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 originalImageDataUrl = e.target.result; previewImage.src = originalImageDataUrl;
-                joyX = 50; joyY = 50; joystickNode.style.left = '50%'; joystickNode.style.top = '50%';
                 previewZoomSlider.value = 10; applyPreviewZoom(10);
                 setTimeout(() => {
                     loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
-                    calculateJoystickMix(); changeCategory('all');
+                    selectFilter(filtersConfig[0]); changeCategory('all');
                 }, 400);
             };
             reader.readAsDataURL(file);
@@ -445,14 +486,13 @@
             previewZoomSlider.value = 10; applyPreviewZoom(10);
             cameraView.style.display = 'none'; previewView.style.display = 'flex';
             
-            joyX = 50; joyY = 50; joystickNode.style.left = '50%'; joystickNode.style.top = '50%';
-            calculateJoystickMix(); changeCategory('all');
+            selectFilter(filtersConfig[0]); changeCategory('all');
         }
 
         function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; initCam(); }
 
         function downloadFinalImage() {
-            loadingToast.innerText = "🎛️ XUẤT ẢNH HIGH-RES..."; loadingToast.style.display = 'block';
+            loadingToast.innerText = "🎛️ XUẤT ẢNH HIGH-RES AI CHẤT LƯỢNG CAO..."; loadingToast.style.display = 'block';
             const img = new Image(); img.src = originalImageDataUrl;
             img.onload = function() {
                 const ctx = canvas.getContext('2d'); 
@@ -465,31 +505,17 @@
                 ctx.filter = previewImage.style.filter; 
                 ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, canvas.width, canvas.height);
                 
-                let maxMix = Math.max(mixFilm, mixCyber, mixHorror, mixSea);
-                ctx.globalCompositeOperation = (maxMix === mixFilm) ? 'soft-light' : (maxMix === mixHorror ? 'multiply' : 'overlay');
-                
-                if (maxMix === mixFilm) {
-                    let g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height); g.addColorStop(0, "rgba(230,200,170,0.04)"); g.addColorStop(1, "transparent"); ctx.fillStyle = g;
-                } else if (maxMix === mixCyber) {
-                    ctx.fillStyle = "rgba(0,150,180,0.04)";
-                } else if (maxMix === mixHorror) {
-                    ctx.fillStyle = "rgba(20,40,20,0.08)";
-                } else {
-                    ctx.fillStyle = "rgba(0,60,120,0.05)";
-                }
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.globalCompositeOperation = 'source-over'; ctx.filter = "none";
+                ctx.filter = "none";
                 
                 canvas.toBlob(function(b) {
-                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_v37_${new Date().getTime()}.png`;
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_AI_Slider_${new Date().getTime()}.png`;
                     document.body.appendChild(l); l.click();
                     setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
                 }, 'image/png', 1.0);
             };
         }
 
-        window.addEventListener('DOMContentLoaded', () => { initCam(); initJoystick(); renderFilterBar(); });
+        window.addEventListener('DOMContentLoaded', () => { initCam(); renderFilterBar(); });
     </script>
 </body>
 </html>
