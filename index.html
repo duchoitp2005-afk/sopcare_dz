@@ -299,6 +299,43 @@
                 rawValues: valObj
             });
         }
+        <script>
+    // Thêm Tệp 5: Chân Dung Điện Ảnh
+    const portraitFilters = [
+        { id: 'p-01', name: 'Nắng Mơ', rawValues: { con: 95, sat: 105, bri: 105, sep: 5, hue: 0 } },
+        { id: 'p-02', name: 'Tuyết Xanh', rawValues: { con: 100, sat: 90, bri: 110, sep: 0, hue: -10 } },
+        { id: 'p-03', name: 'Rừng Xanh', rawValues: { con: 105, sat: 115, bri: 95, sep: 0, hue: 15 } },
+        { id: 'p-04', name: 'Hạ Trong', rawValues: { con: 90, sat: 120, bri: 105, sep: 0, hue: 5 } },
+        { id: 'p-05', name: 'Tĩnh Lặng', rawValues: { con: 85, sat: 80, bri: 90, sep: 10, hue: -5 } },
+        { id: 'p-06', name: 'Mưa Xanh', rawValues: { con: 105, sat: 95, bri: 90, sep: 5, hue: 10 } },
+        { id: 'p-07', name: 'Mây Mờ', rawValues: { con: 90, sat: 90, bri: 110, sep: 0, hue: 0 } },
+        { id: 'p-08', name: 'Đồng Cỏ', rawValues: { con: 100, sat: 125, bri: 100, sep: 5, hue: 10 } },
+        { id: 'p-09', name: 'Hoàng Hôn', rawValues: { con: 110, sat: 130, bri: 105, sep: 15, hue: 20 } },
+        { id: 'p-10', name: 'Vibe Film', rawValues: { con: 105, sat: 110, bri: 95, sep: 20, hue: 5 } }
+    ];
+
+    // Hàm cập nhật danh mục để hiển thị Tệp 5
+    function renderCategoryBar() {
+        const tabBar = document.querySelector('.category-tab-bar');
+        tabBar.innerHTML += `
+            <button class="category-tab-btn" onclick="loadPortraitCategory()">✨ Tệp 5: Chân Dung</button>
+        `;
+    }
+
+    function loadPortraitCategory() {
+        // Xóa filter cũ và nạp 10 bộ lọc Tệp 5
+        const filterBar = document.getElementById('filterBar');
+        filterBar.innerHTML = '';
+        portraitFilters.forEach(f => {
+            const item = document.createElement('div');
+            item.className = 'filter-item';
+            item.innerHTML = `<div class="filter-thumb" style="background:#555"></div><div class="filter-name">${f.name}</div>`;
+            item.onclick = () => applyPreset(f.rawValues);
+            filterBar.appendChild(item);
+        });
+    }
+</script>
+    
 
         // THUẬT TOÁN AI PHÂN TÍCH MA TRẬN MÀU NỀN VÀ TRỘN TỰ ĐỘNG
         function triggerAIAnalysis() {
