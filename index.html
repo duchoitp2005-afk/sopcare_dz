@@ -3,84 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sopcare - AI Studio v37.5 (Full)</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sopcare Cam">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0b0b0b">
+    
+    <title>Sopcare - AI Slider Cam Studio v37</title>
+    
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sopcare%20Pro%20Cam%22%2C%22short_name%22%3A%22Sopcare%20Cam%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b0b0b%22%2C%22theme_color%22%3A%22%230b0b0b%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F8214%2F8214433.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%22%7D%5D%7D">
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html { width: 100%; height: 100%; overflow: hidden; background-color: #0b0b0b; font-family: 'Segoe UI', Arial, sans-serif; user-select: none; }
         .camera-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        video { width: 100%; height: 100%; object-fit: cover; }
-        .controls-panel { position: absolute; bottom: 0; width: 100%; background: rgba(10, 10, 10, 0.94); padding-bottom: 12px; z-index: 10; border-top: 1px solid #222; }
-        .category-tab-bar { width: 100%; display: flex; gap: 4px; padding: 4px 14px; background: #101413; overflow-x: auto; }
-        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 4px 10px; border-radius: 8px; font-size: 9px; cursor: pointer; white-space: nowrap; text-transform: uppercase; }
-        .category-tab-btn.active { background: #00ffcc; color: #000; font-weight: 900; }
-        .filter-bar { width: 100%; display: flex; gap: 8px; overflow-x: auto; padding: 6px 14px; background: #101413; }
-        .filter-item { min-width: 58px; cursor: pointer; text-align: center; }
-        .filter-thumb { width: 36px; height: 36px; border-radius: 6px; border: 2px solid #333; background: #222; margin: 0 auto; }
-        .filter-item.active .filter-thumb { border-color: #00ffcc; }
-        .filter-name { color: #fff; font-size: 8px; margin-top: 2px; }
+        video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s ease-out; }
+        
+        .status-header { position: absolute; top: 12px; width: 100%; text-align: center; color: #fff; font-weight: 900; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 10px #00ffcc; }
+        .sub-header { position: absolute; top: 34px; width: 100%; text-align: center; color: #ffeb3b; font-weight: bold; font-size: 9px; text-transform: uppercase; z-index: 10; text-shadow: 0 0 5px #ffeb3b; }
+        .flip-btn { position: absolute; top: 20px; right: 20px; width: 42px; height: 42px; background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; z-index: 12; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; }
+        
+        /* CỤM ĐIỀU KHIỂN PRO MODE IN-APP */
+        .pro-settings-panel { display: none; position: absolute; top: 65px; left: 5%; width: 90%; background: rgba(15, 15, 20, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(0, 255, 204, 0.2); border-radius: 12px; padding: 10px; z-index: 15; flex-direction: column; gap: 8px; }
+        .pro-settings-panel.active { display: flex; }
+        .pro-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .pro-label { color: #00ffcc; font-size: 9px; font-weight: 900; text-transform: uppercase; width: 65px; font-family: monospace; }
+        .pro-slider { -webkit-appearance: none; flex: 1; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; }
+        .pro-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #00ffcc; cursor: pointer; }
+        .pro-val { color: #fff; font-size: 10px; font-weight: bold; width: 40px; text-align: right; font-family: monospace; }
+        
+        .wb-select { background: #222; color: #fff; border: 1px solid #444; font-size: 10px; padding: 2px 6px; border-radius: 4px; outline: none; font-weight: bold; }
+
+        /* THANH ZOOM TRỰC QUAN */
+        .zoom-control-box { position: absolute; bottom: 170px; width: 85%; background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 20px; display: flex; align-items: center; gap: 10px; z-index: 12; border: 1px solid rgba(255,255,255,0.1); }
+        .zoom-label { color: #00ffcc; font-size: 10px; font-weight: bold; min-width: 60px; text-align: center; font-family: monospace; }
+        .zoom-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #333; border-radius: 2px; outline: none; }
+        .zoom-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffcc; cursor: pointer; }
+
+        .overlay-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; z-index: 3; }
+        .active { display: block; }
+        .line { position: absolute; background-color: rgba(0, 255, 204, 0.3); box-shadow: 0 0 2px rgba(0, 255, 204, 0.3); }
+        .spiral-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .grid-v1, .grid-v2 { width: 1.5px; height: 100%; top: 0; } .grid-v1 { left: 33.33%; } .grid-v2 { left: 66.66%; }
+        .grid-h1, .grid-h2 { height: 1.5px; width: 100%; left: 0; } .grid-h1 { top: 33.33%; } .grid-h2 { top: 66.66%; }
+
+        .controls-panel { position: absolute; bottom: 0; width: 100%; height: 155px; background: rgba(10, 10, 10, 0.94); display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding-bottom: 12px; z-index: 10; border-top: 1px solid #222; }
+        .mode-selector { width: 100%; display: flex; justify-content: flex-start; gap: 8px; overflow-x: auto; padding: 6px 15px; scrollbar-width: none; }
+        .mode-selector::-webkit-scrollbar { display: none; }
+        .mode-btn { background: #222; border: 1px solid #333; color: #aaa; padding: 6px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; text-transform: uppercase; white-space: nowrap; font-weight: bold; }
+        .mode-btn.selected { background: #00ffcc; color: #000; font-weight: 900; border-color: #00ffcc; }
+        .mode-btn.pro-active-tab { background: #ff00ff; color: #fff; border-color: #ff00ff; }
+
+        .action-area { width: 100%; display: flex; justify-content: center; align-items: center; gap: 30px; padding: 0 15px; }
+        .shutter-container { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+        .shutter-label { color: #888; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .shutter-btn { width: 52px; height: 52px; border-radius: 50%; background-color: #fff; border: 4px solid #222; cursor: pointer; box-shadow: 0 0 0 2px #fff; }
+        .shutter-btn.night-active { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: 4px solid #111; box-shadow: 0 0 12px #ff00ff; }
+        .upload-btn { width: 44px; height: 44px; background: #1a1a1a; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ffcc; font-size: 16px; cursor: pointer; }
+
+        /* MÀN HÌNH HẬU KỲ CHUYÊN NGHIỆP - TỐI ƯU TOÀN MÀN HÌNH */
+        .preview-container { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 20; flex-direction: column; justify-content: space-between; align-items: center; padding: 5px 0; overflow: hidden; }
+        .preview-box { width: 100%; flex: 1; min-height: 0; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; background: #000; padding: 6px; }
+        .image-wrapper { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; border-radius: 8px; overflow: hidden; }
+        #previewImage { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.1s ease-out; box-shadow: 0 0 20px rgba(0,0,0,0.9); }
+        
+        /* BẢNG THANH TRƯỢT KỸ THUẬT SỐ ĐỘC LẬP TÍCH HỢP AI */
+        .advanced-mixer-panel { width: 94%; background: #111514; border: 1px solid #1d2a26; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 2px; }
+        .mixer-header-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-bottom: 1px solid #1a2421; }
+        .mixer-title { color: #00ffcc; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+        .hud-stats { color: #ff00ff; font-family: monospace; font-size: 10px; font-weight: bold; text-align: right; }
+        
+        /* CỤM AI MIX VÀ INTENSITY */
+        .ai-control-box { display: flex; align-items: center; justify-content: space-between; background: rgba(0, 255, 204, 0.06); padding: 6px 8px; border-radius: 8px; border: 1px dashed rgba(0, 255, 204, 0.3); gap: 10px; }
+        .ai-btn { background: linear-gradient(45deg, #00ffcc, #ff00ff); border: none; color: #000; font-size: 9px; font-weight: 900; padding: 6px 12px; border-radius: 6px; cursor: pointer; text-transform: uppercase; white-space: nowrap; box-shadow: 0 0 8px rgba(0,255,204,0.4); }
+        .ai-intensity-label { color: #ff00ff; font-size: 9px; font-weight: bold; text-transform: uppercase; font-family: monospace; white-space: nowrap; }
+
+        /* KHÔNG GIAN BẢNG TRƯỢT HẬU KỲ CHUYÊN NGHIỆP */
+        .slider-group-box { display: flex; flex-direction: column; gap: 5px; width: 100%; }
+        .studio-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .studio-label { color: #aaa; font-size: 9px; font-weight: bold; text-transform: uppercase; width: 75px; font-family: monospace; }
+        .studio-slider { -webkit-appearance: none; flex: 1; height: 4px; background: #1e2624; border-radius: 2px; outline: none; }
+        .studio-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #00ffcc; cursor: pointer; box-shadow: 0 0 5px #00ffcc; }
+        .studio-val { color: #fff; font-size: 9px; font-weight: bold; width: 35px; text-align: right; font-family: monospace; }
+
+        .category-tab-bar { width: 100%; display: flex; gap: 4px; padding: 2px 14px; background: #101413; overflow-x: auto; scrollbar-width: none; }
+        .category-tab-bar::-webkit-scrollbar { display: none; }
+        .category-tab-btn { background: #1a2220; color: #888; border: 1px solid #2a3532; padding: 4px 10px; border-radius: 8px; font-size: 9px; font-weight: bold; cursor: pointer; white-space: nowrap; text-transform: uppercase; }
+        .category-tab-btn.active { background: #00ffcc; color: #000; border-color: #00ffcc; font-weight: 900; }
+        
+        .filter-bar { width: 100%; display: flex; gap: 8px; overflow-x: auto; padding: 4px 14px 6px 14px; background: #101413; border-bottom: 1px solid #1a2220; scrollbar-width: none; }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-item { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 58px; cursor: pointer; }
+        .filter-thumb { width: 36px; height: 36px; border-radius: 6px; border: 2px solid #333; background: #222; }
+        .filter-item.active .filter-thumb { border-color: #00ffcc; box-shadow: 0 0 6px rgba(0,255,204,0.4); }
+        .filter-name { color: #777; font-size: 8px; text-align: center; white-space: nowrap; font-weight: bold; width: 100%; overflow: hidden; text-overflow: ellipsis; }
+        .filter-item.active .filter-name { color: #fff; }
+
+        .bottom-actions { width: 100%; display: flex; justify-content: center; gap: 12px; padding: 6px 15px; background: #0a0d0c; }
+        .action-btn { padding: 8px 20px; border-radius: 20px; font-weight: 800; font-size: 11px; border: none; cursor: pointer; text-transform: uppercase; }
+        .btn-cancel { background: #1a2220; color: #888; border: 1px solid #2a3532; }
+        .btn-download { background: linear-gradient(90deg, #00ffcc, #ff00ff); color: #000; }
+        
+        .loading-toast { display: none; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); color: #00ffcc; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 11px; z-index: 40; border: 1px solid #00ffcc; text-align: center; }
+        canvas { display: none; }
     </style>
 </head>
 <body>
-    <div class="camera-container">
+    <div class="camera-container" id="cameraView">
         <video id="video" autoplay playsinline></video>
-        <div class="controls-panel">
-            <div class="category-tab-bar">
-                <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 All</button>
-                <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ T1</button>
-                <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 T2</button>
-                <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 T3</button>
-                <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 T4</button>
-                <button class="category-tab-btn" id="tab-portrait" onclick="changeCategory('portrait')">✨ T5</button>
+        <div class="status-header">SOPCARE AI SLIDER STUDIO</div>
+        <div class="sub-header">MÔ HÌNH PHÂN TÍCH SẮC ĐỘ THÔNG MINH</div>
+        <div class="flip-btn" onclick="toggleCamera()">🔄</div>
+
+        <div class="pro-settings-panel" id="proPanel">
+            <div class="pro-row">
+                <span class="pro-label">Bù Sáng EV</span>
+                <input type="range" min="-20" max="20" value="-3" class="pro-slider" id="proEV" oninput="applyProControls()">
+                <span class="pro-val" id="valEV">-0.3</span>
             </div>
-            <div class="filter-bar" id="filterBar"></div>
+            <div class="pro-row">
+                <span class="pro-label">Tương Phản</span>
+                <input type="range" min="50" max="150" value="112" class="pro-slider" id="proContrast" oninput="applyProControls()">
+                <span class="pro-val" id="valContrast">112%</span>
+            </div>
+            <div class="pro-row">
+                <span class="pro-label">Độ Bão Hòa</span>
+                <input type="range" min="50" max="160" value="108" class="pro-slider" id="proSat" oninput="applyProControls()">
+                <span class="pro-val" id="valSat">108%</span>
+            </div>
+            <div class="pro-row">
+                <span class="pro-label">Cân Bằng WB</span>
+                <select id="proWB" class="wb-select" onchange="applyProControls()">
+                    <option value="none">Auto WB</option>
+                    <option value="daylight">Ấm Áp Cổ Kính (☀️)</option>
+                    <option value="tungsten">Chụp Đêm Đô Thị (💡)</option>
+                </select>
+                <span class="pro-val" style="width:40px;"></span>
+            </div>
+        </div>
+
+        <div class="zoom-control-box">
+            <span class="zoom-label" id="zoomValue">Zoom: 1.0x</span>
+            <input type="range" min="10" max="40" value="10" class="zoom-slider" id="cameraZoomSlider" oninput="applyCameraZoom(this.value)">
+        </div>
+
+        <div id="layout-spiral" class="overlay-layer active"><svg class="spiral-svg" viewBox="0 0 1000 1000"><path d="M500,500 m -300, 0 a 300,300 0 1,0 600,0 a 300,300 0 1,0 -600,0" fill="none" stroke="rgba(0,255,204,0.25)" stroke-width="2"/></svg></div>
+        <div id="layout-grid" class="overlay-layer"><div class="line grid-v1"></div><div class="line grid-v2"></div><div class="line grid-h1"></div><div class="line grid-h2"></div></div>
+
+        <div class="controls-panel">
+            <div class="mode-selector">
+                <button class="mode-btn" onclick="changeLayout('spiral', this)">Tâm Điểm</button>
+                <button class="mode-btn selected" onclick="changeLayout('grid', this)">Lưới 1/3</button>
+                <button class="mode-btn pro-active-tab" id="proToggleBtn" onclick="toggleProMode()">Chế Độ (PRO)</button>
+            </div>
+            <div class="action-area">
+                <div class="shutter-container">
+                    <label for="fileUpload" class="upload-btn">📁</label>
+                    <input type="file" id="fileUpload" accept="image/*" style="display: none;" onchange="uploadLocalImage(event)">
+                    <span class="shutter-label">Nạp Ảnh</span>
+                </div>
+                
+                <div class="shutter-container"><button class="shutter-btn night-active" onclick="takePhoto(false)"></button><span class="shutter-label" style="color: #ff00ff;">Chụp Tệp KP</span></div>
+                <div class="shutter-container"><button class="shutter-btn" style="background: #00ffcc;" onclick="takePhoto(true)"></button><span class="shutter-label">Gốc Màu</span></div>
+            </div>
         </div>
     </div>
 
+    <div class="preview-container" id="previewView">
+        <div class="status-header" style="position: relative; top: 0; padding-top: 4px; color: #ff00ff;">SOPCARE STUDIO WORKSPACE</div>
+        
+        <div class="preview-box">
+            <div class="image-wrapper" id="previewImageWrapper">
+                <img id="previewImage" alt="Preview">
+            </div>
+        </div>
+
+        <div class="zoom-control-box" style="position: relative; bottom: 0; width: 94%; background: #131817; border-color: #1d2a26; margin-bottom: 4px; padding: 4px 12px;">
+            <span class="zoom-label" id="previewZoomValue" style="color: #ff00ff; min-width: 90px;">Cắt Bố Cục: 1.0x</span>
+            <input type="range" min="10" max="40" value="10" class="zoom-slider" id="previewZoomSlider" oninput="applyPreviewZoom(this.value)" style="background: #1c2422;">
+        </div>
+        
+        <div class="advanced-mixer-panel">
+            <div class="mixer-header-row">
+                <span class="mixer-title">🎛️ Bảng Tinh Chỉnh & Trộn Màu AI</span>
+                <span class="hud-stats" id="hudMixStats">Màu Gốc</span>
+            </div>
+
+            <div class="ai-control-box">
+                <button class="ai-btn" onclick="triggerAIAnalysis()">✨ AI Tự Động Trộn MÀU</button>
+                <span class="ai-intensity-label">Can thiệp AI:</span>
+                <input type="range" min="0" max="100" value="100" class="studio-slider" id="sldAIEffect" oninput="applyManualSliders()" style="background: #2a1f2d;">
+                <span class="studio-val" id="valAIEffect" style="color: #ff00ff;">100%</span>
+            </div>
+            
+            <div class="slider-group-box">
+                <div class="studio-row">
+                    <span class="studio-label">Tương phản</span>
+                    <input type="range" min="40" max="180" value="100" class="studio-slider" id="sldContrast" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldContrast">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Độ bão hòa</span>
+                    <input type="range" min="0" max="200" value="100" class="studio-slider" id="sldSaturate" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldSaturate">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Độ sáng</span>
+                    <input type="range" min="50" max="150" value="100" class="studio-slider" id="sldBrightness" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldBrightness">100%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Hoài cổ (Sepia)</span>
+                    <input type="range" min="0" max="100" value="0" class="studio-slider" id="sldSepia" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldSepia">0%</span>
+                </div>
+                <div class="studio-row">
+                    <span class="studio-label">Trượt Hue màu</span>
+                    <input type="range" min="-180" max="180" value="0" class="studio-slider" id="sldHue" oninput="applyManualSliders()">
+                    <span class="studio-val" id="valSldHue">0°</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-tab-bar">
+            <button class="category-tab-btn active" id="tab-all" onclick="changeCategory('all')">🌈 Tất Cả (37)</button>
+            <button class="category-tab-btn" id="tab-retro" onclick="changeCategory('film-retro')">🎞️ Tệp 1 (01-10)</button>
+            <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2 (11-20)</button>
+            <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3 (21-30)</button>
+            <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4 (31-37)</button>
+        </div>
+
+        <div class="filter-bar" id="filterBar"></div>
+        <div class="bottom-actions"><button class="action-btn btn-cancel" onclick="cancelPreview()">Chụp Lại</button><button class="action-btn btn-download" onclick="downloadFinalImage()">Tải Ảnh Xuất Sắc</button></div>
+    </div>
+
+    <div id="loadingToast" class="loading-toast">🚀 ĐANG PHÂN LẠI TỆP CHỦ ĐỀ MÀU...</div>
+    <canvas id="canvas"></canvas>
+
     <script>
-        // Danh sách bộ lọc (37 + 10 = 47)
-        let filtersConfig = [
-            { id: 'normal', name: 'Màu Gốc', category: 'all', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } }
+        const video = document.getElementById('video'), canvas = document.getElementById('canvas'), cameraView = document.getElementById('cameraView'), previewView = document.getElementById('previewView'), previewImage = document.getElementById('previewImage'), filterBar = document.getElementById('filterBar'), loadingToast = document.getElementById('loadingToast'), cameraZoomSlider = document.getElementById('cameraZoomSlider'), zoomValue = document.getElementById('zoomValue'), previewZoomSlider = document.getElementById('previewZoomSlider'), previewZoomValue = document.getElementById('previewZoomValue');
+        
+        const hudMixStats = document.getElementById('hudMixStats');
+        const sldContrast = document.getElementById('sldContrast'), sldSaturate = document.getElementById('sldSaturate'), sldBrightness = document.getElementById('sldBrightness'), sldSepia = document.getElementById('sldSepia'), sldHue = document.getElementById('sldHue');
+        const valSldContrast = document.getElementById('valSldContrast'), valSldSaturate = document.getElementById('valSldSaturate'), valSldBrightness = document.getElementById('valSldBrightness'), valSldSepia = document.getElementById('valSldSepia'), valSldHue = document.getElementById('valSldHue');
+        const sldAIEffect = document.getElementById('sldAIEffect'), valAIEffect = document.getElementById('valAIEffect');
+        
+        const proPanel = document.getElementById('proPanel'), proToggleBtn = document.getElementById('proToggleBtn'), proEV = document.getElementById('proEV'), proContrast = document.getElementById('proContrast'), proSat = document.getElementById('proSat'), proWB = document.getElementById('proWB');
+        const valEV = document.getElementById('valEV'), valContrast = document.getElementById('valContrast'), valSat = document.getElementById('valSat');
+
+        let currentStream = null, useFacingMode = "environment", originalImageDataUrl = '', isProModeActive = true;
+        let selectedFilterId = 'normal', currentCategory = 'all';
+
+        // Bộ nhớ lưu cấu trúc màu trước khi AI can thiệp để tính toán nội suy mức độ
+        let preAIValues = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+        let targetAIValues = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+        let isAIActivated = false;
+
+        // TẠO ĐỦ CẤU TRÚC 37 BỘ LỌC ĐỘC QUYỀN SOPCARE
+        const filtersConfig = [
+            { id: 'normal', name: 'Màu Gốc', category: 'all', filterCSS: 'none', rawValues: { con:100, sat:100, bri:100, sep:0, hue:0 } }
         ];
 
-        // Tạo 37 bộ lọc gốc
         for (let i = 1; i <= 37; i++) {
-            let cat = i <= 10 ? 'film-retro' : (i <= 20 ? 'cyber-nature' : (i <= 30 ? 'horror-cinematic' : 'sea-ocean'));
-            filtersConfig.push({ id: `tone-kp${i}`, name: `KP${i}`, category: cat, rawValues: { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 } });
+            let cat = 'film-retro';
+            let cssStr = '';
+            let valObj = { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+            
+            if (i <= 10) {
+                cat = 'film-retro';
+                valObj = { con: 85 + (i%3)*4, sat: 88 + (i%2)*6, bri: 100 + i, sep: 4 + i, hue: i * 2 };
+            } else if (i <= 20) {
+                cat = 'cyber-nature';
+                valObj = { con: 108 + (i%3)*3, sat: 130 + (i%4)*5, bri: 96 - (i%2)*2, sep: 0, hue: 120 + (i*5) };
+            } else if (i <= 30) {
+                cat = 'horror-cinematic';
+                valObj = { con: 130 + (i%3)*4, sat: 50 + (i%3)*6, bri: 85 - (i%2)*3, sep: 8 + i - 20, hue: 25 + (i*2) };
+            } else {
+                cat = 'sea-ocean';
+                valObj = { con: 108 + (i%2)*4, sat: 122 + (i%3)*4, bri: 101 - (i%2)*2, sep: 0, hue: -10 - (i - 30) * 4 };
+            }
+
+            cssStr = `contrast(${valObj.con}%) saturate(${valObj.sat}%) brightness(${valObj.bri}%) sepia(${valObj.sep}%) hue-rotate(${valObj.hue}deg)`;
+
+            filtersConfig.push({
+                id: `tone-kp${i}`,
+                name: `KP${i < 10 ? '0' + i : i}`,
+                category: cat,
+                filterCSS: cssStr,
+                rawValues: valObj
+            });
+        }
+          // THUẬT TOÁN AI PHÂN TÍCH MA TRẬN MÀU NỀN VÀ TRỘN TỰ ĐỘNG
+        function triggerAIAnalysis() {
+            loadingToast.innerText = "⚡ AI ĐANG QUÉT KHÔNG GIAN SẮC ĐỘ...";
+            loadingToast.style.display = 'block';
+            isAIActivated = true;
+            sldAIEffect.value = 100;
+            valAIEffect.innerText = "100%";
+
+            // Lưu lại thông số hiện tại làm mốc 0% cho thanh trượt cường độ AI
+            preAIValues = {
+                con: parseInt(sldContrast.value),
+                sat: parseInt(sldSaturate.value),
+                bri: parseInt(sldBrightness.value),
+                sep: parseInt(sldSepia.value),
+                hue: parseInt(sldHue.value)
+            };
+
+            setTimeout(() => {
+                // Thuật toán AI giả lập: Tùy chỉnh thông số tối ưu dựa theo đặc trưng của tệp màu đang chọn để tránh cháy màu
+                if (selectedFilterId === 'normal') {
+                    targetAIValues = { con: 115, sat: 110, bri: 102, sep: 2, hue: 4 };
+                } else {
+                    const currentFilter = filtersConfig.find(f => f.id === selectedFilterId);
+                    const base = currentFilter ? currentFilter.rawValues : { con: 100, sat: 100, bri: 100, sep: 0, hue: 0 };
+                    
+                    // AI tinh chỉnh cân bằng sắc độ: giảm tương phản nếu quá gắt, bù sáng thông minh
+                    targetAIValues = {
+                        con: Math.round(base.con * 0.95 + 10),
+                        sat: Math.round(base.sat * 1.05),
+                        bri: Math.round(base.bri * 0.98 + 4),
+                        sep: Math.round(base.sep * 0.8),
+                        hue: base.hue + 5
+                    };
+                }
+
+                // Cập nhật giá trị đích lên các thanh trượt hiển thị
+                sldContrast.value = targetAIValues.con;
+                sldSaturate.value = targetAIValues.sat;
+                sldBrightness.value = targetAIValues.bri;
+                sldSepia.value = targetAIValues.sep;
+                sldHue.value = targetAIValues.hue;
+
+                applyManualSliders();
+                hudMixStats.innerText = `✨ AI Đã Trộn Màu`;
+                loadingToast.style.display = 'none';
+            }, 600);
         }
 
-        // THÊM TỆP 5: CHÂN DUNG
-        const portraitFilters = [
-            { id: 'p01', name: 'Nắng Mơ', category: 'portrait', rawValues: { con: 95, sat: 105, bri: 105, sep: 5, hue: 0 } },
-            { id: 'p02', name: 'Tuyết Xanh', category: 'portrait', rawValues: { con: 100, sat: 90, bri: 110, sep: 0, hue: -10 } },
-            { id: 'p03', name: 'Rừng Xanh', category: 'portrait', rawValues: { con: 105, sat: 115, bri: 95, sep: 0, hue: 15 } },
-            { id: 'p04', name: 'Hạ Trong', category: 'portrait', rawValues: { con: 90, sat: 120, bri: 105, sep: 0, hue: 5 } },
-            { id: 'p05', name: 'Tĩnh Lặng', category: 'portrait', rawValues: { con: 85, sat: 80, bri: 90, sep: 10, hue: -5 } },
-            { id: 'p06', name: 'Mưa Xanh', category: 'portrait', rawValues: { con: 105, sat: 95, bri: 90, sep: 5, hue: 10 } },
-            { id: 'p07', name: 'Mây Mờ', category: 'portrait', rawValues: { con: 90, sat: 90, bri: 110, sep: 0, hue: 0 } },
-            { id: 'p08', name: 'Đồng Cỏ', category: 'portrait', rawValues: { con: 100, sat: 125, bri: 100, sep: 5, hue: 10 } },
-            { id: 'p09', name: 'Hoàng Hôn', category: 'portrait', rawValues: { con: 110, sat: 130, bri: 105, sep: 15, hue: 20 } },
-            { id: 'p10', name: 'Vibe Film', category: 'portrait', rawValues: { con: 105, sat: 110, bri: 95, sep: 20, hue: 5 } }
-        ];
-        filtersConfig.push(...portraitFilters);
+        // ÁP DỤNG THÔNG SỐ TỪ CÁC THANH TRƯỢT ĐỂ HẬU KỲ KHÔNG BỊ NHẢY MÀU
+        function applyManualSliders() {
+            let con = parseInt(sldContrast.value);
+            let sat = parseInt(sldSaturate.value);
+            let bri = parseInt(sldBrightness.value);
+            let sep = parseInt(sldSepia.value);
+            let hue = parseInt(sldHue.value);
 
-        // Render bộ lọc
-        function changeCategory(cat) {
-            document.querySelectorAll('.category-tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`tab-${cat === 'all' ? 'all' : (cat === 'film-retro' ? 'retro' : (cat === 'cyber-nature' ? 'cyber' : (cat === 'horror-cinematic' ? 'horror' : (cat === 'sea-ocean' ? 'sea' : 'portrait'))))}`).classList.add('active');
+            // Nếu thanh trượt cường độ AI di chuyển, tính toán nội suy mượt mà từ mốc pre-AI lên target-AI
+            if (isAIActivated) {
+                const aiFactor = parseInt(sldAIEffect.value) / 100;
+                valAIEffect.innerText = sldAIEffect.value + "%";
+
+                con = Math.round(preAIValues.con + (targetAIValues.con - preAIValues.con) * aiFactor);
+                sat = Math.round(preAIValues.sat + (targetAIValues.sat - preAIValues.sat) * aiFactor);
+                bri = Math.round(preAIValues.bri + (targetAIValues.bri - preAIValues.bri) * aiFactor);
+                sep = Math.round(preAIValues.sep + (targetAIValues.sep - preAIValues.sep) * aiFactor);
+                hue = Math.round(preAIValues.hue + (targetAIValues.hue - preAIValues.hue) * aiFactor);
+
+                // Đồng bộ vị trí nút trượt vật lý theo thuật toán nội suy AI
+                sldContrast.value = con;
+                sldSaturate.value = sat;
+                sldBrightness.value = bri;
+                sldSepia.value = sep;
+                sldHue.value = hue;
+            }
+
+            valSldContrast.innerText = con + "%";
+            valSldSaturate.innerText = sat + "%";
+            valSldBrightness.innerText = bri + "%";
+            valSldSepia.innerText = sep + "%";
+            valSldHue.innerText = hue + "°";
+
+            previewImage.style.filter = `contrast(${con}%) saturate(${sat}%) brightness(${bri}%) sepia(${sep}%) hue-rotate(${hue}deg)`;
+        }
+
+        // KHI BẤM CHỌN BỘ LỌC ĐƠN, ĐỒNG BỘ GIÁ TRỊ GỐC LÊN THANH TRƯỢT VÀ TẮT TẠM AI KHỎI NHẢY MÀU
+        function selectFilter(f) {
+            selectedFilterId = f.id;
+            hudMixStats.innerText = f.name;
+            isAIActivated = false; // Tắt trạng thái AI khi đổi filter đơn
+            sldAIEffect.value = 0;
+            valAIEffect.innerText = "0%";
             
-            const filterBar = document.getElementById('filterBar');
+            // Đồng bộ thông số gốc của bộ lọc được chọn lên hệ thống thanh trượt thanh thoát
+            sldContrast.value = f.rawValues.con;
+            sldSaturate.value = f.rawValues.sat;
+            sldBrightness.value = f.rawValues.bri;
+            sldSepia.value = f.rawValues.sep;
+            sldHue.value = f.rawValues.hue;
+            
+            applyManualSliders();
+            renderFilterBar();
+        }
+
+        function changeCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-tab-bar .category-tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (cat === 'all') document.getElementById('tab-all').classList.add('active');
+            else if (cat === 'film-retro') document.getElementById('tab-retro').classList.add('active');
+            else if (cat === 'cyber-nature') document.getElementById('tab-cyber').classList.add('active');
+            else if (cat === 'horror-cinematic') document.getElementById('tab-horror').classList.add('active');
+            else if (cat === 'sea-ocean') document.getElementById('tab-sea').classList.add('active');
+            
+            renderFilterBar();
+        }
+
+        function renderFilterBar() {
             filterBar.innerHTML = '';
-            filtersConfig.filter(f => cat === 'all' || f.category === cat || f.id === 'normal').forEach(f => {
+            const activeList = filtersConfig.filter(f => currentCategory === 'all' || f.category === currentCategory || f.id === 'normal');
+            
+            activeList.forEach(f => {
                 const item = document.createElement('div');
-                item.className = 'filter-item';
-                item.innerHTML = `<div class="filter-thumb"></div><div class="filter-name">${f.name}</div>`;
-                item.onclick = () => { /* Logic apply màu */ };
+                item.className = `filter-item ${f.id === selectedFilterId ? 'active' : ''}`;
+                item.onclick = () => { selectFilter(f); };
+                item.innerHTML = `<div class="filter-thumb" style="contrast(${f.rawValues.con}%) saturate(${f.rawValues.sat}%) brightness(${f.rawValues.bri}%) sepia(${f.rawValues.sep}%) hue-rotate(${f.rawValues.hue}deg); background:#252a28"></div><div class="filter-name">${f.name}</div>`;
                 filterBar.appendChild(item);
             });
         }
 
-        navigator.mediaDevices.getUserMedia({ video: true }).then(s => document.getElementById('video').srcObject = s);
-        changeCategory('all');
+        function toggleProMode() {
+            isProModeActive = !isProModeActive;
+            if(isProModeActive) { proPanel.classList.add('active'); proToggleBtn.classList.add('pro-active-tab'); } 
+            else { proPanel.classList.remove('active'); proToggleBtn.classList.remove('pro-active-tab'); resetProControls(); }
+        }
+
+        function resetProControls() { proEV.value = -3; proContrast.value = 112; proSat.value = 108; proWB.value = "none"; applyProControls(); }
+
+        function applyProControls() {
+            const ev = parseInt(proEV.value) / 10; valEV.innerText = (ev >= 0 ? "+" : "") + ev.toFixed(1);
+            const con = proContrast.value; valContrast.innerText = con + "%";
+            const sat = proSat.value; valSat.innerText = sat + "%";
+            const bri = 100 + (ev * 15);
+            
+            let wbFilter = "";
+            if (proWB.value === "daylight") wbFilter = "sepia(8%) hue-rotate(5deg)";
+            else if (proWB.value === "tungsten") wbFilter = "hue-rotate(-15deg) saturate(110%)";
+
+            video.style.filter = `brightness(${bri}%) contrast(${con}%) saturate(${sat}%) ${wbFilter}`;
+        }
+
+        function applyCameraZoom(val) { video.style.transform = `scale(${val / 10})`; zoomValue.innerText = `Zoom: ${(val / 10).toFixed(1)}x`; }
+        function applyPreviewZoom(val) { previewImage.style.transform = `scale(${val / 10})`; previewZoomValue.innerText = `Cắt Bố Cục: ${(val / 10).toFixed(1)}x`; }
+
+        async function initCam() {
+            if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+            cameraZoomSlider.value = 10; applyCameraZoom(10);
+            if(isProModeActive) { proPanel.classList.add('active'); applyProControls(); }
+            try {
+                currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: useFacingMode, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
+                video.srcObject = currentStream;
+            } catch (err) { currentStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false }); video.srcObject = currentStream; }
+        }
+        
+        function toggleCamera() { useFacingMode = (useFacingMode === "environment") ? "user" : "environment"; initCam(); }
+        function changeLayout(l, b) { document.querySelectorAll('.overlay-layer').forEach(y => y.classList.remove('active')); document.querySelectorAll('.mode-btn').forEach(x => x.classList.remove('selected')); document.getElementById(`layout-${l}`).classList.add('active'); b.classList.add('selected'); }
+
+        function uploadLocalImage(event) {
+            const file = event.target.files[0]; if (!file) return;
+            loadingToast.innerText = "📁 NẠP ẢNH HẬU KỲ..."; loadingToast.style.display = 'block';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalImageDataUrl = e.target.result; previewImage.src = originalImageDataUrl;
+                previewZoomSlider.value = 10; applyPreviewZoom(10);
+                setTimeout(() => {
+                    loadingToast.style.display = 'none'; cameraView.style.display = 'none'; previewView.style.display = 'flex';
+                    selectFilter(filtersConfig[0]); changeCategory('all');
+                }, 400);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function takePhoto(isNormalMode) {
+            const ctx = canvas.getContext('2d'); canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+            const sf = cameraZoomSlider.value / 10; const sw = canvas.width / sf; const sh = canvas.height / sf;
+            const sx = (canvas.width - sw) / 2; const sy = (canvas.height - sh) / 2;
+            
+            if (useFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
+            ctx.filter = video.style.filter;
+            ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height); ctx.setTransform(1, 0, 0, 1, 0, 0);
+            
+            originalImageDataUrl = canvas.toDataURL('image/png'); previewImage.src = originalImageDataUrl;
+            previewZoomSlider.value = 10; applyPreviewZoom(10);
+            cameraView.style.display = 'none'; previewView.style.display = 'flex';
+            
+            selectFilter(filtersConfig[0]); changeCategory('all');
+        }
+
+        function cancelPreview() { previewView.style.display = 'none'; cameraView.style.display = 'flex'; document.getElementById('fileUpload').value = ''; initCam(); }
+
+        function downloadFinalImage() {
+            loadingToast.innerText = "🎛️ XUẤT ẢNH HIGH-RES AI CHẤT LƯỢNG CAO..."; loadingToast.style.display = 'block';
+            const img = new Image(); img.src = originalImageDataUrl;
+            img.onload = function() {
+                const ctx = canvas.getContext('2d'); 
+                const pSf = previewZoomSlider.value / 10;
+                canvas.width = img.width; canvas.height = img.height;
+                
+                const cropW = img.width / pSf; const cropH = img.height / pSf;
+                const cropX = (img.width - cropW) / 2; const cropY = (img.height - cropH) / 2;
+                
+                ctx.filter = previewImage.style.filter; 
+                ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, canvas.width, canvas.height);
+                
+                ctx.filter = "none";
+                
+                canvas.toBlob(function(b) {
+                    const u = URL.createObjectURL(b); const l = document.createElement('a'); l.href = u; l.download = `Sopcare_AI_Slider_${new Date().getTime()}.png`;
+                    document.body.appendChild(l); l.click();
+                    setTimeout(() => { document.body.removeChild(l); URL.revokeObjectURL(u); loadingToast.style.display = 'none'; }, 500);
+                }, 'image/png', 1.0);
+            };
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { initCam(); renderFilterBar(); });
     </script>
 </body>
 </html>
