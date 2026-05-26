@@ -232,6 +232,8 @@
             <button class="category-tab-btn" id="tab-cyber" onclick="changeCategory('cyber-nature')">🌌 Tệp 2 (11-20)</button>
             <button class="category-tab-btn" id="tab-horror" onclick="changeCategory('horror-cinematic')">💀 Tệp 3 (21-30)</button>
             <button class="category-tab-btn" id="tab-sea" onclick="changeCategory('sea-ocean')">🌊 Tệp 4 (31-37)</button>
+            <button class="category-tab-btn" id="tab-portrait" onclick="changeCategory('portrait')">✨ Tệp 5 (Portrait)</button>
+
         </div>
 
         <div class="filter-bar" id="filterBar"></div>
@@ -293,6 +295,22 @@
                 filterCSS: cssStr,
                 rawValues: valObj
             });
+        }
+        // --- THÊM TỆP 5 (PORTRAIT) ---
+const portraitFilters = [
+    { id: 'p01', name: 'Nắng Mơ', category: 'portrait', filterCSS: '', rawValues: { con: 95, sat: 105, bri: 105, sep: 5, hue: 0 } },
+    { id: 'p02', name: 'Tuyết Xanh', category: 'portrait', filterCSS: '', rawValues: { con: 100, sat: 90, bri: 110, sep: 0, hue: -10 } },
+    { id: 'p03', name: 'Rừng Xanh', category: 'portrait', filterCSS: '', rawValues: { con: 105, sat: 115, bri: 95, sep: 0, hue: 15 } },
+    { id: 'p04', name: 'Hạ Trong', category: 'portrait', filterCSS: '', rawValues: { con: 90, sat: 120, bri: 105, sep: 0, hue: 5 } },
+    { id: 'p05', name: 'Tĩnh Lặng', category: 'portrait', filterCSS: '', rawValues: { con: 85, sat: 80, bri: 90, sep: 10, hue: -5 } },
+    { id: 'p06', name: 'Mưa Xanh', category: 'portrait', filterCSS: '', rawValues: { con: 105, sat: 95, bri: 90, sep: 5, hue: 10 } },
+    { id: 'p07', name: 'Mây Mờ', category: 'portrait', filterCSS: '', rawValues: { con: 90, sat: 90, bri: 110, sep: 0, hue: 0 } },
+    { id: 'p08', name: 'Đồng Cỏ', category: 'portrait', filterCSS: '', rawValues: { con: 100, sat: 125, bri: 100, sep: 5, hue: 10 } },
+    { id: 'p09', name: 'Hoàng Hôn', category: 'portrait', filterCSS: '', rawValues: { con: 110, sat: 130, bri: 105, sep: 15, hue: 20 } },
+    { id: 'p10', name: 'Vibe Film', category: 'portrait', filterCSS: '', rawValues: { con: 105, sat: 110, bri: 95, sep: 20, hue: 5 } }
+];
+filtersConfig.push(...portraitFilters);
+// -----------------------------
         }
           // THUẬT TOÁN AI PHÂN TÍCH MA TRẬN MÀU NỀN VÀ TRỘN TỰ ĐỘNG
         function triggerAIAnalysis() {
